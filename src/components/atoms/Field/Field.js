@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const StyledLabel = styled.label`
   display: flex;
   flex-direction: row;
+  margin: 10px 0;
 
   & > * {
     padding: 3px;
@@ -26,6 +27,7 @@ const StyledName = styled.span`
   width: 140px;
   text-shadow: 0 1.5px 6px #1a9b30;
   font-weight: 600;
+  padding-left: 10px;
 `;
 const StyledInput = styled.input`
   width: 60px;
@@ -39,12 +41,13 @@ const StyledUnit = styled.span`
   background-color: #fff;
   border-color: #fff;
   border-radius: 0 2px 2px 0;
+  font-weight: 600;
 `;
 
-const Field = ({ name, unit, change }) => (
+const Field = ({ label, unit, change }) => (
   <>
     <StyledLabel>
-      <StyledName>{name}</StyledName>
+      <StyledName>{label}</StyledName>
       <StyledInput placeholder="00" onChange={change} />
       <StyledUnit>{unit}</StyledUnit>
     </StyledLabel>
