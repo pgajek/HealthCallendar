@@ -13,9 +13,18 @@ html{
 }
 
 body{
+    min-height: 100vh;
+display: flex;
+align-items: stretch;
+justify-content: stretch;
+    width: 100vw;
     font-family: "Montserrat", sans-serif;
-    font-size: 1.6em;
-    padding: 0 3%;
+    font-size: 1.6rem;
+    background-color: #DCDCDC;
+
+    @media (min-width: 1024px){
+        padding: 3% 0;
+    }
 }
 `;
 export default GlobalStyle;
