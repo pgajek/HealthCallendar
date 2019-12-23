@@ -2,6 +2,9 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { theme } from 'theme/mainTheme.js';
 import { ReactComponent as Logout } from 'assets/icons/logout.svg';
+import { ReactComponent as yesIcon } from 'assets/icons/yesicon.svg';
+import { ReactComponent as wrongIcon } from 'assets/icons/wrongicon.svg';
+import { ReactComponent as hamburger } from 'assets/icons/hamburger.svg';
 
 const StyledIconButton = styled.button`
   width: 48px;
@@ -29,12 +32,24 @@ const StyledIconButton = styled.button`
       box-shadow: 0px 1.5px 6px #84e75b;
     `}
 `;
-const StyledSvg = styled(Logout)`
+const StyledLogout = styled(Logout)`
   fill: hsl(102.5, 43.3%, 50.2%);
 `;
-const IconButton = ({ secondary, icon }) => (
-  <StyledIconButton>
-    <StyledSvg />
+const StyledWrong = styled(wrongIcon)`
+  fill: hsl(102.5, 43.3%, 50.2%);
+`;
+const StyledYesIcon = styled(yesIcon)`
+  fill: hsl(102.5, 43.3%, 50.2%);
+`;
+const StyledBurger = styled(hamburger)`
+  fill: hsl(102.5, 43.3%, 50.2%);
+`;
+const IconButton = ({ secondary, yes, wrong, logout, burger, onClick }) => (
+  <StyledIconButton onClick={onClick}>
+    {logout && <StyledLogout />}
+    {wrong && <StyledWrong />}
+    {yes && <StyledYesIcon />}
+    {burger && <StyledBurger />}
   </StyledIconButton>
 );
 
