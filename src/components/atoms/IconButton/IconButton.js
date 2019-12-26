@@ -34,15 +34,23 @@ const StyledIconButton = styled.button`
 `;
 const StyledLogout = styled(Logout)`
   fill: hsl(102.5, 43.3%, 50.2%);
+  width: 80%;
+  height: 80%;
 `;
 const StyledWrong = styled(wrongIcon)`
   fill: hsl(102.5, 43.3%, 50.2%);
+  width: 80%;
+  height: 80%;
 `;
 const StyledYesIcon = styled(yesIcon)`
   fill: hsl(102.5, 43.3%, 50.2%);
+  width: 80%;
+  height: 80%;
 `;
 const StyledBurger = styled(hamburger)`
   fill: hsl(102.5, 43.3%, 50.2%);
+  width: 80%;
+  height: 80%;
 `;
 const IconButton = ({ secondary, yes, wrong, logout, burger, onClick }) => (
   <StyledIconButton onClick={onClick}>
