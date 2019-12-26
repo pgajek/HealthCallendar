@@ -63,7 +63,7 @@ class BodySize extends Component {
   componentDidMount() {
     const token = JSON.parse(
       JSON.stringify(
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6InRvbSIsInJvbGUiOiJBRE1JTiJ9.CiX5kau56zry9aMZ7Cm0IdGYp5o83TgbPqFufRz9iWY',
+        'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJTdWJqZWN0IiwibmFtZSI6ImtyaXMiLCJyb2xlcyI6IlJPTEVfQURNSU4iLCJpYXQiOjE1NzcxNzMzMTMsImV4cCI6MTU3NzQ3MzMxM30.I9UJbWSHl7kL-ESbZ7eQF7BVYHf93E1w6ZaEnlPlKSSHDhT5hNn54earYRktqZRe',
       ),
     );
 
@@ -71,8 +71,9 @@ class BodySize extends Component {
       method: 'GET',
       mode: 'cors',
       headers: {
-        'Content-type': 'application/json; charset=UTF-8, ',
+        'Content-type': 'application/json;',
         Authorization: `${token}`,
+        Accept: 'application/json',
       },
     })
       .then(response => response.json())
@@ -91,12 +92,17 @@ class BodySize extends Component {
       userId: 1,
       waist: this.state.waist,
     };
-
+    const token = JSON.parse(
+      JSON.stringify(
+        'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJTdWJqZWN0IiwibmFtZSI6ImtyaXMiLCJyb2xlcyI6IlJPTEVfQURNSU4iLCJpYXQiOjE1NzcxNzMzMTMsImV4cCI6MTU3NzQ3MzMxM30.I9UJbWSHl7kL-ESbZ7eQF7BVYHf93E1w6ZaEnlPlKSSHDhT5hNn54earYRktqZRe',
+      ),
+    );
     fetch('http://164.132.97.42:8080/HealthCalendar/api/body', {
       method: 'POST',
       body: JSON.stringify(bodySizeObj),
       headers: {
-        'Content-type': 'application/json; charset=UTF-8, ',
+        'Content-type': 'application/json',
+        Authorization: `${token}`,
       },
     })
       .then(res => res.json())
@@ -176,8 +182,8 @@ class BodySize extends Component {
           />
         </StyledForm>
         <SideFlag secondary>
-          <IconButton icon={yesicon} onClick={this.handleYesButtonClick} />
-          <IconButton icon={wrongicon} />
+          <IconButton yes onClick={this.handleYesButtonClick} />
+          <IconButton wrong />
         </SideFlag>
       </StyledWrapper>
     );
