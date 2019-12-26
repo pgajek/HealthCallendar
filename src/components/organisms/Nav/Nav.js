@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import IconButton from 'components/atoms/IconButton/IconButton';
-
-import { ReactComponent as Logout } from 'assets/icons/logout.svg';
 import hamburger from 'assets/icons/hamburger.svg';
 import wrongicon from 'assets/icons/wrongicon.svg';
 
@@ -114,7 +112,7 @@ class Nav extends Component {
           <StyledListItem>Page5</StyledListItem>
           <StyledListItem>Page6</StyledListItem>
           <StyledListItem>
-            <IconButton icon={Logout} />
+            <IconButton logout />
           </StyledListItem>
         </StyledList>
       </StyledNav>
