@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Nav from 'components/organisms/Nav/Nav';
+import SideFlag from 'components/molecules/SideFlag/SideFlag.js';
+import IconButton from 'components/atoms/IconButton/IconButton';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -34,12 +36,15 @@ const StyledForm = styled.form`
   }
 `;
 
-const FormTemplate = ({ children }) => (
+const FormTemplate = ({ children, header, yesClick }) => (
   <StyledWrapper>
-    <StyledForm>
-      <Nav />
-      {children}
-    </StyledForm>
+    <Nav />
+    <SideFlag primarry>{header}</SideFlag>
+    <StyledForm>{children}</StyledForm>
+    <SideFlag secondary>
+      <IconButton yes onClick={yesClick} />
+      <IconButton wrong />
+    </SideFlag>
   </StyledWrapper>
 );
 

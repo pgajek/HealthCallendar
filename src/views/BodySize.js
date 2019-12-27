@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Nav from 'components/organisms/Nav/Nav';
-import SideFlag from 'components/molecules/SideFlag/SideFlag';
-import Field from 'components/atoms/Field/Field';
-import IconButton from 'components/atoms/IconButton/IconButton';
-import yesicon from 'assets/icons/yesicon.svg';
-import wrongicon from 'assets/icons/wrongicon.svg';
+import FormTemplate from 'templates/FormTemplate.js';
+import Field from 'components/atoms/Field/Field.js';
 
 const StyledWrapper = styled.div`
   position: absolute;
@@ -18,29 +14,6 @@ const StyledWrapper = styled.div`
   width: 100vw;
   min-height: 100vh;
   height: 100%;
-`;
-
-const StyledForm = styled.form`
-  min-height: 100vh;
-  width: 100vw;
-  background-color: #4b4b4b;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20vh 0;
-
-  @media (min-width: 1024px) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 85vh;
-    width: 80vw;
-    border: 5px solid white;
-    top: 52%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
 `;
 
 class BodySize extends Component {
@@ -126,10 +99,7 @@ class BodySize extends Component {
 
     return (
       <StyledWrapper>
-        <Nav />
-        <SideFlag primarry>Body Size</SideFlag>
-
-        <StyledForm>
+        <FormTemplate header="Body Size" yesClick={this.handleYesButtonClick}>
           <Field
             name="armSize"
             label="Arm Size"
@@ -180,11 +150,7 @@ class BodySize extends Component {
             change={this.handleInputChange}
             value={waist}
           />
-        </StyledForm>
-        <SideFlag secondary>
-          <IconButton yes onClick={this.handleYesButtonClick} />
-          <IconButton wrong />
-        </SideFlag>
+        </FormTemplate>
       </StyledWrapper>
     );
   }
