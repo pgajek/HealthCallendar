@@ -12,11 +12,13 @@ const SideFlag = styled.div`
   background-color: ${theme.lightGray};
   color: #4b4b4b;
   z-index: 99;
+  font-weight: 600;
 
   &:after {
     content: '';
     display: block;
     position: absolute;
+
     bottom: -25%;
     left: 0;
     width: 100%;
@@ -33,7 +35,6 @@ const SideFlag = styled.div`
       position: absolute;
       bottom: 0;
       left: 0;
-
       justify-content: flex-end;
       background-color: ${theme.darkGray};
       &:after {
@@ -59,6 +60,8 @@ const SideFlag = styled.div`
       position: absolute;
       top: 0;
       left: 0;
+      padding-left: 5px;
+      font-size: 1.8rem;
     `}
   @media(min-width: 1024px) {
     top: 15%;
@@ -74,7 +77,11 @@ const SideFlag = styled.div`
     &:after {
       display: none;
     }
-
+    ${({ primarry }) =>
+      primarry &&
+      css`
+        justify-content: flex-end;
+      `}
     ${({ secondary }) =>
       secondary &&
       css`
