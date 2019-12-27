@@ -14,6 +14,7 @@ const StyledIconButton = styled.button`
   box-shadow: 0px 1.5px 6px rgba(0, 0, 0, 0.38);
   cursor: pointer;
   transition: background-color 0.2s;
+  margin: 0 5px;
   &:focus {
     outline: none;
   }
@@ -33,24 +34,53 @@ const StyledIconButton = styled.button`
     `}
 `;
 const StyledLogout = styled(Logout)`
-  fill: hsl(102.5, 43.3%, 50.2%);
+  .path {
+    fill: ${theme.darkGray};
+  }
+  fill: white;
   width: 80%;
   height: 80%;
+  @media (min-width: 1024px) {
+    .path {
+      fill: hsl(102.5, 43.3%, 50.2%);
+    }
+  }
 `;
 const StyledWrong = styled(wrongIcon)`
-  fill: hsl(102.5, 43.3%, 50.2%);
+  .path {
+    fill: ${theme.darkGray};
+  }
   width: 80%;
   height: 80%;
+  @media (min-width: 1024px) {
+    .path {
+      fill: hsl(102.5, 43.3%, 50.2%);
+    }
+  }
 `;
 const StyledYesIcon = styled(yesIcon)`
-  fill: hsl(102.5, 43.3%, 50.2%);
+  .path {
+    fill: ${theme.darkGray};
+  }
   width: 80%;
   height: 80%;
+  @media (min-width: 1024px) {
+    .path {
+      fill: hsl(102.5, 43.3%, 50.2%);
+    }
+  }
 `;
 const StyledBurger = styled(hamburger)`
-  fill: hsl(102.5, 43.3%, 50.2%);
+  .path {
+    fill: ${theme.darkGray};
+  }
   width: 80%;
   height: 80%;
+  @media (min-width: 1024px) {
+    .path {
+      fill: ${theme.darkTextShadowGreen};
+    }
+  }
 `;
 const IconButton = ({ secondary, yes, wrong, logout, burger, onClick }) => (
   <StyledIconButton onClick={onClick}>
@@ -62,32 +92,3 @@ const IconButton = ({ secondary, yes, wrong, logout, burger, onClick }) => (
 );
 
 export default IconButton;
-
-// width: 48px;
-// height: 48px;
-// background-image: url(${({ icon }) => icon});
-// background-repeat: no-repeat;
-// background-position: 50% 50%;
-// background-size: 60%;
-// border-radius: 32%;
-// border: 1px solid ${theme.lightGray};
-// box-shadow: 0px 1.5px 6px rgba(0, 0, 0, 0.38);
-// cursor: pointer;
-// transition: background-color 0.2s;
-// &:focus {
-//   outline: none;
-// }
-// &:hover {
-//   background-color: hsl(0, 0%, 45%);
-//   border-color: hsl(103, 48%, 45%);
-// }
-// @media (min-width: 1024px) {
-//   background-color: ${theme.darkGray};
-//   box-shadow: 0px 1.5px 6px rgba(0, 0, 0, 0.38);
-//   border-color: hsl(103, 48%, 23%);
-// }
-// ${({ secondary }) =>
-//   secondary &&
-//   css`
-//     box-shadow: 0px 1.5px 6px #84e75b;
-//   `}

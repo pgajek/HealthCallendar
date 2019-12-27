@@ -1,8 +1,6 @@
 import React from 'react';
 import IconButton from './IconButton';
 import { storiesOf, addDecorator } from '@storybook/react';
-import logout from 'assets/icons/logout.svg';
-import yesicon from 'assets/icons/yesicon.svg';
 import styled from 'styled-components';
 
 const Bg = styled.div`
@@ -16,5 +14,5 @@ const Bg = styled.div`
 
 storiesOf('IconButton', module)
   .addDecorator(story => <Bg>{story()}</Bg>)
-  .add('logout', () => <IconButton icon={logout} />)
-  .add('yes', () => <IconButton icon={yesicon} />);
+  .add('logout', () => <IconButton logout />)
+  .add('yes', () => <IconButton yes />);

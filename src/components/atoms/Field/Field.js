@@ -5,19 +5,33 @@ const StyledLabel = styled.label`
   display: flex;
   flex-direction: row;
   margin: 10px 0;
+  font-size: 1.4rem;
 
   & > * {
     padding: 3px;
     box-shadow: 0 1.5px 6px #000000;
-    height: 30px;
+    height: 100%;
     display: block;
     border: 1px;
     display: flex;
     align-items: center;
-    font-size: 1.4rem;
   }
   & > *:focus {
     outline: none;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 1.6rem;
+    height: 45px;
+    padding: 4px;
+    box-shadow: 0 3 6px #000000;
+    border: 2px;
+  }
+  @media (min-width: 1644px) {
+    font-size: 2rem;
+    height: 60px;
+    padding: 6px;
+    border: 2px;
   }
 `;
 const StyledName = styled.span`
@@ -28,6 +42,14 @@ const StyledName = styled.span`
   text-shadow: 0 1.5px 6px #1a9b30;
   font-weight: 600;
   padding-left: 10px;
+
+  @media (min-width: 1024px) {
+    text-shadow: 0 3px 6px #1a9b30;
+    width: 210px;
+  }
+  @media (min-width: 1644px) {
+    width: 280px;
+  }
 `;
 const StyledInput = styled.input`
   width: 60px;
@@ -35,6 +57,14 @@ const StyledInput = styled.input`
   border-radius: 0 2px 2px 0;
   margin: 0 5px;
   text-align: right;
+  @media (min-width: 1024px) {
+    width: 90px;
+    font-size: 1.6rem;
+  }
+  @media (min-width: 1644px) {
+    width: 120px;
+    font-size: 2rem;
+  }
 `;
 const StyledUnit = styled.span`
   width: 30px;
@@ -42,6 +72,12 @@ const StyledUnit = styled.span`
   border-color: #fff;
   border-radius: 0 2px 2px 0;
   font-weight: 600;
+  @media (min-width: 1024px) {
+    width: 45px;
+  }
+  @media (min-width: 1644px) {
+    width: 60px;
+  }
 `;
 
 const Field = ({ label, unit, change }) => (
