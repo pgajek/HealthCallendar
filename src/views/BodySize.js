@@ -33,25 +33,7 @@ class BodySize extends Component {
       [e.target.name]: e.target.value,
     });
   };
-  componentDidMount() {
-    const token = JSON.parse(
-      JSON.stringify(
-        'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJTdWJqZWN0IiwibmFtZSI6ImtyaXMiLCJyb2xlcyI6IlJPTEVfQURNSU4iLCJpYXQiOjE1NzcxNzMzMTMsImV4cCI6MTU3NzQ3MzMxM30.I9UJbWSHl7kL-ESbZ7eQF7BVYHf93E1w6ZaEnlPlKSSHDhT5hNn54earYRktqZRe',
-      ),
-    );
 
-    fetch('http://164.132.97.42:8080/HealthCalendar/api/body/1', {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-type': 'application/json;',
-        Authorization: `${token}`,
-        Accept: 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(data => console.log(data));
-  }
   handleDataPost = () => {
     const bodySizeObj = {
       armSize: this.state.armSize,
