@@ -14,9 +14,9 @@ html{
 
 body{
     min-height: 100vh;
-display: flex;
-align-items: stretch;
-justify-content: stretch;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
     width: 100vw;
     font-family: "Montserrat", sans-serif;
     font-size: 1.6rem;

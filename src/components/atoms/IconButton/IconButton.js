@@ -11,6 +11,7 @@ const StyledIconButton = styled.button`
   height: 48px;
   border-radius: 32%;
   border: 1px solid ${theme.lightGray};
+  background-color: ${theme.lightGray};
   box-shadow: 0px 1.5px 6px rgba(0, 0, 0, 0.38);
   cursor: pointer;
   transition: background-color 0.2s;

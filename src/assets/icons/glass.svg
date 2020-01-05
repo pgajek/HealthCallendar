@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Warstwa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#DDDDDD;}
+	.st1{fill:#FFFFFF;}
+	.st2{fill:none;stroke:#CCCCCB;stroke-miterlimit:10;}
+	.st3{fill:#F0EFEF;}
+	.st4{fill:#D2D2D1;stroke:#CCCCCB;stroke-miterlimit:10;}
+	.st5{fill:#7292B7;}
+	.st6{fill:#577089;}
+</style>
+<path class="st0" d="M32.01,8.19c-7.03,0-12.73,1-12.73,2.24v41.11c0,1.23,5.7,2.24,12.73,2.24c7.03,0,12.73-1,12.73-2.24V10.42
+	C44.74,9.19,39.04,8.19,32.01,8.19z"/>
+<path class="st1" d="M20.05,48.93v2.27c0,1.02,5.35,1.84,11.95,1.84s11.95-0.83,11.95-1.84v-2.27H20.05z"/>
+<ellipse class="st0" cx="31.99" cy="48.63" rx="11.95" ry="1.93"/>
+<path class="st2" d="M19.26,51.53c0,1.23,6.54,2.24,13.27,2.24s12.18-1,12.18-2.24"/>
+<line class="st2" x1="19.26" y1="10.42" x2="19.26" y2="51.53"/>
+<line class="st2" x1="44.72" y1="10.42" x2="44.72" y2="51.53"/>
+<path class="st3" d="M31.99,9.62c-6.6,0-11.95,0.87-11.95,1.94v35.75c0,1.07,5.35,1.94,11.95,1.94s11.95-0.87,11.95-1.94V11.57
+	C43.94,10.49,38.59,9.62,31.99,9.62z"/>
+<ellipse class="st4" cx="31.99" cy="10.52" rx="12.73" ry="2.34"/>
+<g id="woda">
+	<path id="woda_dół" class="st5" d="M43.92,27.62c0-1.26-5.34-2.28-11.94-2.28s-11.94,1.02-11.94,2.28v19.78h0.02
+		c0,1.26,5.34,2.28,11.94,2.28s11.94-1.02,11.94-2.28V27.62H43.92z"/>
+	<ellipse id="woda_góra" class="st6" cx="31.99" cy="27.62" rx="11.94" ry="2.28"/>
+</g>
+<path class="st1" d="M21.88,25.44c0.51,0.36,1.21,0.81,2.01,1.14c0.18,0.07,0.3,0.24,0.32,0.42l2.02,20.13
+	c0.03,0.33-0.25,0.6-0.58,0.56c-0.44-0.06-1.19-0.21-2.43-0.58c-0.9-0.27-1.69-0.68-2.09-0.9c-0.17-0.09-0.27-0.27-0.26-0.46
+	l0.2-19.92C21.07,25.44,21.54,25.2,21.88,25.44z"/>
+</svg>
