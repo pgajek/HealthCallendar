@@ -2,6 +2,7 @@ import React from 'react';
 import IconButton from './IconButton';
 import { storiesOf, addDecorator } from '@storybook/react';
 import styled from 'styled-components';
+import { ReactComponent as Logout } from 'assets/icons/logout.svg';
 
 const Bg = styled.div`
   display: flex;
@@ -12,7 +13,20 @@ const Bg = styled.div`
   background: #69b749;
 `;
 
-storiesOf('IconButton', module)
+storiesOf('Atoms/IconButton', module)
   .addDecorator(story => <Bg>{story()}</Bg>)
-  .add('logout', () => <IconButton logout />)
-  .add('yes', () => <IconButton yes />);
+  .add('logout', () => (
+    <IconButton logout>
+      <Logout />{' '}
+    </IconButton>
+  ))
+  .add('secondary', () => (
+    <IconButton secondary>
+      <Logout />{' '}
+    </IconButton>
+  ))
+  .add('green', () => (
+    <IconButton green>
+      <Logout />{' '}
+    </IconButton>
+  ));

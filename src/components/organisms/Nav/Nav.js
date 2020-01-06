@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import IconButton from 'components/atoms/IconButton/IconButton';
 import hamburger from 'assets/icons/hamburger.svg';
 import wrongicon from 'assets/icons/wrongicon.svg';
-
+import { ReactComponent as Logout } from 'assets/icons/logout.svg';
 const StyledNav = styled.nav`
   background-color: #69b749;
   z-index: 999;
@@ -112,7 +112,9 @@ class Nav extends Component {
           <StyledListItem>Page5</StyledListItem>
           <StyledListItem>Page6</StyledListItem>
           <StyledListItem>
-            <IconButton logout />
+            <IconButton>
+              <Logout />
+            </IconButton>
           </StyledListItem>
         </StyledList>
       </StyledNav>

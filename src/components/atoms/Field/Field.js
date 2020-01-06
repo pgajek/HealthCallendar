@@ -80,11 +80,16 @@ const StyledUnit = styled.span`
   }
 `;
 
-const Field = ({ label, unit, change }) => (
+const Field = ({ label, unit, change, placeholder, name, value }) => (
   <>
     <StyledLabel>
       <StyledName>{label}</StyledName>
-      <StyledInput placeholder="00" onChange={change} />
+      <StyledInput
+        placeholder={placeholder ? placeholder : '00'}
+        onChange={change}
+        name={name}
+        value={value}
+      />
       <StyledUnit>{unit}</StyledUnit>
     </StyledLabel>
   </>

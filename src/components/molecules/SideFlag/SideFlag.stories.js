@@ -5,7 +5,7 @@ import IconButton from 'components/atoms/IconButton/IconButton';
 import yesicon from 'assets/icons/yesicon.svg';
 import wrongicon from 'assets/icons/wrongicon.svg';
 
-storiesOf('SideFlag', module)
+storiesOf('Molecules/SideFlag', module)
   .add('primary', () => <SideFlag>Body Size</SideFlag>)
   .add('secondary', () => (
     <SideFlag secondary>
