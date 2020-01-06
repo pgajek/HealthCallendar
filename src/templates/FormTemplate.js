@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Nav from 'components/organisms/Nav/Nav';
 import SideFlag from 'components/molecules/SideFlag/SideFlag.js';
 import IconButton from 'components/atoms/IconButton/IconButton';
+import { ReactComponent as YesIcon } from 'assets/icons/yesicon.svg';
+import { ReactComponent as WrongIcon } from 'assets/icons/wrongicon.svg';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -42,8 +44,12 @@ const FormTemplate = ({ children, header, yesClick }) => (
     <SideFlag primarry>{header}</SideFlag>
     <StyledForm>{children}</StyledForm>
     <SideFlag secondary>
-      <IconButton yes onClick={yesClick} />
-      <IconButton wrong />
+      <IconButton onClick={yesClick}>
+        <YesIcon />
+      </IconButton>
+      <IconButton>
+        <WrongIcon />
+      </IconButton>
     </SideFlag>
   </StyledWrapper>
 );
