@@ -18,7 +18,6 @@ const StyledWrapper = styled.div`
 
 const StyledForm = styled.form`
   position: absolute;
-
   min-height: 100vh;
   width: 100vw;
   background-color: #4b4b4b;
@@ -29,12 +28,13 @@ const StyledForm = styled.form`
   padding: 20vh 0;
 
   @media (min-width: 1024px) {
-    height: 85vh;
+    min-height: 80vh;
     width: 80vw;
     border: 5px solid white;
-    top: 52%;
-    left: 50%;
+    top: 50vh;
+    left: 50vw;
     transform: translate(-50%, -50%);
+    padding: 5vh 5vw;
   }
 `;
 

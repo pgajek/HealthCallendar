@@ -68,10 +68,11 @@ const SideFlag = styled.div`
     left: 0;
     height: 15%;
     max-height: 126px;
-    width: 30%;
+    width: 20%;
     font-size: 3rem;
     font-weight: 700;
     text-shadow: 0 1.5px 6px #86eb5c;
+    box-shadow: 1px 2px 6px #222222;
     background-color: #69b749;
 
     &:after {
@@ -86,10 +87,11 @@ const SideFlag = styled.div`
       secondary &&
       css`
         top: 75%;
-        left: 70%;
+        left: 80%;
         justify-content: flex-start;
         padding-right: 0;
         padding-left: 2%;
+        box-shadow: -1px 2px 6px #222222;
         &:before {
           display: none;
         }
