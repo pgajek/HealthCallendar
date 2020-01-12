@@ -67,16 +67,19 @@ const StyledInput = styled.input`
   }
 `;
 const StyledUnit = styled.span`
-  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 30px;
   background-color: #fff;
   border-color: #fff;
   border-radius: 0 2px 2px 0;
   font-weight: 600;
   @media (min-width: 1024px) {
-    width: 45px;
+    min-width: 45px;
   }
   @media (min-width: 1644px) {
-    width: 60px;
+    min-width: 60px;
   }
 `;
 
@@ -90,7 +93,7 @@ const Field = ({ label, unit, change, placeholder, name, value }) => (
         name={name}
         value={value}
       />
-      <StyledUnit>{unit}</StyledUnit>
+      {unit ? <StyledUnit>{unit}</StyledUnit> : null}
     </StyledLabel>
   </>
 );
