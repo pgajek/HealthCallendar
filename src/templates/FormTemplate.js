@@ -38,7 +38,7 @@ const StyledForm = styled.form`
   }
 `;
 
-const FormTemplate = ({ children, header, yesClick }) => (
+const FormTemplate = ({ children, header, yesClick, wrongClick }) => (
   <StyledWrapper>
     <Nav />
     <SideFlag primarry>{header}</SideFlag>
@@ -47,7 +47,7 @@ const FormTemplate = ({ children, header, yesClick }) => (
       <IconButton onClick={yesClick}>
         <YesIcon />
       </IconButton>
-      <IconButton>
+      <IconButton onClick={wrongClick}>
         <WrongIcon />
       </IconButton>
     </SideFlag>

@@ -78,10 +78,13 @@ class BodySize extends Component {
       bodyWeight,
       armSize,
     } = this.state;
-
     return (
       <StyledWrapper>
-        <FormTemplate header="Body Size" yesClick={this.handleYesButtonClick}>
+        <FormTemplate
+          header="Body Size"
+          yesClick={this.handleYesButtonClick}
+          wrongClick={this.hadnleLogIn}
+        >
           <Field
             name="armSize"
             label="Arm Size"

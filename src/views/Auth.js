@@ -52,13 +52,16 @@ const StyledLink = styled.a`
   font-size: 1.2rem;
   font-weight: 600;
   text-decoration: underline;
+  cursor: pointer;
 `;
 
 class Auth extends Component {
   state = {
-    name: '',
+    login: '',
     password: '',
     registration: false,
+    email: '',
+    secondPassword: '',
   };
   handleInputChange = e => {
     this.setState({
@@ -70,6 +73,71 @@ class Auth extends Component {
       registration: !this.state.registration,
     });
   };
+  componentDidMount() {
+    fetch('http://164.132.97.42:8080/HealthCalendar/admin/api/user')
+      .then(response => response.json())
+      .then(data => console.log(data));
+  }
+  hadnleRegistration = e => {
+    console.log(this.state);
+    e.preventDefault();
+    const { login, password, email, secondPassword } = this.state;
+    if (
+      login.length > 5 &&
+      password.length > 5 &&
+      email.length > 5 &&
+      password === secondPassword
+    ) {
+      const user = {
+        email: this.state.email,
+        loginName: this.state.login,
+        nick: this.state.login,
+        password: this.state.password,
+      };
+      fetch('http://164.132.97.42:8080/HealthCalendar/api/user/user-id/new-account', {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      })
+        .then(response => response.json())
+        .then(data => console.log(data));
+      this.setState({
+        login: '',
+        password: '',
+        registration: false,
+        email: '',
+        secondPassword: '',
+      });
+    } else {
+      console.log('wrong');
+    }
+  };
+  handleSignIn = e => {
+    e.preventDefault();
+    const { login, password } = this.state;
+    const user = { loginName: login, password };
+    if (login.length > 5 && password.length > 5) {
+      console.log('dzialam');
+      fetch('http://164.132.97.42:8080/HealthCalendar/login', {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      })
+        .then(response => response.text())
+        .then(data => console.log(data))
+        .catch(err => console.log(err));
+    } else {
+      console.log('wrong login');
+    }
+    this.setState({
+      login: '',
+      password: '',
+    });
+  };
   render() {
     const { registration } = this.state;
     return (
@@ -78,32 +146,51 @@ class Auth extends Component {
         <StyledForm>
           <StyledHeader>Sign In!</StyledHeader>
           <StyledLabel>
-            <Input name="login" placeholder="LOGIN" type="text" onChange={this.handleInputChange} />
+            <Input
+              name="login"
+              placeholder="LOGIN"
+              type="text"
+              onChange={this.handleInputChange}
+              value={this.state.login}
+            />
           </StyledLabel>
+          {registration && (
+            <StyledLabel>
+              <Input
+                name="email"
+                type="email"
+                placeholder="Your email"
+                onChange={this.handleInputChange}
+                value={this.state.email}
+              />
+            </StyledLabel>
+          )}
           <StyledLabel>
             <Input
               name="password"
               type="password"
               placeholder="PASSWORD"
               onChange={this.handleInputChange}
+              value={this.state.password}
             />
           </StyledLabel>
           {registration && (
             <StyledLabel>
               <Input
-                name="passwordReapeated"
+                name="secondPassword"
                 type="password"
                 placeholder="Reapeat your password"
                 onChange={this.handleInputChange}
+                value={this.state.secondPassword}
               />
             </StyledLabel>
           )}
           {registration ? (
-            <Button color={theme.lightGreen} onClick={this.handleRegistration}>
+            <Button color={theme.lightGreen} onClick={e => this.hadnleRegistration(e)}>
               Registration
             </Button>
           ) : (
-            <Button color={theme.lightGreen} onClick={this.handleSignIn}>
+            <Button color={theme.lightGreen} onClick={e => this.handleSignIn(e)}>
               Sign In
             </Button>
           )}
