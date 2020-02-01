@@ -141,7 +141,6 @@ class Auth extends Component {
     const { registration } = this.state;
     const { userId } = this.props;
     if (userId) {
-      console.log(this.props);
       return <Redirect to="/bodySize" />;
     }
     return (
