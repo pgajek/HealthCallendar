@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import Input from 'components/atoms/Input/Input';
 import styled from 'styled-components';
 import Button from 'components/atoms/Button/Button';
+import { Redirect } from 'react-router-dom';
 import { theme } from 'theme/mainTheme.js';
+import { connect } from 'react-redux';
+import { authenticate as authenticateAction } from 'actions/index.js';
+import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 
 const StyledWrapper = styled.div`
   position: fixed;
@@ -39,7 +43,7 @@ const StyledLabel = styled.label``;
 const StyledMainHeader = styled.h1`
   display: block;
   width: 60%;
-  max-width: 200px;
+  max-width: 400px;
   font-size: 3rem;
   text-transform: uppercase;
   text-align: center;
@@ -63,6 +67,16 @@ class Auth extends Component {
     email: '',
     secondPassword: '',
   };
+  componentDidMount() {
+    const { userdIsLogged } = this.props;
+    if (window.sessionStorage.getItem('userId')) {
+      const userData = {
+        userId: window.sessionStorage.getItem('userId'),
+        token: window.sessionStorage.getItem('token'),
+      };
+      userdIsLogged(userData);
+    }
+  }
   handleInputChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -73,13 +87,7 @@ class Auth extends Component {
       registration: !this.state.registration,
     });
   };
-  componentDidMount() {
-    fetch('http://164.132.97.42:8080/HealthCalendar/admin/api/user')
-      .then(response => response.json())
-      .then(data => console.log(data));
-  }
   hadnleRegistration = e => {
-    console.log(this.state);
     e.preventDefault();
     const { login, password, email, secondPassword } = this.state;
     if (
@@ -94,7 +102,7 @@ class Auth extends Component {
         nick: this.state.login,
         password: this.state.password,
       };
-      fetch('http://164.132.97.42:8080/HealthCalendar/api/user/user-id/new-account', {
+      fetch('http://164.132.97.42:8080/HealthCalendar/api/user/new-account', {
         method: 'POST',
         body: JSON.stringify(user),
         headers: {
@@ -103,6 +111,7 @@ class Auth extends Component {
       })
         .then(response => response.json())
         .then(data => console.log(data));
+
       this.setState({
         login: '',
         password: '',
@@ -119,17 +128,7 @@ class Auth extends Component {
     const { login, password } = this.state;
     const user = { loginName: login, password };
     if (login.length > 5 && password.length > 5) {
-      console.log('dzialam');
-      fetch('http://164.132.97.42:8080/HealthCalendar/login', {
-        method: 'POST',
-        body: JSON.stringify(user),
-        headers: {
-          'Content-type': 'application/json',
-        },
-      })
-        .then(response => response.text())
-        .then(data => console.log(data))
-        .catch(err => console.log(err));
+      this.props.authenticate(user);
     } else {
       console.log('wrong login');
     }
@@ -140,9 +139,16 @@ class Auth extends Component {
   };
   render() {
     const { registration } = this.state;
+    const { userId } = this.props;
+    if (userId) {
+      console.log(this.props);
+      return <Redirect to="/bodySize" />;
+    }
     return (
       <StyledWrapper>
-        <StyledMainHeader>Health Callendar</StyledMainHeader>
+        <StyledMainHeader>
+          <Logo />
+        </StyledMainHeader>
         <StyledForm>
           <StyledHeader>Sign In!</StyledHeader>
           <StyledLabel>
@@ -202,5 +208,12 @@ class Auth extends Component {
     );
   }
 }
-
-export default Auth;
+const mapStateToProps = ({ userId = null, token }) => ({
+  userId,
+  token,
+});
+const mapDispatchToProps = dispatch => ({
+  authenticate: user => dispatch(authenticateAction(user)),
+  userdIsLogged: userData => dispatch({ type: 'AUTH_SUCCESS', payload: userData }),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

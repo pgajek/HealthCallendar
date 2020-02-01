@@ -4,6 +4,10 @@ import IconButton from 'components/atoms/IconButton/IconButton';
 import hamburger from 'assets/icons/hamburger.svg';
 import wrongicon from 'assets/icons/wrongicon.svg';
 import { ReactComponent as Logout } from 'assets/icons/logout.svg';
+import { ReactComponent as Logo } from 'assets/icons/logo.svg';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+
 const StyledNav = styled.nav`
   background-color: #69b749;
   z-index: 999;
@@ -92,19 +96,31 @@ const StyledHamburger = styled.button`
 `;
 
 class Nav extends Component {
-  state = { active: false };
+  state = { active: false, isUserLoggedIn: true };
   handleBurgerClick = () => {
     this.setState(prevState => ({
       active: !prevState.active,
     }));
   };
+  handleLogout = () => {
+    window.sessionStorage.removeItem('token');
+    window.sessionStorage.removeItem('userId');
+    this.props.logout();
+    this.setState(prevState => ({
+      ...prevState,
+      isUserLoggedIn: false,
+    }));
+  };
   render() {
     return (
       <StyledNav active={this.state.active}>
+        {this.state.isUserLoggedIn ? null : <Redirect to="/" />}
         <StyledHamburger active={this.state.active} onClick={this.handleBurgerClick} />
         <StyledList>
           <StyledListItem>
-            <StyledLogo>HealthCallendar</StyledLogo>
+            <StyledLogo>
+              <Logo />
+            </StyledLogo>
           </StyledListItem>
           <StyledListItem>Page2</StyledListItem>
           <StyledListItem>Page3</StyledListItem>
@@ -112,7 +128,7 @@ class Nav extends Component {
           <StyledListItem>Page5</StyledListItem>
           <StyledListItem>Page6</StyledListItem>
           <StyledListItem>
-            <IconButton>
+            <IconButton onClick={this.handleLogout}>
               <Logout />
             </IconButton>
           </StyledListItem>
@@ -121,5 +137,7 @@ class Nav extends Component {
     );
   }
 }
-
-export default Nav;
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch({ type: 'USER_LOGOUT' }),
+});
+export default connect(null, mapDispatchToProps)(Nav);
