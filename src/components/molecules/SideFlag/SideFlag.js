@@ -5,7 +5,7 @@ const SideFlag = styled.div`
   width: 100vw;
   padding-right: 2%;
   text-align: center;
-  height: 10%;
+  height: 10vh;
   display: flex;
   align-items: center;
   justify-content: flex-start;

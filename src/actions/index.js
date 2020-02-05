@@ -11,6 +11,7 @@ export const authenticate = user => dispatch => {
       window.sessionStorage.setItem('token', payload.token);
       window.sessionStorage.setItem('userId', payload.userId);
       dispatch({ type: 'AUTH_SUCCESS', payload });
+      console.log(payload);
     })
     .catch(err => {
       console.log(err);
