@@ -4,8 +4,8 @@ import { theme } from 'theme/mainTheme.js';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Auth from 'views/Auth';
-import BodySize from 'views/BodySize';
-import DietPage from 'views/DietPage';
+import BodySize from 'views/BodySize.js';
+import DietPage from 'views/DietPage.js';
 import { Provider } from 'react-redux';
 import store from 'store/index.js';
 
