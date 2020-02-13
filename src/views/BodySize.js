@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import FormTemplate from 'templates/FormTemplate.js';
 import Field from 'components/atoms/Field/Field.js';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 const StyledWrapper = styled.div`
   position: absolute;
@@ -27,6 +28,8 @@ class BodySize extends Component {
     hipsSize: '',
     neckSize: '',
     waist: '',
+    date: '',
+    haveSent: false,
   };
 
   handleInputChange = e => {
@@ -41,18 +44,14 @@ class BodySize extends Component {
       bodyWeight: this.state.bodyWeight,
       bustSize: this.state.bustSize,
       calf: this.state.calf,
-      dataMeasurement: '2019-22-1',
+      dateMeasurement: this.state.date,
       femoralSize: this.state.femoralSize,
       hipsSize: this.state.hipsSize,
       neckSize: this.state.neckSize,
-      userId: 1,
+      userId: this.props.userId,
       waist: this.state.waist,
     };
-    const token = JSON.parse(
-      JSON.stringify(
-        'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJTdWJqZWN0IiwibmFtZSI6ImtyaXMiLCJyb2xlcyI6IlJPTEVfQURNSU4iLCJpYXQiOjE1NzcxNzMzMTMsImV4cCI6MTU3NzQ3MzMxM30.I9UJbWSHl7kL-ESbZ7eQF7BVYHf93E1w6ZaEnlPlKSSHDhT5hNn54earYRktqZRe',
-      ),
-    );
+    const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
     fetch('http://164.132.97.42:8080/HealthCalendar/api/body', {
       method: 'POST',
       body: JSON.stringify(bodySizeObj),
@@ -61,12 +60,33 @@ class BodySize extends Component {
         Authorization: `${token}`,
       },
     })
-      .then(res => res.json())
-      .then(data => console.log(data))
+      .then(res => {
+        this.setState(prevState => ({
+          ...prevState,
+          haveSent: true,
+        }));
+      })
       .catch(err => console.log(err));
   };
   handleYesButtonClick = () => {
     this.handleDataPost();
+  };
+  componentDidMount() {
+    this.createDate();
+  }
+  createDate = () => {
+    const date = new Date();
+    let month = 0;
+    if (date.getMonth() < 10) {
+      month = `0${date.getMonth() + 1}`;
+    } else {
+      month = date.getMonth() + 1;
+    }
+    const theDate = `${date.getFullYear()}-${month}-${date.getDate()}`;
+    this.setState(prevState => ({
+      ...prevState,
+      date: theDate,
+    }));
   };
   render() {
     const {
@@ -79,6 +99,9 @@ class BodySize extends Component {
       bodyWeight,
       armSize,
     } = this.state;
+    if (this.state.haveSent) {
+      return <Redirect to="/home" />;
+    }
     return (
       <StyledWrapper>
         <FormTemplate
@@ -141,6 +164,9 @@ class BodySize extends Component {
     );
   }
 }
-const mapStateToProps = ({}) => ({});
+const mapStateToProps = ({ userId, token }) => ({
+  userId,
+  token,
+});
 const mapDispatchToProps = dispatch => ({});
 export default connect(mapStateToProps, mapDispatchToProps)(BodySize);

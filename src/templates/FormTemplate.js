@@ -5,6 +5,7 @@ import IconButton from 'components/atoms/IconButton/IconButton';
 import { ReactComponent as YesIcon } from 'assets/icons/yesicon.svg';
 import { ReactComponent as WrongIcon } from 'assets/icons/wrongicon.svg';
 import MainTemplate from 'templates/MainTemplate.js';
+import { Link } from 'react-router-dom';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -44,7 +45,9 @@ const FormTemplate = ({ children, header, yesClick, wrongClick }) => (
           <YesIcon />
         </IconButton>
         <IconButton onClick={wrongClick}>
-          <WrongIcon />
+          <Link to="/home">
+            <WrongIcon />
+          </Link>
         </IconButton>
       </SideFlag>
     </StyledWrapper>
