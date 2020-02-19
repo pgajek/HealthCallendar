@@ -18,3 +18,16 @@ export const authenticate = user => dispatch => {
       //   dispatch({ type: 'AUTH_FAILURE' });
     });
 };
+export const bodySizePost = (bodySize, token) => dispatch => {
+  return fetch('http://164.132.97.42:8080/HealthCalendar/api/body', {
+    method: 'POST',
+    body: JSON.stringify(bodySize),
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `${token}`,
+    },
+  })
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+};

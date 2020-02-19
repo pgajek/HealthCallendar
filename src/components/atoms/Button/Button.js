@@ -11,7 +11,7 @@ const Button = styled.button`
   background-color: ${theme.mainGreen};
   width: 105px;
   height: 30px;
-  font-size: 10px;
+  font-size: 1.4rem;
   border: none;
   border-radius: 50px;
   font-family: 'Montserrat';
@@ -22,6 +22,13 @@ const Button = styled.button`
     color &&
     css`
       background-color: ${({ color }) => color};
+    `}
+  ${({ round }) =>
+    round &&
+    css`
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
     `}
 
   &:focus {

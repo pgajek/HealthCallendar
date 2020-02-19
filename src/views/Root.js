@@ -6,8 +6,11 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Auth from 'views/Auth';
 import BodySize from 'views/BodySize.js';
 import DietPage from 'views/DietPage.js';
+import BodySizeList from 'views/BodySizeList.js';
 import { Provider } from 'react-redux';
 import store from 'store/index.js';
+import BodySizeDetails from './BodySizeDetails';
+import Home from 'views/Home';
 
 const Root = () => (
   <Provider store={store}>
@@ -16,8 +19,11 @@ const Root = () => (
       <ThemeProvider theme={theme}>
         <Switch>
           <Route exact path="/" component={Auth} />
+          <Route exact path="/home" component={Home} />
           <Route exact path="/bodySize" component={BodySize} />
           <Route exact path="/dietPage" component={DietPage} />
+          <Route exact path="/bodySizeList" component={BodySizeList} />
+          <Route path="/bodySizeList/:id" component={BodySizeDetails} />
         </Switch>
       </ThemeProvider>
     </BrowserRouter>

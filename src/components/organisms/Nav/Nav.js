@@ -6,7 +6,7 @@ import wrongicon from 'assets/icons/wrongicon.svg';
 import { ReactComponent as Logout } from 'assets/icons/logout.svg';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 const StyledNav = styled.nav`
   background-color: #69b749;
@@ -25,7 +25,7 @@ const StyledNav = styled.nav`
     transform: ${({ active }) => (active ? 'translateX(0)' : 'translateX(100vw)')};
     width: 100vw;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     width: 100vw;
     height: 10%;
     max-height: 56px;
@@ -44,13 +44,11 @@ const StyledList = styled.ul`
   list-style-type: none;
   display: flex;
   flex-direction: column;
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     flex-direction: row;
   }
 `;
-const StyledLogo = styled.h1`
-  font-size: 2rem;
-`;
+
 const StyledListItem = styled.li`
   background-color: #81dc5c;
   border: 1px solid #9be77d;
@@ -61,11 +59,19 @@ const StyledListItem = styled.li`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     height: 100%;
     margin: 0;
     font-weight: 600;
   }
+  transition: 0.2s;
+  &:hover {
+    filter: brightness(0.95);
+  }
+`;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #fff;
 `;
 const StyledHamburger = styled.button`
   position: absolute;
@@ -90,7 +96,7 @@ const StyledHamburger = styled.button`
     background-color: ${({ active }) => (active ? '#fff' : 'transparent')};
     z-index: 99;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     display: none;
   }
 `;
@@ -118,15 +124,23 @@ class Nav extends Component {
         <StyledHamburger active={this.state.active} onClick={this.handleBurgerClick} />
         <StyledList>
           <StyledListItem>
-            <StyledLogo>
-              <Logo />
-            </StyledLogo>
+            <Logo />
           </StyledListItem>
-          <StyledListItem>Page2</StyledListItem>
-          <StyledListItem>Page3</StyledListItem>
-          <StyledListItem>Page4</StyledListItem>
-          <StyledListItem>Page5</StyledListItem>
-          <StyledListItem>Page6</StyledListItem>
+          <StyledListItem>
+            <StyledLink to="/home">Main Page</StyledLink>
+          </StyledListItem>
+          <StyledListItem>
+            <StyledLink to="/bodySizeList">Body Size</StyledLink>
+          </StyledListItem>
+          <StyledListItem>
+            <StyledLink to="/dietPage">Diet</StyledLink>
+          </StyledListItem>
+          <StyledListItem>
+            <StyledLink to="/">Trainings</StyledLink>
+          </StyledListItem>
+          <StyledListItem>
+            <StyledLink to="/">Profile</StyledLink>
+          </StyledListItem>
           <StyledListItem>
             <IconButton onClick={this.handleLogout}>
               <Logout />

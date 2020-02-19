@@ -126,7 +126,7 @@ class Auth extends Component {
   handleSignIn = e => {
     e.preventDefault();
     const { login, password } = this.state;
-    const user = { loginName: login, password };
+    const user = { loginName: login, password, roles: 'USER' };
     if (login.length > 5 && password.length > 5) {
       this.props.authenticate(user);
     } else {
@@ -141,7 +141,7 @@ class Auth extends Component {
     const { registration } = this.state;
     const { userId } = this.props;
     if (userId) {
-      return <Redirect to="/bodySize" />;
+      return <Redirect to="/home" />;
     }
     return (
       <StyledWrapper>
