@@ -26,7 +26,8 @@ class BodySizeList extends Component {
           ...this.state,
           dates: response,
         });
-      });
+      })
+      .catch(err => console.log(err));
   }
 
   render() {

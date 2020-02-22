@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import store from 'store/index.js';
 import BodySizeDetails from './BodySizeDetails';
 import Home from 'views/Home';
+import ProfilePage from 'views/ProfilePage';
 
 const Root = () => (
   <Provider store={store}>
@@ -20,6 +21,7 @@ const Root = () => (
         <Switch>
           <Route exact path="/" component={Auth} />
           <Route exact path="/home" component={Home} />
+          <Route exact path="/Profile" component={ProfilePage} />
           <Route exact path="/bodySize" component={BodySize} />
           <Route exact path="/dietPage" component={DietPage} />
           <Route exact path="/bodySizeList" component={BodySizeList} />
