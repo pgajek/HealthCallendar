@@ -139,7 +139,7 @@ class Nav extends Component {
             <StyledLink to="/">Trainings</StyledLink>
           </StyledListItem>
           <StyledListItem>
-            <StyledLink to="/">Profile</StyledLink>
+            <StyledLink to="/Profile">Profile</StyledLink>
           </StyledListItem>
           <StyledListItem>
             <IconButton onClick={this.handleLogout}>
