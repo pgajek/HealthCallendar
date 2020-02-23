@@ -1,5 +1,5 @@
 export const authenticate = user => dispatch => {
-  return fetch('http://164.132.97.42:8080/HealthCalendar/login', {
+  return fetch('http://164.132.97.42:8080/health-calendar/login', {
     method: 'POST',
     body: JSON.stringify(user),
     headers: {
@@ -19,7 +19,7 @@ export const authenticate = user => dispatch => {
     });
 };
 export const bodySizePost = (bodySize, token) => dispatch => {
-  return fetch('http://164.132.97.42:8080/HealthCalendar/api/body', {
+  return fetch('http://164.132.97.42:8080/health-calendar/api/body', {
     method: 'POST',
     body: JSON.stringify(bodySize),
     headers: {

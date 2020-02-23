@@ -6,9 +6,10 @@ import { connect } from 'react-redux';
 class ProfilePage extends Component {
   state = {};
   componentDidMount() {
+    console.log(this.props.token);
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
 
-    fetch(`http://164.132.97.42:8080/HealthCalendar/api/user/login-name/${'999999'}`, {
+    fetch(`http://164.132.97.42:8080/health-calendar/api/user/login-name/${'999999'}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -25,15 +26,13 @@ class ProfilePage extends Component {
       drinkDemandPerDay: 3200,
       email: '999999@gmail.com',
       kcalDemandPerDay: 22,
-      loginName: '999999',
-      nick: '999999',
-      phoneNumber: 543908654,
-      sex: 1,
+      loginName: this.props.loginName,
+      phoneNumber: '543908654',
     };
 
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
 
-    fetch(`http://164.132.97.42:8080/HealthCalendar/api/user/${this.props.userId}`, {
+    fetch(`http://164.132.97.42:8080/health-calendar/api/user/${this.props.userId}`, {
       method: 'PUT',
       body: JSON.stringify(limits),
       headers: {

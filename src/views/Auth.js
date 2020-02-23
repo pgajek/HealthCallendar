@@ -91,9 +91,9 @@ class Auth extends Component {
     e.preventDefault();
     const { login, password, email, secondPassword } = this.state;
     if (
-      login.length > 5 &&
-      password.length > 5 &&
-      email.length > 5 &&
+      login.length > 4 &&
+      password.length > 4 &&
+      email.length > 4 &&
       password === secondPassword
     ) {
       const user = {
@@ -102,7 +102,7 @@ class Auth extends Component {
         nick: this.state.login,
         password: this.state.password,
       };
-      fetch('http://164.132.97.42:8080/HealthCalendar/api/user/new-account', {
+      fetch('http://164.132.97.42:8080/health-calendar/api/user/new-account', {
         method: 'POST',
         body: JSON.stringify(user),
         headers: {
@@ -127,7 +127,7 @@ class Auth extends Component {
     e.preventDefault();
     const { login, password } = this.state;
     const user = { loginName: login, password, roles: 'USER' };
-    if (login.length > 5 && password.length > 5) {
+    if (login.length > 4 && password.length > 4) {
       this.props.authenticate(user);
     } else {
       console.log('wrong login');

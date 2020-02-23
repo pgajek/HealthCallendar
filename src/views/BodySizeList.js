@@ -12,7 +12,7 @@ class BodySizeList extends Component {
   state = { dates: [] };
   componentDidMount() {
     const { userId, token } = this.props;
-    fetch(`http://164.132.97.42:8080/HealthCalendar/api/body/dates/user-id/${userId}`, {
+    fetch(`http://164.132.97.42:8080/health-calendar/api/body/dates/user-id/${userId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -22,10 +22,12 @@ class BodySizeList extends Component {
       .then(res => res.json())
       .then(response => {
         console.log(response);
-        this.setState({
-          ...this.state,
-          dates: response,
-        });
+        if (response.length > 0) {
+          this.setState({
+            ...this.state,
+            dates: response,
+          });
+        }
       })
       .catch(err => console.log(err));
   }
@@ -39,7 +41,7 @@ class BodySizeList extends Component {
 
     return (
       <MainTemplate>
-        {dates}
+        {dates.length > 0 && dates}
         <Link to="/bodySize">
           <Button>Dodaj</Button>
         </Link>
