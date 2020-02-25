@@ -73,6 +73,7 @@ class Auth extends Component {
       const userData = {
         userId: window.sessionStorage.getItem('userId'),
         token: window.sessionStorage.getItem('token'),
+        login: window.sessionStorage.getItem('loginName'),
       };
       userdIsLogged(userData);
     }

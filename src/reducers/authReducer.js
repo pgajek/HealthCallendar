@@ -1,6 +1,7 @@
 const initialState = {
   token: window.sessionStorage.getItem('token'),
   userId: window.sessionStorage.getItem('userId'),
+  loginName: window.sessionStorage.getItem('loginName'),
 };
 
 const authReducer = (state = initialState, action) => {
@@ -10,6 +11,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         userId: action.payload.userId,
         token: action.payload.token,
+        loginName: action.payload.login,
       };
     case 'AUTH_FAILURE':
       return state;
