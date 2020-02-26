@@ -53,20 +53,26 @@ const StyledWine = styled(Wine)`
 class Count extends Component {
   state = { count: 0 };
   countUp = () => {
-    this.setState(prevState => ({
-      count: prevState.count + 1,
-    }));
+    this.setState(
+      prevState => ({
+        count: prevState.count + 1,
+      }),
+      () => this.props.click(this.state.count, this.props.aspect),
+    );
   };
   countDown = () => {
     if (this.state.count > 0)
-      this.setState(prevState => ({
-        count: prevState.count - 1,
-      }));
+      this.setState(
+        prevState => ({
+          count: prevState.count - 1,
+        }),
+        () => this.props.click(this.state.count, this.props.aspect),
+      );
   };
   iconsColor = () => {
     let variants = [];
     for (let i = 0; i < this.props.howMany; i++) {
-      if (i < this.state.count) {
+      if (i < this.props.count) {
         variants.push(true);
       } else {
         variants.push(false);
@@ -74,15 +80,19 @@ class Count extends Component {
     }
     return variants;
   };
+
   render() {
     const counts = this.iconsColor();
-    const { wine, glass, snack } = this.props;
+    const { aspect } = this.props;
     return (
       <StyledWrapper>
         <InnerWrapper>
-          {glass && counts.map((item, index) => <StyledGlass key={index} filled={item} />)}
-          {wine && counts.map((item, index) => <StyledWine key={index} filled={item} />)}
-          {snack && counts.map((item, index) => <StyledMuffin key={index} filled={item} />)}
+          {aspect === 'drinks' &&
+            counts.map((item, index) => <StyledGlass key={index} filled={item} />)}
+          {aspect === 'alcohols' &&
+            counts.map((item, index) => <StyledWine key={index} filled={item} />)}
+          {aspect === 'snacks' &&
+            counts.map((item, index) => <StyledMuffin key={index} filled={item} />)}
         </InnerWrapper>
         <StyledCounter>
           <Button round onClick={this.countUp}>
