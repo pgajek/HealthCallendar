@@ -30,7 +30,9 @@ class Home extends Component {
       },
       body: JSON.stringify(day),
     })
-      .then(res => this.getDayData())
+      .then(res => {
+        this.getDayData();
+      })
       .catch(err => console.log(err));
   };
   getDayData = () => {
@@ -53,7 +55,11 @@ class Home extends Component {
           this.postDay();
         }
       })
-      .then(dayId => this.setState(prevState => ({ ...prevState, dayId })))
+      .then(dayId => {
+        console.log(dayId);
+        window.sessionStorage.setItem('dayId', dayId);
+        this.setState(prevState => ({ ...prevState, dayId }));
+      })
       .catch(err => console.log(err));
   };
 
@@ -73,12 +79,18 @@ class Home extends Component {
   createDate = () => {
     const date = new Date();
     let month = 0;
+    let day = 0;
     if (date.getMonth() < 10) {
       month = `0${date.getMonth() + 1}`;
     } else {
       month = date.getMonth() + 1;
     }
-    const theDate = `${date.getFullYear()}-${month}-${date.getDate()}`;
+    if (date.getDate() < 10) {
+      day = `0${date.getDay() + 1}`;
+    } else {
+      day = date.getDate() + 1;
+    }
+    const theDate = `${date.getFullYear()}-${month}-${day}`;
     return theDate;
   };
   handleCount = (count, aspect) => {
@@ -87,9 +99,7 @@ class Home extends Component {
       [aspect]: count,
     }));
   };
-  componentDidUpdate() {
-    console.log(this.state);
-  }
+
   render() {
     const { snacks, drinks, alcohols } = this.state;
     return (

@@ -77,12 +77,18 @@ class BodySize extends Component {
   createDate = () => {
     const date = new Date();
     let month = 0;
+    let day = 0;
     if (date.getMonth() < 10) {
       month = `0${date.getMonth() + 1}`;
     } else {
       month = date.getMonth() + 1;
     }
-    const theDate = `${date.getFullYear()}-${month}-${date.getDate()}`;
+    if (date.getDate() < 10) {
+      day = `0${date.getDay() + 1}`;
+    } else {
+      day = date.getDate() + 1;
+    }
+    const theDate = `${date.getFullYear()}-${month}-${day}`;
     this.setState(prevState => ({
       ...prevState,
       date: theDate,

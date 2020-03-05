@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const StyledLabel = styled.label`
   display: flex;
@@ -75,6 +75,7 @@ const StyledUnit = styled.span`
   border-color: #fff;
   border-radius: 0 2px 2px 0;
   font-weight: 600;
+
   @media (min-width: 1024px) {
     min-width: 45px;
   }
@@ -83,11 +84,12 @@ const StyledUnit = styled.span`
   }
 `;
 
-const Field = ({ label, unit, change, placeholder, name, value }) => (
+const Field = ({ label, unit, change, placeholder, name, value, type }) => (
   <>
     <StyledLabel>
       <StyledName>{label}</StyledName>
       <StyledInput
+        type={type}
         placeholder={placeholder ? placeholder : '00'}
         onChange={change}
         name={name}

@@ -18,9 +18,25 @@ const StyledWrapper = styled.div`
 
 class DietPage extends Component {
   state = {
-    Meal: '',
-    Calories: '',
+    meal: '',
+    calories: '',
     meals: [],
+  };
+  getUserData = () => {
+    const { userId } = this.props;
+    const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
+    fetch(
+      `http://164.132.97.42:8080/health-calendar/api/day/day-id/${this.createDate()}/${userId}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `${token}`,
+        },
+      },
+    )
+      .then(res => res.json())
+      .catch(err => console.log(err));
   };
   handleInputChange = e => {
     this.setState({
@@ -28,33 +44,61 @@ class DietPage extends Component {
       [e.target.name]: e.target.value,
     });
   };
+  sendMeal = Meal => {
+    const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
+    fetch(`http://164.132.97.42:8080/health-calendar/api/meal`, {
+      method: 'POST',
+      body: JSON.stringify(Meal),
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `${token}`,
+      },
+    })
+      .then(res => res.json())
+      .catch(err => console.log(err));
+  };
   habndleYesButtonClick = e => {
     e.preventDefault();
-    const Meal = {
-      name: this.state.Meal,
-      value: this.state.Calories,
+    const NewMeal = {
+      dateTimeOfEat: '2020-03-02_18.10',
+      dayId: this.props.dayId,
+      description: this.state.meal,
+      kcal: this.state.calories,
     };
-    this.setState({
-      ...this.state,
-      Meal: '',
-      Calories: '',
-      meals: [...this.state.meals, Meal],
-    });
+    this.sendMeal(NewMeal);
+    // this.setState({
+    //   ...this.state,
+    //   Meal: '',
+    //   Calories: '',
+    //   meals: [...this.state.meals, NewMeal],
+    // });
+  };
+  handleDeleteButtonClick = (e, id) => {
+    e.preventDefault();
+    this.setState(prevState => ({
+      ...prevState,
+      meals: prevState.meals.filter(el => el.id !== id),
+    }));
   };
   render() {
-    const MappedMeals = this.state.meals.map((meal, index) => (
-      <Card key={index} name={meal.name} value={meal.value} />
+    const MappedMeals = this.state.meals.map(meal => (
+      <Card
+        key={meal.id}
+        id={meal.id}
+        click={this.handleDeleteButtonClick}
+        name={meal.name}
+        value={meal.value}
+      />
     ));
     return (
       <MainTemplate>
-        <FormTemplate header="Diet Page">
+        <FormTemplate header="Diet Page" yesClick={this.habndleYesButtonClick}>
           <StyledWrapper>
             {MappedMeals}
             <AddNew
               change={this.handleInputChange}
               name="Meal"
               name2="Calories"
-              click={this.habndleYesButtonClick}
               value={this.state.Meal}
               value2={this.state.Calories}
             />

@@ -88,11 +88,11 @@ class Count extends Component {
       <StyledWrapper>
         <InnerWrapper>
           {aspect === 'drinks' &&
-            counts.map((item, index) => <StyledGlass key={index} filled={item} />)}
+            counts.map((item, index) => <StyledGlass key={index} filled={item ? 1 : 0} />)}
           {aspect === 'alcohols' &&
-            counts.map((item, index) => <StyledWine key={index} filled={item} />)}
+            counts.map((item, index) => <StyledWine key={index} filled={item ? 1 : 0} />)}
           {aspect === 'snacks' &&
-            counts.map((item, index) => <StyledMuffin key={index} filled={item} />)}
+            counts.map((item, index) => <StyledMuffin key={index} filled={item ? 1 : 0} />)}
         </InnerWrapper>
         <StyledCounter>
           <Button round onClick={this.countUp}>

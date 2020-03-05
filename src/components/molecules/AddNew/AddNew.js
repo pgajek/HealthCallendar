@@ -20,13 +20,10 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const AddNew = ({ change, name, name2, click, value, value2 }) => (
+const AddNew = ({ change, name, name2, value, value2 }) => (
   <StyledWrapper>
     <Field change={change} label={name} name={name} placeholder="Meal" value={value} />
     <Field change={change} unit="kcal" label={name2} name={name2} value={value2} />
-    <IconButton green onClick={click}>
-      <YesIcon />
-    </IconButton>
   </StyledWrapper>
 );
 

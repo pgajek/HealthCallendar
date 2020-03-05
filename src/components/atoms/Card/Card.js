@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { theme } from 'theme/mainTheme.js';
 const StyledWrapper = styled.div`
+  position: relative;
   width: 50%;
   max-width: 200px;
   height: 50px;
@@ -27,9 +28,15 @@ const StyledValue = styled.div`
   justify-content: center;
   align-items: center;
 `;
+const StyledButton = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+`;
 
-const Card = ({ name, value }) => (
+const Card = ({ name, value, click, id }) => (
   <StyledWrapper>
+    <StyledButton onClick={e => click(e, id)}>X</StyledButton>
     <StyledName>{name}</StyledName>
     <StyledValue>{value} kcal</StyledValue>
   </StyledWrapper>
