@@ -4,6 +4,7 @@ import FormTemplate from 'templates/FormTemplate.js';
 import Field from 'components/atoms/Field/Field.js';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { createDate } from 'helpers';
 
 const StyledWrapper = styled.div`
   position: absolute;
@@ -72,28 +73,13 @@ class BodySize extends Component {
     this.handleDataPost();
   };
   componentDidMount() {
-    this.createDate();
-  }
-  createDate = () => {
-    const date = new Date();
-    let month = 0;
-    let day = 0;
-    if (date.getMonth() < 10) {
-      month = `0${date.getMonth() + 1}`;
-    } else {
-      month = date.getMonth() + 1;
-    }
-    if (date.getDate() < 10) {
-      day = `0${date.getDay() + 1}`;
-    } else {
-      day = date.getDate() + 1;
-    }
-    const theDate = `${date.getFullYear()}-${month}-${day}`;
+    const theDate = createDate();
     this.setState(prevState => ({
       ...prevState,
       date: theDate,
     }));
-  };
+  }
+
   render() {
     const {
       waist,

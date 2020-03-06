@@ -3,6 +3,7 @@ import Count from 'components/molecules/Count/Count';
 import MainTemplate from 'templates/MainTemplate.js';
 import { connect } from 'react-redux';
 import Button from 'components/atoms/Button/Button';
+import { createDate } from 'helpers';
 
 class Home extends Component {
   state = {
@@ -15,7 +16,7 @@ class Home extends Component {
   }
   postDay = () => {
     const day = {
-      date: this.createDate(),
+      date: createDate(),
       portionsAlcohol: 0,
       portionsDrink: 0,
       portionsSnack: 0,
@@ -38,16 +39,13 @@ class Home extends Component {
   getDayData = () => {
     const { userId } = this.props;
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(
-      `http://164.132.97.42:8080/health-calendar/api/day/day-id/${this.createDate()}/${userId}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `${token}`,
-        },
+    fetch(`http://164.132.97.42:8080/health-calendar/api/day/day-id/${createDate()}/${userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `${token}`,
       },
-    )
+    })
       .then(res => {
         if (res.ok) {
           return res.json();
@@ -56,13 +54,11 @@ class Home extends Component {
         }
       })
       .then(dayId => {
-        console.log(dayId);
         window.sessionStorage.setItem('dayId', dayId);
         this.setState(prevState => ({ ...prevState, dayId }));
       })
       .catch(err => console.log(err));
   };
-
   deleteDay = () => {
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
     fetch(`http://164.132.97.42:8080/health-calendar/api/day/14`, {
@@ -76,23 +72,6 @@ class Home extends Component {
       .then(data => console.log(data))
       .catch(err => console.log(err));
   };
-  createDate = () => {
-    const date = new Date();
-    let month = 0;
-    let day = 0;
-    if (date.getMonth() < 10) {
-      month = `0${date.getMonth() + 1}`;
-    } else {
-      month = date.getMonth() + 1;
-    }
-    if (date.getDate() < 10) {
-      day = `0${date.getDay() + 1}`;
-    } else {
-      day = date.getDate() + 1;
-    }
-    const theDate = `${date.getFullYear()}-${month}-${day}`;
-    return theDate;
-  };
   handleCount = (count, aspect) => {
     this.setState(prevState => ({
       ...prevState,
@@ -102,7 +81,6 @@ class Home extends Component {
 
   render() {
     const { snacks, drinks, alcohols } = this.state;
-    console.log(this.props.userId);
     return (
       <MainTemplate>
         <Count aspect="drinks" howMany={8} count={drinks} click={this.handleCount} />

@@ -8,6 +8,7 @@ export const authenticate = user => dispatch => {
   })
     .then(response => response.json())
     .then(data => {
+      console.log(data);
       const payload = { login: user.loginName, userId: data.userId, token: data.token };
       window.sessionStorage.setItem('token', payload.token);
       window.sessionStorage.setItem('userId', payload.userId);

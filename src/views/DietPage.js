@@ -6,6 +6,7 @@ import MainTemplate from 'templates/MainTemplate.js';
 import FormTemplate from 'templates/FormTemplate.js';
 import Card from 'components/atoms/Card/Card.js';
 import { connect } from 'react-redux';
+import { createDate, createHour } from 'helpers';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -30,7 +31,7 @@ class DietPage extends Component {
     const { userId } = this.props;
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
     fetch(
-      `http://164.132.97.42:8080/health-calendar/api/meal/dto/date/user-id/${this.createDate()}/${userId}`,
+      `http://164.132.97.42:8080/health-calendar/api/meal/dto/date/user-id/${createDate()}/${userId}`,
       {
         method: 'GET',
         headers: {
@@ -70,7 +71,7 @@ class DietPage extends Component {
   habndleYesButtonClick = e => {
     e.preventDefault();
     const NewMeal = {
-      dateTimeOfEat: `${this.createDate()}_${this.createHour()}`,
+      dateTimeOfEat: `${createDate()}_${createHour()}`,
       dayId: this.props.dayId,
       description: this.state.meal,
       kcal: this.state.calories,
@@ -94,40 +95,6 @@ class DietPage extends Component {
     })
       .then(res => this.getUserData())
       .catch(err => console.log(err));
-  };
-  createDate = () => {
-    const date = new Date();
-    let month = 0;
-    let day = 0;
-    if (date.getMonth() < 10) {
-      month = `0${date.getMonth() + 1}`;
-    } else {
-      month = date.getMonth() + 1;
-    }
-    if (date.getDate() < 10) {
-      day = `0${date.getDay() + 1}`;
-    } else {
-      day = date.getDate() + 1;
-    }
-    const theDate = `${date.getFullYear()}-${month}-${day}`;
-    return theDate;
-  };
-  createHour = () => {
-    const date = new Date();
-    let Hour;
-    let Minutes;
-    if (date.getHours() < 10) {
-      Hour = `0${date.getHours()}`;
-    } else {
-      Hour = date.getHours();
-    }
-    if (date.getMinutes() < 10) {
-      Minutes = `0${date.getMinutes()}`;
-    } else {
-      Minutes = date.getMinutes();
-    }
-    const theHour = `${Hour}:${Minutes}`;
-    return theHour;
   };
   render() {
     const MappedMeals = this.state.meals.map(meal => (
