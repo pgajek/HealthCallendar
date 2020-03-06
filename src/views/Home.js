@@ -102,6 +102,7 @@ class Home extends Component {
 
   render() {
     const { snacks, drinks, alcohols } = this.state;
+    console.log(this.props.userId);
     return (
       <MainTemplate>
         <Count aspect="drinks" howMany={8} count={drinks} click={this.handleCount} />

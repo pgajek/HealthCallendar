@@ -5,6 +5,7 @@ import AddNew from 'components/molecules/AddNew/AddNew.js';
 import MainTemplate from 'templates/MainTemplate.js';
 import FormTemplate from 'templates/FormTemplate.js';
 import Card from 'components/atoms/Card/Card.js';
+import { connect } from 'react-redux';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -22,11 +23,14 @@ class DietPage extends Component {
     calories: '',
     meals: [],
   };
+  componentDidMount() {
+    this.getUserData();
+  }
   getUserData = () => {
     const { userId } = this.props;
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
     fetch(
-      `http://164.132.97.42:8080/health-calendar/api/day/day-id/${this.createDate()}/${userId}`,
+      `http://164.132.97.42:8080/health-calendar/api/meal/dto/date/user-id/${this.createDate()}/${userId}`,
       {
         method: 'GET',
         headers: {
@@ -36,6 +40,12 @@ class DietPage extends Component {
       },
     )
       .then(res => res.json())
+      .then(data => {
+        this.setState({
+          ...this.state,
+          meals: data.listMeals,
+        });
+      })
       .catch(err => console.log(err));
   };
   handleInputChange = e => {
@@ -54,31 +64,70 @@ class DietPage extends Component {
         Authorization: `${token}`,
       },
     })
-      .then(res => res.json())
+      .then(res => this.getUserData())
       .catch(err => console.log(err));
   };
   habndleYesButtonClick = e => {
     e.preventDefault();
     const NewMeal = {
-      dateTimeOfEat: '2020-03-02_18.10',
+      dateTimeOfEat: `${this.createDate()}_${this.createHour()}`,
       dayId: this.props.dayId,
       description: this.state.meal,
       kcal: this.state.calories,
     };
     this.sendMeal(NewMeal);
-    // this.setState({
-    //   ...this.state,
-    //   Meal: '',
-    //   Calories: '',
-    //   meals: [...this.state.meals, NewMeal],
-    // });
+    this.setState({
+      ...this.state,
+      meal: '',
+      calories: '',
+    });
   };
   handleDeleteButtonClick = (e, id) => {
     e.preventDefault();
-    this.setState(prevState => ({
-      ...prevState,
-      meals: prevState.meals.filter(el => el.id !== id),
-    }));
+    const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
+    fetch(`http://164.132.97.42:8080/health-calendar/api/meal/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `${token}`,
+      },
+    })
+      .then(res => this.getUserData())
+      .catch(err => console.log(err));
+  };
+  createDate = () => {
+    const date = new Date();
+    let month = 0;
+    let day = 0;
+    if (date.getMonth() < 10) {
+      month = `0${date.getMonth() + 1}`;
+    } else {
+      month = date.getMonth() + 1;
+    }
+    if (date.getDate() < 10) {
+      day = `0${date.getDay() + 1}`;
+    } else {
+      day = date.getDate() + 1;
+    }
+    const theDate = `${date.getFullYear()}-${month}-${day}`;
+    return theDate;
+  };
+  createHour = () => {
+    const date = new Date();
+    let Hour;
+    let Minutes;
+    if (date.getHours() < 10) {
+      Hour = `0${date.getHours()}`;
+    } else {
+      Hour = date.getHours();
+    }
+    if (date.getMinutes() < 10) {
+      Minutes = `0${date.getMinutes()}`;
+    } else {
+      Minutes = date.getMinutes();
+    }
+    const theHour = `${Hour}:${Minutes}`;
+    return theHour;
   };
   render() {
     const MappedMeals = this.state.meals.map(meal => (
@@ -86,8 +135,8 @@ class DietPage extends Component {
         key={meal.id}
         id={meal.id}
         click={this.handleDeleteButtonClick}
-        name={meal.name}
-        value={meal.value}
+        name={meal.description}
+        value={meal.kcal}
       />
     ));
     return (
@@ -97,10 +146,10 @@ class DietPage extends Component {
             {MappedMeals}
             <AddNew
               change={this.handleInputChange}
-              name="Meal"
-              name2="Calories"
-              value={this.state.Meal}
-              value2={this.state.Calories}
+              name="meal"
+              name2="calories"
+              value={this.state.meal}
+              value2={this.state.calories}
             />
           </StyledWrapper>
         </FormTemplate>
@@ -108,5 +157,9 @@ class DietPage extends Component {
     );
   }
 }
-
-export default DietPage;
+const mapStateToProps = ({ userId, token, dayId }) => ({
+  userId,
+  token,
+  dayId,
+});
+export default connect(mapStateToProps)(DietPage);

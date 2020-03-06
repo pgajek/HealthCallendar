@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { theme } from 'theme/mainTheme.js';
 const StyledWrapper = styled.div`
+  margin: 0 5px;
   position: relative;
   width: 50%;
   max-width: 200px;
@@ -15,6 +16,7 @@ const StyledWrapper = styled.div`
 const StyledName = styled.div`
   background-color: ${theme.mainGreen};
   width: 100%;
+  min-height: 40%;
   padding: 2px 2px 2px 10px;
   color: #fff;
   text-shadow: 0px 1px 2px ${theme.shadowGreen};

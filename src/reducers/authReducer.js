@@ -2,6 +2,7 @@ const initialState = {
   token: window.sessionStorage.getItem('token'),
   userId: window.sessionStorage.getItem('userId'),
   loginName: window.sessionStorage.getItem('loginName'),
+  dayId: window.sessionStorage.getItem('dayId'),
 };
 
 const authReducer = (state = initialState, action) => {

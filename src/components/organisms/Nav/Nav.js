@@ -111,6 +111,8 @@ class Nav extends Component {
   handleLogout = () => {
     window.sessionStorage.removeItem('token');
     window.sessionStorage.removeItem('userId');
+    window.sessionStorage.removeItem('loginName');
+    window.sessionStorage.removeItem('dayId');
     this.props.logout();
     this.setState(prevState => ({
       ...prevState,
