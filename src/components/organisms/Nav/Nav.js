@@ -138,7 +138,7 @@ class Nav extends Component {
             <StyledLink to="/dietPage">Diet</StyledLink>
           </StyledListItem>
           <StyledListItem>
-            <StyledLink to="/">Trainings</StyledLink>
+            <StyledLink to="/training">Training</StyledLink>
           </StyledListItem>
           <StyledListItem>
             <StyledLink to="/Profile">Profile</StyledLink>

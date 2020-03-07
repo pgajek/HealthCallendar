@@ -13,6 +13,7 @@ class Home extends Component {
   };
   componentDidMount() {
     this.getDayData();
+    this.downloadUserData();
   }
   postDay = () => {
     const day = {
@@ -78,7 +79,28 @@ class Home extends Component {
       [aspect]: count,
     }));
   };
-
+  downloadUserData = () => {
+    const { userId } = this.props;
+    const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
+    fetch(`http://164.132.97.42:8080/health-calendar/api/report/${createDate()}/${userId}`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `${token}`,
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          ...this.state,
+          alcohols: data.portionsAlcohol,
+          drinks: data.portionsDrink,
+          snacks: data.portionsSnack,
+        });
+      })
+      .catch(err => console.log(err));
+  };
   render() {
     const { snacks, drinks, alcohols } = this.state;
     return (
@@ -91,8 +113,9 @@ class Home extends Component {
     );
   }
 }
-const mapStateToProps = ({ userId, token }) => ({
+const mapStateToProps = ({ userId, token, loginName }) => ({
   userId,
   token,
+  loginName,
 });
 export default connect(mapStateToProps)(Home);

@@ -12,6 +12,7 @@ import store from 'store/index.js';
 import BodySizeDetails from './BodySizeDetails';
 import Home from 'views/Home';
 import ProfilePage from 'views/ProfilePage';
+import TrainingPage from 'views/TrainingPage';
 
 const Root = () => (
   <Provider store={store}>
@@ -25,6 +26,7 @@ const Root = () => (
           <Route exact path="/bodySize" component={BodySize} />
           <Route exact path="/dietPage" component={DietPage} />
           <Route exact path="/bodySizeList" component={BodySizeList} />
+          <Route exact path="/training" component={TrainingPage} />
           <Route path="/bodySizeList/:id" component={BodySizeDetails} />
         </Switch>
       </ThemeProvider>
