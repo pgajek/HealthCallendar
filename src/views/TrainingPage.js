@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { theme } from 'theme/mainTheme.js';
 import AddNew from 'components/molecules/AddNew/AddNew.js';
-import MainTemplate from 'templates/MainTemplate.js';
 import FormTemplate from 'templates/FormTemplate.js';
 import Card from 'components/atoms/Card/Card.js';
 import { connect } from 'react-redux';
@@ -39,8 +37,7 @@ class TrainingPage extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-        if (data.listTrainings > 0) {
+        if (data.listTrainings.length > 0) {
           this.setState({
             ...this.state,
             trainings: data.listTrainings,
@@ -65,19 +62,15 @@ class TrainingPage extends Component {
         Authorization: `${token}`,
       },
     })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        this.getUserData();
-      })
+      .then(res => this.getUserData())
       .catch(err => console.log(err));
   };
   habndleYesButtonClick = e => {
     e.preventDefault();
     const NewTraining = {
       dateTimeOfExecution: `${createDate()}_${createHour()}`,
-      dayId: this.props.dayId,
-      elapsedTime: { hour: 1, minute: 12, nano: 0, second: 0 },
+      dayId: parseInt(this.props.dayId),
+      elapsedTime: '01:20',
       description: this.state.training,
       burnKcal: this.state.calories,
     };
@@ -102,31 +95,28 @@ class TrainingPage extends Component {
       .catch(err => console.log(err));
   };
   render() {
-    console.log(this.props.dayId);
     const MappedTrainings = this.state.trainings.map(training => (
       <Card
         key={training.id}
         id={training.id}
         click={this.handleDeleteButtonClick}
         name={training.description}
-        value={training.kcal}
+        value={training.burnKcal}
       />
     ));
     return (
-      <MainTemplate>
-        <FormTemplate header="Diet Page" yesClick={this.habndleYesButtonClick}>
-          <StyledWrapper>
-            {MappedTrainings}
-            <AddNew
-              change={this.handleInputChange}
-              name="training"
-              name2="calories"
-              value={this.state.training}
-              value2={this.state.calories}
-            />
-          </StyledWrapper>
-        </FormTemplate>
-      </MainTemplate>
+      <FormTemplate header="Training Page" yesClick={this.habndleYesButtonClick}>
+        <StyledWrapper>
+          {MappedTrainings}
+          <AddNew
+            change={this.handleInputChange}
+            name="training"
+            name2="calories"
+            value={this.state.training}
+            value2={this.state.calories}
+          />
+        </StyledWrapper>
+      </FormTemplate>
     );
   }
 }

@@ -51,24 +51,6 @@ const StyledWine = styled(Wine)`
     `}
 `;
 class Count extends Component {
-  state = { count: 0 };
-  countUp = () => {
-    this.setState(
-      prevState => ({
-        count: prevState.count + 1,
-      }),
-      () => this.props.click(this.state.count, this.props.aspect),
-    );
-  };
-  countDown = () => {
-    if (this.state.count > 0)
-      this.setState(
-        prevState => ({
-          count: prevState.count - 1,
-        }),
-        () => this.props.click(this.state.count, this.props.aspect),
-      );
-  };
   iconsColor = () => {
     let variants = [];
     for (let i = 0; i < this.props.howMany; i++) {
@@ -83,25 +65,27 @@ class Count extends Component {
 
   render() {
     const counts = this.iconsColor();
-    const { aspect } = this.props;
+
+    const { aspect, sendData, click } = this.props;
     return (
       <StyledWrapper>
         <InnerWrapper>
-          {aspect === 'drinks' &&
+          {aspect === 'portionsDrink' &&
             counts.map((item, index) => <StyledGlass key={index} filled={item ? 1 : 0} />)}
-          {aspect === 'alcohols' &&
+          {aspect === 'portionsAlcohol' &&
             counts.map((item, index) => <StyledWine key={index} filled={item ? 1 : 0} />)}
-          {aspect === 'snacks' &&
+          {aspect === 'portionsSnack' &&
             counts.map((item, index) => <StyledMuffin key={index} filled={item ? 1 : 0} />)}
         </InnerWrapper>
         <StyledCounter>
-          <Button round onClick={this.countUp}>
+          <Button round onClick={() => click(this.props.aspect, '+')}>
             +
           </Button>
-          <Button round onClick={this.countDown}>
+          <Button round onClick={() => click(this.props.aspect, '-')}>
             -
           </Button>
         </StyledCounter>
+        <Button onClick={sendData}>Wyślij</Button>
       </StyledWrapper>
     );
   }
