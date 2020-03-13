@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.js": "/HealthCallendar/static/js/main.04bf4411.chunk.js",
+    "main.js.map": "/HealthCallendar/static/js/main.04bf4411.chunk.js.map",
+    "runtime-main.js": "/HealthCallendar/static/js/runtime-main.1076db4b.js",
+    "runtime-main.js.map": "/HealthCallendar/static/js/runtime-main.1076db4b.js.map",
+    "static/js/2.1671fd40.chunk.js": "/HealthCallendar/static/js/2.1671fd40.chunk.js",
+    "static/js/2.1671fd40.chunk.js.map": "/HealthCallendar/static/js/2.1671fd40.chunk.js.map",
+    "index.html": "/HealthCallendar/index.html",
+    "precache-manifest.72a6bbf49538996788c471b39b78f678.js": "/HealthCallendar/precache-manifest.72a6bbf49538996788c471b39b78f678.js",
+    "service-worker.js": "/HealthCallendar/service-worker.js",
+    "static/js/2.1671fd40.chunk.js.LICENSE.txt": "/HealthCallendar/static/js/2.1671fd40.chunk.js.LICENSE.txt",
+    "static/media/glass.4a30f732.svg": "/HealthCallendar/static/media/glass.4a30f732.svg",
+    "static/media/hamburger.svg": "/HealthCallendar/static/media/hamburger.6bfe17c4.svg",
+    "static/media/kieliszek.9032c533.svg": "/HealthCallendar/static/media/kieliszek.9032c533.svg",
+    "static/media/logo.576ed754.svg": "/HealthCallendar/static/media/logo.576ed754.svg",
+    "static/media/logout.ae4d50fa.svg": "/HealthCallendar/static/media/logout.ae4d50fa.svg",
+    "static/media/muffin.ec0120ea.svg": "/HealthCallendar/static/media/muffin.ec0120ea.svg",
+    "static/media/wrongicon.svg": "/HealthCallendar/static/media/wrongicon.994fb418.svg",
+    "static/media/yesicon.ffdc4baa.svg": "/HealthCallendar/static/media/yesicon.ffdc4baa.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1076db4b.js",
+    "static/js/2.1671fd40.chunk.js",
+    "static/js/main.04bf4411.chunk.js"
+  ]
+}
