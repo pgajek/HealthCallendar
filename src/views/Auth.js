@@ -103,7 +103,7 @@ class Auth extends Component {
         nick: this.state.login,
         password: this.state.password,
       };
-      fetch('http://164.132.97.42:8080/health-calendar/api/user/new-account', {
+      fetch('https://164.132.97.42:8080/health-calendar/api/user/new-account', {
         method: 'POST',
         body: JSON.stringify(user),
         headers: {

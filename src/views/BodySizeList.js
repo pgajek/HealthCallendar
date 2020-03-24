@@ -13,7 +13,7 @@ class BodySizeList extends Component {
   componentDidMount() {
     const { userId, token } = this.props;
 
-    fetch(`http://164.132.97.42:8080/health-calendar/api/body/dates/user-id/${userId}`, {
+    fetch(`https://164.132.97.42:8080/health-calendar/api/body/dates/user-id/${userId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',

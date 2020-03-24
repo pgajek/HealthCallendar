@@ -28,7 +28,7 @@ class TrainingPage extends Component {
   getUserData = () => {
     const { dayId } = this.props;
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`http://164.132.97.42:8080/health-calendar/api/training/trainings-summary/${dayId}`, {
+    fetch(`https://164.132.97.42:8080/health-calendar/api/training/trainings-summary/${dayId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -54,7 +54,7 @@ class TrainingPage extends Component {
   };
   sendTraining = Training => {
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`http://164.132.97.42:8080/health-calendar/api/training`, {
+    fetch(`https://164.132.97.42:8080/health-calendar/api/training`, {
       method: 'POST',
       body: JSON.stringify(Training),
       headers: {
@@ -84,7 +84,7 @@ class TrainingPage extends Component {
   handleDeleteButtonClick = (e, id) => {
     e.preventDefault();
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`http://164.132.97.42:8080/health-calendar/api/training/${id}`, {
+    fetch(`https://164.132.97.42:8080/health-calendar/api/training/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',

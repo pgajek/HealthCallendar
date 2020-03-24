@@ -24,7 +24,7 @@ class Home extends Component {
       userId: this.props.userId,
     };
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`http://164.132.97.42:8080/health-calendar/api/day`, {
+    fetch(`https://164.132.97.42:8080/health-calendar/api/day`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -32,15 +32,13 @@ class Home extends Component {
       },
       body: JSON.stringify(day),
     })
-      .then(res => {
-        this.getDayData();
-      })
+      .then(this.getDayData())
       .catch(err => console.log(err));
   };
   getDayData = () => {
     const { userId } = this.props;
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`http://164.132.97.42:8080/health-calendar/api/day/day-id/${createDate()}/${userId}`, {
+    fetch(`https://164.132.97.42:8080/health-calendar/api/day/day-id/${createDate()}/${userId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -63,7 +61,7 @@ class Home extends Component {
   downloadUserData = () => {
     const { userId } = this.props;
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`http://164.132.97.42:8080/health-calendar/api/report/${createDate()}/${userId}`, {
+    fetch(`https://164.132.97.42:8080/health-calendar/api/report/${createDate()}/${userId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -72,7 +70,7 @@ class Home extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        console.log(this.state);
         this.setState({
           ...this.state,
           portionsAlcohol: data.portionsAlcohol,
@@ -94,16 +92,14 @@ class Home extends Component {
     };
 
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`http://164.132.97.42:8080/health-calendar/api/day/${dayId}`, {
+    fetch(`https://164.132.97.42:8080/health-calendar/api/day/${dayId}`, {
       method: 'PUT',
       body: JSON.stringify(userData),
       headers: {
         'Content-type': 'application/json',
         Authorization: `${token}`,
       },
-    })
-      .then(this.downloadUserData())
-      .catch(err => console.log(err));
+    });
   };
   handleCount = (aspect, type) => {
     if (this.state[aspect] > -1 && this.state[aspect] < 8) {
@@ -148,6 +144,7 @@ class Home extends Component {
           click={this.handleCount}
           sendData={this.updateUserData}
         />
+        <Button onClick={this.updateUserData}>Send</Button>
       </MainTemplate>
     );
   }

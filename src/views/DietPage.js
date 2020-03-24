@@ -31,7 +31,7 @@ class DietPage extends Component {
     const { userId } = this.props;
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
     fetch(
-      `http://164.132.97.42:8080/health-calendar/api/meal/dto/date/user-id/${createDate()}/${userId}`,
+      `https://164.132.97.42:8080/health-calendar/api/meal/dto/date/user-id/${createDate()}/${userId}`,
       {
         method: 'GET',
         headers: {
@@ -57,7 +57,7 @@ class DietPage extends Component {
   };
   sendMeal = Meal => {
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`http://164.132.97.42:8080/health-calendar/api/meal`, {
+    fetch(`https://164.132.97.42:8080/health-calendar/api/meal`, {
       method: 'POST',
       body: JSON.stringify(Meal),
       headers: {
@@ -86,7 +86,7 @@ class DietPage extends Component {
   handleDeleteButtonClick = (e, id) => {
     e.preventDefault();
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`http://164.132.97.42:8080/health-calendar/api/meal/${id}`, {
+    fetch(`https://164.132.97.42:8080/health-calendar/api/meal/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',

@@ -16,7 +16,7 @@ import TrainingPage from 'views/TrainingPage';
 
 const Root = () => (
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <Switch>
