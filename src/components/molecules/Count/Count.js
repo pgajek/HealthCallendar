@@ -66,7 +66,7 @@ class Count extends Component {
   render() {
     const counts = this.iconsColor();
 
-    const { aspect, sendData, click } = this.props;
+    const { aspect, click } = this.props;
     return (
       <StyledWrapper>
         <InnerWrapper>
@@ -85,7 +85,6 @@ class Count extends Component {
             -
           </Button>
         </StyledCounter>
-        <Button onClick={sendData}>Wyślij</Button>
       </StyledWrapper>
     );
   }
