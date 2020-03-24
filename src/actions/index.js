@@ -1,5 +1,5 @@
 export const authenticate = user => dispatch => {
-  return fetch('http://164.132.97.42:8080/health-calendar/login', {
+  return fetch('https://164.132.97.42:8080/health-calendar/login', {
     method: 'POST',
     body: JSON.stringify(user),
     headers: {
