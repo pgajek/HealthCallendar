@@ -36,7 +36,7 @@ class ProfilePage extends Component {
   downloadUserData = () => {
     const { loginName } = this.props;
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`https://164.132.97.42:8080/health-calendar/api/user/login-name/${loginName}`, {
+    fetch(`https://164.132.97.42:8443/health-calendar/api/user/login-name/${loginName}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -87,7 +87,7 @@ class ProfilePage extends Component {
 
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
 
-    fetch(`https://164.132.97.42:8080/health-calendar/api/user/${this.props.userId}`, {
+    fetch(`https://164.132.97.42:8443/health-calendar/api/user/${this.props.userId}`, {
       method: 'PUT',
       body: JSON.stringify(limits),
       headers: {
@@ -126,7 +126,7 @@ class ProfilePage extends Component {
       password: this.state.password,
     };
     const theToken = JSON.parse(JSON.stringify(`Bearer ${token}`));
-    fetch(`https://164.132.97.42:8080/health-calendar/api/user/secret/${userId}`, {
+    fetch(`https://164.132.97.42:8443/health-calendar/api/user/secret/${userId}`, {
       method: 'Put',
       body: JSON.stringify(pass),
       headers: {

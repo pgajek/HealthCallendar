@@ -53,7 +53,7 @@ class BodySize extends Component {
       waist: this.state.waist,
     };
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch('https://164.132.97.42:8080/health-calendar/api/body', {
+    fetch('https://164.132.97.42:8443/health-calendar/api/body', {
       method: 'POST',
       body: JSON.stringify(bodySizeObj),
       headers: {

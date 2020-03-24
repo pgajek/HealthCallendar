@@ -24,7 +24,7 @@ class Home extends Component {
       userId: this.props.userId,
     };
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`https://164.132.97.42:8080/health-calendar/api/day`, {
+    fetch(`https://164.132.97.42:8443/health-calendar/api/day`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -38,7 +38,7 @@ class Home extends Component {
   getDayData = () => {
     const { userId } = this.props;
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`https://164.132.97.42:8080/health-calendar/api/day/day-id/${createDate()}/${userId}`, {
+    fetch(`https://164.132.97.42:8443/health-calendar/api/day/day-id/${createDate()}/${userId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -61,7 +61,7 @@ class Home extends Component {
   downloadUserData = () => {
     const { userId } = this.props;
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`https://164.132.97.42:8080/health-calendar/api/report/${createDate()}/${userId}`, {
+    fetch(`https://164.132.97.42:8443/health-calendar/api/report/${createDate()}/${userId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -92,7 +92,7 @@ class Home extends Component {
     };
 
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`https://164.132.97.42:8080/health-calendar/api/day/${dayId}`, {
+    fetch(`https://164.132.97.42:8443/health-calendar/api/day/${dayId}`, {
       method: 'PUT',
       body: JSON.stringify(userData),
       headers: {
