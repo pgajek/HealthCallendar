@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import AddNew from 'components/molecules/AddNew/AddNew.js';
-import FormTemplate from 'templates/FormTemplate.js';
 import Card from 'components/atoms/Card/Card.js';
 import { connect } from 'react-redux';
 import { createDate, createHour } from 'helpers';
@@ -35,8 +34,8 @@ class TrainingPage extends Component {
         Authorization: `${token}`,
       },
     })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.listTrainings.length > 0) {
           this.setState({
             ...this.state,
@@ -44,15 +43,15 @@ class TrainingPage extends Component {
           });
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
-  handleInputChange = e => {
+  handleInputChange = (e) => {
     this.setState({
       ...this.state,
       [e.target.name]: e.target.value,
     });
   };
-  sendTraining = Training => {
+  sendTraining = (Training) => {
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
     fetch(`https://164.132.97.42:8443/health-calendar/api/training`, {
       method: 'POST',
@@ -62,10 +61,10 @@ class TrainingPage extends Component {
         Authorization: `${token}`,
       },
     })
-      .then(res => this.getUserData())
-      .catch(err => console.log(err));
+      .then((res) => this.getUserData())
+      .catch((err) => console.log(err));
   };
-  habndleYesButtonClick = e => {
+  habndleYesButtonClick = (e) => {
     e.preventDefault();
     const NewTraining = {
       dateTimeOfExecution: `${createDate()}_${createHour()}`,
@@ -91,11 +90,11 @@ class TrainingPage extends Component {
         Authorization: `${token}`,
       },
     })
-      .then(res => this.getUserData())
-      .catch(err => console.log(err));
+      .then((res) => this.getUserData())
+      .catch((err) => console.log(err));
   };
   render() {
-    const MappedTrainings = this.state.trainings.map(training => (
+    const MappedTrainings = this.state.trainings.map((training) => (
       <Card
         key={training.id}
         id={training.id}
@@ -105,18 +104,16 @@ class TrainingPage extends Component {
       />
     ));
     return (
-      <FormTemplate header="Training Page" yesClick={this.habndleYesButtonClick}>
-        <StyledWrapper>
-          {MappedTrainings}
-          <AddNew
-            change={this.handleInputChange}
-            name="training"
-            name2="calories"
-            value={this.state.training}
-            value2={this.state.calories}
-          />
-        </StyledWrapper>
-      </FormTemplate>
+      <StyledWrapper>
+        {MappedTrainings}
+        <AddNew
+          change={this.handleInputChange}
+          name="training"
+          name2="calories"
+          value={this.state.training}
+          value2={this.state.calories}
+        />
+      </StyledWrapper>
     );
   }
 }

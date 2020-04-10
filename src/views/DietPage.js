@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { theme } from 'theme/mainTheme.js';
 import AddNew from 'components/molecules/AddNew/AddNew.js';
 import MainTemplate from 'templates/MainTemplate.js';
-import FormTemplate from 'templates/FormTemplate.js';
 import Card from 'components/atoms/Card/Card.js';
 import { connect } from 'react-redux';
 import { createDate, createHour } from 'helpers';
@@ -40,22 +39,22 @@ class DietPage extends Component {
         },
       },
     )
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         this.setState({
           ...this.state,
           meals: data.listMeals,
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
-  handleInputChange = e => {
+  handleInputChange = (e) => {
     this.setState({
       ...this.state,
       [e.target.name]: e.target.value,
     });
   };
-  sendMeal = Meal => {
+  sendMeal = (Meal) => {
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
     fetch(`https://164.132.97.42:8443/health-calendar/api/meal`, {
       method: 'POST',
@@ -65,10 +64,10 @@ class DietPage extends Component {
         Authorization: `${token}`,
       },
     })
-      .then(res => this.getUserData())
-      .catch(err => console.log(err));
+      .then((res) => this.getUserData())
+      .catch((err) => console.log(err));
   };
-  habndleYesButtonClick = e => {
+  habndleYesButtonClick = (e) => {
     e.preventDefault();
     const NewMeal = {
       dateTimeOfEat: `${createDate()}_${createHour()}`,
@@ -93,11 +92,11 @@ class DietPage extends Component {
         Authorization: `${token}`,
       },
     })
-      .then(res => this.getUserData())
-      .catch(err => console.log(err));
+      .then((res) => this.getUserData())
+      .catch((err) => console.log(err));
   };
   render() {
-    const MappedMeals = this.state.meals.map(meal => (
+    const MappedMeals = this.state.meals.map((meal) => (
       <Card
         key={meal.id}
         id={meal.id}
@@ -108,18 +107,16 @@ class DietPage extends Component {
     ));
     return (
       <MainTemplate>
-        <FormTemplate header="Diet Page" yesClick={this.habndleYesButtonClick}>
-          <StyledWrapper>
-            {MappedMeals}
-            <AddNew
-              change={this.handleInputChange}
-              name="meal"
-              name2="calories"
-              value={this.state.meal}
-              value2={this.state.calories}
-            />
-          </StyledWrapper>
-        </FormTemplate>
+        <StyledWrapper>
+          {MappedMeals}
+          <AddNew
+            change={this.handleInputChange}
+            name="meal"
+            name2="calories"
+            value={this.state.meal}
+            value2={this.state.calories}
+          />
+        </StyledWrapper>
       </MainTemplate>
     );
   }
