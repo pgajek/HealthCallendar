@@ -1,8 +1,10 @@
 import React from 'react';
 import IconButton from './IconButton';
-import { storiesOf, addDecorator } from '@storybook/react';
+import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { ReactComponent as Logout } from 'assets/icons/logout.svg';
+import { ReactComponent as YesIcon } from 'assets/icons/yesicon.svg';
+import { ReactComponent as WrongIcon } from 'assets/icons/wrongicon.svg';
 
 const Bg = styled.div`
   display: flex;
@@ -14,19 +16,19 @@ const Bg = styled.div`
 `;
 
 storiesOf('Atoms/IconButton', module)
-  .addDecorator(story => <Bg>{story()}</Bg>)
+  .addDecorator((story) => <Bg>{story()}</Bg>)
   .add('logout', () => (
-    <IconButton logout>
-      <Logout />{' '}
+    <IconButton>
+      <WrongIcon />
     </IconButton>
   ))
   .add('secondary', () => (
     <IconButton secondary>
-      <Logout />{' '}
+      <YesIcon />
     </IconButton>
   ))
   .add('green', () => (
-    <IconButton green>
-      <Logout />{' '}
+    <IconButton dark>
+      <Logout />
     </IconButton>
   ));

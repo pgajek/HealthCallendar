@@ -1,100 +1,129 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { theme } from 'theme/mainTheme.js';
 
 const StyledLabel = styled.label`
   display: flex;
   flex-direction: row;
   margin: 10px 0;
-  font-size: 1.4rem;
   height: 30px;
+
+  font-size: ${theme.fontSize.s};
+  color: #6b6b6b;
+  -webkit-text-stroke: 0.5px #9b9b9b;
+
   & > * {
-    padding: 3px;
-    box-shadow: 0 1.5px 6px #000000;
-    height: 100%;
-    display: block;
-    border: 1px;
     display: flex;
     align-items: center;
+
+    height: 100%;
+    padding: 3px;
+    border: none;
   }
   & > *:focus {
     outline: none;
   }
 
-  @media (min-width: 1024px) {
-    font-size: 1.6rem;
-    height: 45px;
+  @media (min-width: 768px) {
+    font-size: ${theme.fontSize.m};
+    height: 77px;
     padding: 4px;
     box-shadow: 0 3 6px #000000;
-    border: 2px;
+
+    -webkit-text-stroke: 0.5px #9b9b9b;
   }
-  @media (min-width: 1644px) {
-    font-size: 2rem;
-    height: 60px;
-    padding: 6px;
-    border: 2px;
+  @media (min-width: 1024px) {
+    font-size: ${theme.fontSize.l};
+  }
+  @media (orientation: landscape) and (min-width: 600px) {
+    font-size: ${theme.fontSize.m};
+    height: 50px;
+    padding: 2px;
+    box-shadow: 0 3 6px #000000;
   }
 `;
 const StyledName = styled.span`
-  background-color: #81dc5c;
-  border-color: #81dc5c;
-  color: white;
+  background-color: ${theme.mainGreen};
+
   width: 140px;
-  text-shadow: 0 1.5px 6px #1a9b30;
+
   font-weight: 600;
   padding-left: 10px;
 
-  @media (min-width: 1024px) {
-    text-shadow: 0 3px 6px #1a9b30;
-    width: 210px;
+  @media (orientation: portrait) and (min-width: 768px) {
+    width: 286px;
   }
-  @media (min-width: 1644px) {
-    width: 280px;
+
+  @media (min-width: 1024px) {
+    width: 286px;
+  }
+  @media (orientation: landscape) and (min-width: 600px) {
+    width: 226px;
+  }
+  @media (orientation: landscape) and (min-width: 1024px) {
+    width: 180px;
+  }
+  @media (orientation: landscape) and (min-width: 1280px) {
+    width: 286px;
   }
 `;
 const StyledInput = styled.input`
   width: 60px;
-  border-color: #fff;
-  border-radius: 0 2px 2px 0;
   margin: 0 5px;
+
   text-align: right;
+  @media (orientation: portrait) and (min-width: 768px) {
+    width: 128px;
+    ::placeholder {
+      font-size: ${theme.fontSize.m};
+    }
+  }
   @media (min-width: 1024px) {
-    width: 90px;
+    width: 128px;
     font-size: 1.6rem;
   }
-  @media (min-width: 1644px) {
-    width: 120px;
-    font-size: 2rem;
+  @media (orientation: landscape) and (min-width: 600px) {
+    width: 100px;
+  }
+  @media (orientation: landscape) and (min-width: 1024px) {
+    width: 80px;
+  }
+  @media (orientation: landscape) and (min-width: 1280px) {
+    width: 128px;
   }
 `;
 const StyledUnit = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 30px;
-  background-color: #fff;
-  border-color: #fff;
-  border-radius: 0 2px 2px 0;
-  font-weight: 600;
 
-  @media (min-width: 1024px) {
-    min-width: 45px;
+  min-width: 30px;
+
+  background-color: #fff;
+
+  font-weight: 600;
+  @media (orientation: portrait) and (min-width: 768px) {
+    min-width: 90px;
   }
-  @media (min-width: 1644px) {
-    min-width: 60px;
+  @media (min-width: 1024px) {
+    min-width: 90px;
+  }
+  @media (orientation: landscape) and (min-width: 600px) {
+    min-width: 70px;
+  }
+  @media (orientation: landscape) and (min-width: 1024px) {
+    min-width: 50px;
+  }
+  @media (orientation: landscape) and (min-width: 1280px) {
+    min-width: 90px;
   }
 `;
 
-const Field = ({ label, unit, change, placeholder, name, value, type }) => (
+const Field = ({ unit, change, name, label, value, type }) => (
   <>
-    <StyledLabel>
+    <StyledLabel htmlFor={label}>
       <StyledName>{label}</StyledName>
-      <StyledInput
-        type={type}
-        placeholder={placeholder ? placeholder : '00'}
-        onChange={change}
-        name={name}
-        value={value}
-      />
+      <StyledInput type={type} placeholder="00" onChange={change} name={name} value={value} />
       {unit ? <StyledUnit>{unit}</StyledUnit> : null}
     </StyledLabel>
   </>

@@ -3,55 +3,60 @@ import styled, { css } from 'styled-components';
 import { theme } from 'theme/mainTheme.js';
 
 const StyledIconButton = styled.button`
-  height: 30px;
-  width: 30px;
-  border-radius: 32%;
-  border: 1px solid ${theme.lightGray};
-  background-color: ${theme.lightGray};
-  box-shadow: 0px 1.5px 6px rgba(0, 0, 0, 0.38);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 45px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 17px;
+
+  background-color: #fff;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.38);
+
   cursor: pointer;
   transition: background-color 0.2s;
-  margin: 0 5px;
+
+  @media (orientation: portrait) and (min-width: 768px) {
+    width: 66px;
+    height: 66px;
+    border-radius: 16px;
+  }
+  @media (orientation: landscape) and (min-width: 1024px) {
+    width: 66px;
+    height: 66px;
+    border-radius: 16px;
+  }
+
   &:focus {
     outline: none;
   }
-  &:hover {
-    background-color: hsl(0, 0%, 45%);
-    border-color: hsl(103, 48%, 45%);
-  }
-  @media (min-width: 1024px) {
-    background-color: ${theme.darkGray};
-    box-shadow: 0px 1.5px 6px rgba(0, 0, 0, 0.38);
-    border-color: hsl(103, 48%, 23%);
-    height: 40px;
-    width: 40px;
-  }
   & svg {
     .path {
-      fill: ${theme.darkGray};
+      fill: #9b9b9b;
     }
-    width: 80%;
-    height: 80%;
-    @media (min-width: 1024px) {
-      .path {
-        fill: hsl(102.5, 43.3%, 50.2%);
-      }
-    }
+    width: 70%;
+    height: 70%;
   }
   ${({ secondary }) =>
     secondary &&
     css`
-      box-shadow: 0px 1.5px 6px #84e75b;
+      background-color: transparent;
+      box-shadow: none;
+      &::hover {
+        filter: none;
+      }
     `}
 
-  ${({ green }) =>
-    green &&
+  ${({ dark }) =>
+    dark &&
     css`
-      background-color: ${theme.mainGreen} !important;
-      border-color: ${theme.mainGreen} !important;
+      background-color: #535353;
+      border-color: #535353;
       & svg {
         .path {
-          fill: ${theme.darkGray};
+          fill: #dcdcdc;
         }
       }
       &:hover {

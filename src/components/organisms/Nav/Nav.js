@@ -1,72 +1,88 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import IconButton from 'components/atoms/IconButton/IconButton';
-import hamburger from 'assets/icons/hamburger.svg';
-import wrongicon from 'assets/icons/wrongicon.svg';
+import { ReactComponent as Hamburger } from 'assets/icons/hamburger.svg';
+import { ReactComponent as WrongIcon } from 'assets/icons/wrongicon.svg';
 import { ReactComponent as Logout } from 'assets/icons/logout.svg';
-import { ReactComponent as Logo } from 'assets/icons/logo.svg';
+import { ReactComponent as Logo } from 'assets/icons/fixedLogo.svg';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import { theme } from 'theme/mainTheme.js';
 
 const StyledNav = styled.nav`
-  background-color: #69b749;
-  z-index: 999;
-  width: 60vw;
-  height: 100vh;
+  width: 100vw;
+  height: 90vh;
+
+  z-index: 98;
   position: fixed;
   top: 0;
   left: 0;
-  transform: ${({ active }) => (active ? 'translateX(40vw)' : 'translateX(100vw)')};
+
   color: #fff;
+  background-color: #4b4b4b;
+
+  transform: ${({ active }) => (active ? 'translateY(0vh)' : 'translateY(-80vh)')};
   text-shadow: 1.5px 1.5px 6px rgba(0, 0, 0, 0.38);
   transition: transform 0.3s;
 
-  @media (orientation: landscape) {
-    transform: ${({ active }) => (active ? 'translateX(0)' : 'translateX(100vw)')};
-    width: 100vw;
-  }
   @media (min-width: 1024px) {
     width: 100vw;
-    height: 10%;
-    max-height: 56px;
+    height: 56px;
     top: 0;
     left: 0;
+    padding: 0 2vw;
     transform: translateX(0);
   }
 `;
 const StyledList = styled.ul`
-  background-color: #7cd05a;
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 0;
   right: 0;
-  height: 100%;
+
   width: 100%;
+  height: 100%;
+
+  background-color: #4b4b4b;
   list-style-type: none;
-  display: flex;
-  flex-direction: column;
+  @media (min-width: 768px) {
+    font-size: ${theme.fontSize.l};
+  }
   @media (min-width: 1024px) {
     flex-direction: row;
+    font-size: ${theme.fontSize.m};
   }
 `;
 
 const StyledListItem = styled.li`
-  background-color: #81dc5c;
-  border: 1px solid #9be77d;
-  height: 48px;
-  width: 100%;
-  margin: 5px 0;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  width: 100%;
+
+  flex-grow: 1;
+  margin: 5px 0;
+
+  background-color: #4e4e4e;
+  border-radius: 35px;
+
   cursor: pointer;
+
+  transition: 0.2s;
+  &::hover {
+    filter: brightness(0.95);
+  }
   @media (min-width: 1024px) {
     height: 100%;
     margin: 0;
     font-weight: 600;
-  }
-  transition: 0.2s;
-  &:hover {
-    filter: brightness(0.95);
+    border-radius: 0;
+    background-color: transparent;
+    &:nth-child(1) {
+      display: none;
+    }
   }
 `;
 const StyledLink = styled(Link)`
@@ -74,27 +90,49 @@ const StyledLink = styled(Link)`
   color: #fff;
 `;
 const StyledHamburger = styled.button`
-  position: absolute;
-  top: 2vh;
-  left: -50px;
-  background-image: url(${({ active }) => (active ? wrongicon : hamburger)});
-  background-position: 50% 50%;
-  background-size: contain;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 99;
+
+  height: 10vh;
+  width: 10vh;
+
   background-color: transparent;
   border: none;
-  height: 30px;
-  width: 30px;
+
   cursor: pointer;
+  transition: 0.3s;
+
+  ::before {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: -1;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 110vw;
+
+    background-color: #4b4b4b;
+  }
+  & svg {
+    height: 50%;
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(-50%, -50%);
+  }
   &:focus {
     outline: none;
   }
-  transition: 0.3s;
+  transform: ${({ active }) => (active ? 'translateY(90vh)' : 'translateY(0vh)')};
   @media (orientation: landscape) {
-    top: 4%;
-    left: ${({ active }) => (active ? '15px' : '-50px')};
-    border-radius: ${({ active }) => (active ? '50%' : '0')};
-    background-color: ${({ active }) => (active ? '#fff' : 'transparent')};
-    z-index: 99;
+    & svg {
+      height: 80%;
+      width: 80%;
+    }
   }
   @media (min-width: 1024px) {
     display: none;
@@ -104,7 +142,7 @@ const StyledHamburger = styled.button`
 class Nav extends Component {
   state = { active: false, isUserLoggedIn: true };
   handleBurgerClick = () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       active: !prevState.active,
     }));
   };
@@ -114,46 +152,51 @@ class Nav extends Component {
     window.sessionStorage.removeItem('loginName');
     window.sessionStorage.removeItem('dayId');
     this.props.logout();
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       ...prevState,
       isUserLoggedIn: false,
     }));
   };
   render() {
     return (
-      <StyledNav active={this.state.active}>
-        {this.state.isUserLoggedIn ? null : <Redirect to="/" />}
-        <StyledHamburger active={this.state.active} onClick={this.handleBurgerClick} />
-        <StyledList>
-          <StyledListItem>
-            <Logo />
-          </StyledListItem>
-          <StyledListItem>
-            <StyledLink to="/home">Main Page</StyledLink>
-          </StyledListItem>
-          <StyledListItem>
-            <StyledLink to="/bodySizeList">Body Size</StyledLink>
-          </StyledListItem>
-          <StyledListItem>
-            <StyledLink to="/dietPage">Diet</StyledLink>
-          </StyledListItem>
-          <StyledListItem>
-            <StyledLink to="/training">Training</StyledLink>
-          </StyledListItem>
-          <StyledListItem>
-            <StyledLink to="/Profile">Profile</StyledLink>
-          </StyledListItem>
-          <StyledListItem>
-            <IconButton onClick={this.handleLogout}>
-              <Logout />
-            </IconButton>
-          </StyledListItem>
-        </StyledList>
-      </StyledNav>
+      <>
+        <StyledHamburger active={this.state.active} onClick={this.handleBurgerClick}>
+          {this.state.active ? <WrongIcon /> : <Hamburger />}
+        </StyledHamburger>
+        <StyledNav active={this.state.active}>
+          {this.state.isUserLoggedIn ? null : <Redirect to="/" />}
+
+          <StyledList>
+            <StyledListItem>
+              <Logo />
+            </StyledListItem>
+            <StyledListItem>
+              <StyledLink to="/home">Main Page</StyledLink>
+            </StyledListItem>
+            <StyledListItem>
+              <StyledLink to="/bodySizeList">Body Size</StyledLink>
+            </StyledListItem>
+            <StyledListItem>
+              <StyledLink to="/dietPage">Diet</StyledLink>
+            </StyledListItem>
+            <StyledListItem>
+              <StyledLink to="/training">Training</StyledLink>
+            </StyledListItem>
+            <StyledListItem>
+              <StyledLink to="/Profile">Profile</StyledLink>
+            </StyledListItem>
+            <StyledListItem>
+              <IconButton onClick={this.handleLogout} secondary>
+                <Logout />
+              </IconButton>
+            </StyledListItem>
+          </StyledList>
+        </StyledNav>
+      </>
     );
   }
 }
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   logout: () => dispatch({ type: 'USER_LOGOUT' }),
 });
 export default connect(null, mapDispatchToProps)(Nav);

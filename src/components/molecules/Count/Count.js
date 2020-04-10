@@ -5,11 +5,42 @@ import { ReactComponent as Wine } from 'assets/icons/kieliszek.svg';
 import { ReactComponent as Muffin } from 'assets/icons/muffin.svg';
 import Button from 'components/atoms/Button/Button';
 
-const StyledWrapper = styled.div``;
-const InnerWrapper = styled.div``;
-const StyledCounter = styled.div``;
+const StyledWrapper = styled.div`
+  width: 80%;
+  max-width: 670px;
+  padding: 5px;
+  min-height: 15vh;
+
+  background-color: #f0f0f0;
+  border: 1px solid #d7ead3;
+  border-radius: 21px;
+
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.4);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const InnerWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  justify-content: flex-start;
+  width: 80%;
+  height: 100%;
+`;
+const StyledCounter = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  width: 20%;
+  height: 100%;
+`;
 const StyledMuffin = styled(Muffin)`
-  width: 75px;
+  min-width: 16%;
+  max-width: 22%;
+  max-height: 90%;
+
   ${({ filled }) =>
     filled &&
     css`
@@ -18,7 +49,10 @@ const StyledMuffin = styled(Muffin)`
     `}
 `;
 const StyledGlass = styled(Glass)`
-  width: 75px;
+  min-width: 16%;
+  max-width: 22%;
+  min-height: 45%;
+  max-height: 60%;
 
   .st5,
   .st6 {
@@ -35,7 +69,9 @@ const StyledGlass = styled(Glass)`
     `}
 `;
 const StyledWine = styled(Wine)`
-  width: 75px;
+  min-width: 16%;
+  max-width: 22%;
+  max-height: 90%;
   .glassst7,
   .glassst8 {
     fill: transparent;

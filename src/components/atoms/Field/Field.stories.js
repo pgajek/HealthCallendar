@@ -3,10 +3,10 @@ import Field from './Field';
 import { storiesOf } from '@storybook/react';
 
 storiesOf('Atoms/Field', module)
-  .add('primary', () => <Field name="Waga" unit="kg" />)
+  .add('primary', () => <Field label="Waga" unit="kg" />)
   .add('secondary', () => (
     <>
-      <Field name="Obwód łydki" unit="cm" />
-      <Field name="Obwód klatki" unit="cm" />
+      <Field label="Femoral size" unit="cm" />
+      <Field label="Obwód klatki" unit="kg" />
     </>
   ));
