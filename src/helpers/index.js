@@ -8,9 +8,9 @@ export const createDate = () => {
     month = date.getMonth() + 1;
   }
   if (date.getDate() < 10) {
-    day = `0${date.getDay() + 1}`;
+    day = `0${date.getDate()}`;
   } else {
-    day = date.getDate() + 1;
+    day = date.getDate();
   }
   const theDate = `${date.getFullYear()}-${month}-${day}`;
   return theDate;

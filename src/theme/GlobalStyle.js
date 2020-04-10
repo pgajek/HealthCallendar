@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Architects+Daughter|Lato:400,700,900&display=swap&subset=latin-ext');
 
 *, *::before, *::after{
    box-sizing: border-box;
@@ -18,13 +18,11 @@ body{
     align-items: stretch;
     justify-content: stretch;
     width: 100vw;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Lato", sans-serif;
     font-size: 1.6rem;
     background-color: #DCDCDC;
 
-    @media (min-width: 1024px){
-        padding: 3% 0;
-    }
+overflow-x: hidden;
 }
 `;
 export default GlobalStyle;
