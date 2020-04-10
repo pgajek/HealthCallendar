@@ -9,7 +9,7 @@ import { authenticate as authenticateAction } from 'actions/index.js';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 
 const StyledWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   height: 100vh;
@@ -19,46 +19,63 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  & button {
+    color: #000000;
+    -webkit-text-stroke: 0 transparent;
+  }
+  @media (orientation: landscape) {
+    height: 140vh;
+  }
+  @media (orientation: landscape) and (min-width: 1024px) {
+    height: 100vh;
+  }
 `;
 const StyledForm = styled.form`
-  background-color: #fff;
-  height: 50%;
-  max-height: 400px;
-  width: 80%;
-  max-width: 400px;
-  max-width: 320px;
-  border-radius: 15px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  flex-direction: column;
-  box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.2);
+
+  height: 80%;
+  max-height: 400px;
+  width: 80%;
+  max-width: 320px;
+
+  background-color: #fff;
+  box-shadow: 0 10px 20px 10px rgba(0, 0, 0, 0.2);
 
   @media (orientation: landscape) {
-    height: 75%;
-    margin-bottom: 10%;
+    height: 70%;
+    width: 80%;
   }
 `;
 const StyledLabel = styled.label``;
 const StyledMainHeader = styled.h1`
-  display: block;
-  width: 60%;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
   max-width: 400px;
-  font-size: 3rem;
-  text-transform: uppercase;
-  text-align: center;
-  color: #fff;
-  text-shadow: 1px 1.5px 0 #000, 3px 3px 3px ${theme.darkGray};
-  margin-bottom: 10%;
+  height: 20%;
 `;
-const StyledHeader = styled.h3``;
+const StyledHeader = styled.h3`
+  text-transform: uppercase;
+  color: #222222;
+`;
 const StyledLink = styled.a`
   font-size: 1.2rem;
   font-weight: 600;
   text-decoration: underline;
   cursor: pointer;
 `;
-
+const StyledButton = styled(Button)`
+  @media (orientation: portrait) and (min-width: 768px) {
+    min-width: 105px;
+    min-height: 30px;
+    font-size: ${theme.fontSize.xs};
+  }
+`;
 class Auth extends Component {
   state = {
     login: '',
@@ -78,7 +95,7 @@ class Auth extends Component {
       userdIsLogged(userData);
     }
   }
-  handleInputChange = e => {
+  handleInputChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
@@ -88,7 +105,7 @@ class Auth extends Component {
       registration: !this.state.registration,
     });
   };
-  hadnleRegistration = e => {
+  hadnleRegistration = (e) => {
     e.preventDefault();
     const { login, password, email, secondPassword } = this.state;
     if (
@@ -110,8 +127,8 @@ class Auth extends Component {
           'Content-type': 'application/json',
         },
       })
-        .then(response => response.json())
-        .then(data => console.log(data));
+        .then((response) => response.json())
+        .then((data) => console.log(data));
 
       this.setState({
         login: '',
@@ -124,7 +141,7 @@ class Auth extends Component {
       console.log('wrong');
     }
   };
-  handleSignIn = e => {
+  handleSignIn = (e) => {
     e.preventDefault();
     const { login, password } = this.state;
     const user = { loginName: login, password, roles: 'USER' };
@@ -153,6 +170,7 @@ class Auth extends Component {
           <StyledHeader>Sign In!</StyledHeader>
           <StyledLabel>
             <Input
+              holderLeft
               name="login"
               placeholder="LOGIN"
               type="text"
@@ -163,6 +181,7 @@ class Auth extends Component {
           {registration && (
             <StyledLabel>
               <Input
+                holderLeft
                 name="email"
                 type="email"
                 placeholder="Your email"
@@ -173,6 +192,7 @@ class Auth extends Component {
           )}
           <StyledLabel>
             <Input
+              holderLeft
               name="password"
               type="password"
               placeholder="PASSWORD"
@@ -183,6 +203,7 @@ class Auth extends Component {
           {registration && (
             <StyledLabel>
               <Input
+                HolderLeft
                 name="secondPassword"
                 type="password"
                 placeholder="Reapeat your password"
@@ -192,13 +213,13 @@ class Auth extends Component {
             </StyledLabel>
           )}
           {registration ? (
-            <Button color={theme.lightGreen} onClick={e => this.hadnleRegistration(e)}>
+            <StyledButton color onClick={(e) => this.hadnleRegistration(e)}>
               Registration
-            </Button>
+            </StyledButton>
           ) : (
-            <Button color={theme.lightGreen} onClick={e => this.handleSignIn(e)}>
+            <StyledButton color onClick={(e) => this.handleSignIn(e)}>
               Sign In
-            </Button>
+            </StyledButton>
           )}
           {registration ? null : (
             <StyledLink onClick={this.handleLinkClick}>Create Your Account</StyledLink>
@@ -212,8 +233,8 @@ const mapStateToProps = ({ userId = null, token }) => ({
   userId,
   token,
 });
-const mapDispatchToProps = dispatch => ({
-  authenticate: user => dispatch(authenticateAction(user)),
-  userdIsLogged: userData => dispatch({ type: 'AUTH_SUCCESS', payload: userData }),
+const mapDispatchToProps = (dispatch) => ({
+  authenticate: (user) => dispatch(authenticateAction(user)),
+  userdIsLogged: (userData) => dispatch({ type: 'AUTH_SUCCESS', payload: userData }),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);
