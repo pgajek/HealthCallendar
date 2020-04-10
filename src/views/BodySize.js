@@ -47,13 +47,17 @@ const StyledForm = styled.form`
     width: 90%;
   }
 `;
-const StyledImage = styled(RunningGuy)`
+const StyledImage = styled.div`
   position: absolute;
   bottom: -4vmax;
   left: 0;
 
   height: 40vmin;
   width: 40vmin;
+  & svg {
+    height: 100%;
+    width: 100%;
+  }
 `;
 const StyledButtonWrapper = styled.div`
   position: absolute;
@@ -224,7 +228,9 @@ class BodySize extends Component {
               </IconButton>
             </StyledButtonWrapper>
           </StyledForm>
-          <StyledImage />
+          <StyledImage>
+            <RunningGuy />{' '}
+          </StyledImage>
         </StyledWrapper>
       </MainTemplate>
     );
