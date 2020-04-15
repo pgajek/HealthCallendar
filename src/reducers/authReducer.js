@@ -13,6 +13,7 @@ const authReducer = (state = initialState, action) => {
         userId: action.payload.userId,
         token: action.payload.token,
         loginName: action.payload.login,
+        isLoggedIn: true,
       };
     case 'AUTH_FAILURE':
       return state;
@@ -21,6 +22,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         userId: '',
         token: '',
+        isLoggedIn: false,
       };
     default:
       return state;
