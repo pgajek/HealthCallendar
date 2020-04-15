@@ -9,6 +9,7 @@ import { createDate } from 'helpers';
 import { ReactComponent as YesIcon } from 'assets/icons/yesicon.svg';
 import { ReactComponent as WrongIcon } from 'assets/icons/wrongicon.svg';
 import { ReactComponent as RunningGuy } from 'assets/Graphics/runningGuy.svg';
+import { theme } from 'theme/mainTheme.js';
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -21,6 +22,12 @@ const StyledWrapper = styled.div`
   }
   @media (orientation: landscape) and (min-width: 1024px) {
     min-height: 80vh;
+  }
+  @media (orientation: landscape) and (min-width: 1280px) {
+    min-height: 90vh;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 100%;
   }
 `;
 const StyledForm = styled.form`
@@ -44,7 +51,12 @@ const StyledForm = styled.form`
     margin: 8vh auto 0 auto;
   }
   @media (orientation: landscape) and (min-width: 1280px) {
-    width: 90%;
+    width: 100%;
+    max-width: 900px;
+    height: 100%;
+    padding: 0;
+    margin: 0 auto;
+    align-content: center;
   }
 `;
 const StyledImage = styled.div`
@@ -57,6 +69,12 @@ const StyledImage = styled.div`
   & svg {
     height: 100%;
     width: 100%;
+  }
+  @media (orientation: landscape) and (min-width: 1280px) {
+    position: static;
+    width: 100%;
+    height: 100%;
+    background-color: ${theme.mainGreen};
   }
 `;
 const StyledButtonWrapper = styled.div`
@@ -79,6 +97,14 @@ const StyledButtonWrapper = styled.div`
   @media (orientation: landscape) and (min-width: 1024px) {
     width: 30vmin;
     margin-right: 10vmin;
+  }
+  @media (orientation: landscape) and (min-width: 1280px) {
+    width: 30vmin;
+    height: 25vmin;
+    margin-right: 35vw;
+  }
+  @media (orientation: landscape) and (min-width: 1440px) {
+    max-width: 150px;
   }
 `;
 
@@ -132,7 +158,8 @@ class BodySize extends Component {
       })
       .catch((err) => console.log(err));
   };
-  handleYesButtonClick = () => {
+  handleYesButtonClick = (e) => {
+    e.preventDefault();
     this.handleDataPost();
   };
   componentDidMount() {

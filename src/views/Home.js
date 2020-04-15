@@ -173,7 +173,7 @@ class Home extends Component {
   downloadUserData = () => {
     const { userId } = this.props;
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`https://164.132.97.42:8443/health-calendar/api/report/${createDate()}/${userId}`, {
+    fetch(`https://164.132.97.42:8443/health-calendar/api/report/long/${createDate()}/${userId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -183,13 +183,25 @@ class Home extends Component {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        const { lastDateMeasureBody, portionsSnack, portionsDrink, portionsAlcohol } = data;
+        const {
+          lastDateMeasureBody,
+          portionsSnack,
+          portionsDrink,
+          portionsAlcohol,
+          dailyDiet: { listMeals },
+          trainings: { listTrainings },
+        } = data;
+        const LastMeal = listMeals[listMeals.length - 1];
+        const LastTraining = listTrainings[listTrainings.length - 1];
+
         this.setState({
           ...this.state,
           portionsAlcohol: portionsAlcohol,
           portionsDrink: portionsDrink,
           portionsSnack: portionsSnack,
           lastBodyMeasurement: lastDateMeasureBody,
+          lastMeal: LastMeal,
+          lastTraining: LastTraining,
         });
       })
       .catch((err) => console.log(err));
@@ -237,7 +249,16 @@ class Home extends Component {
     } else return 'None yet';
   }
   render() {
-    const { portionsSnack, portionsDrink, portionsAlcohol, lastBodyMeasurement } = this.state;
+    const {
+      portionsSnack,
+      portionsDrink,
+      portionsAlcohol,
+      lastBodyMeasurement,
+      lastMeal,
+      lastTraining,
+    } = this.state;
+    const LastMealTime = lastMeal && lastMeal.dateTimeOfEat.slice(11);
+    const TrainingTime = lastTraining && lastTraining.dateTimeOfExecution.slice(11);
     return (
       <MainTemplate>
         <StyledWrapper>
@@ -270,16 +291,17 @@ class Home extends Component {
           </StyledGreenWrapper>
           <StyledWhiteWrapper>
             <StyledGirl />
-            <Controler label="Last body measurement">
+            <Controler label="Last body measurement" link="/bodySize">
               <span>
-                {lastBodyMeasurement ? this.checkMeasurementDate(lastBodyMeasurement) : 'null'}
+                {lastBodyMeasurement ? this.checkMeasurementDate(lastBodyMeasurement) : null}
               </span>
             </Controler>
-            <Controler label="Last training">
-              <span>yyy-dd-mm</span> | <span>21:32</span>
+            <Controler label="Last training" link="/training">
+              <span>{lastTraining && lastTraining.description} </span> | <span>{TrainingTime}</span>
             </Controler>
-            <Controler label="Last meal">
-              <span>nazwaposilku</span> | <span>0000kcal</span> | <span>21.32</span>
+            <Controler label="Last meal" link="/dietPage">
+              <span>{lastMeal && lastMeal.description}</span> |
+              <span>{lastMeal && lastMeal.kcal}kcal</span> |<span>{LastMealTime}</span>
             </Controler>
           </StyledWhiteWrapper>
         </StyledWrapper>

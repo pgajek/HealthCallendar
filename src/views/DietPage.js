@@ -8,13 +8,46 @@ import { connect } from 'react-redux';
 import { createDate, createHour } from 'helpers';
 
 const StyledWrapper = styled.div`
+  display: grid;
+  grid-template-areas:
+    'addNew'
+    'wrapper';
+  grid-template-columns: 1fr;
+  grid-template-rows: 120px 1fr;
+
+  justify-items: center;
+  align-items: center;
+
   width: 100%;
   min-height: 80vh;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
+
+  padding-bottom: 5vh;
+  @media (min-width: 768px) {
+    grid-template-rows: 200px 1fr;
+  }
+`;
+const StyledMealsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 180px);
+  grid-template-rows: repeat(auto-fill, 80px);
+  grid-gap: 10px;
+  grid-area: wrapper;
+
+  width: 80%;
+  height: 100%;
+
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(auto-fill, 220px);
+    grid-template-rows: repeat(auto-fill, 180px);
+    grid-gap: 20px;
+  }
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(auto-fill, 300px);
+  }
 `;
 
 class DietPage extends Component {
@@ -108,14 +141,15 @@ class DietPage extends Component {
     return (
       <MainTemplate>
         <StyledWrapper>
-          {MappedMeals}
           <AddNew
             change={this.handleInputChange}
             name="meal"
             name2="calories"
             value={this.state.meal}
             value2={this.state.calories}
+            click={this.habndleYesButtonClick}
           />
+          <StyledMealsWrapper> {MappedMeals}</StyledMealsWrapper>
         </StyledWrapper>
       </MainTemplate>
     );

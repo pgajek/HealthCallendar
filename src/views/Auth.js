@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import { theme } from 'theme/mainTheme.js';
 import { connect } from 'react-redux';
 import { authenticate as authenticateAction } from 'actions/index.js';
-import { ReactComponent as Logo } from 'assets/icons/logo.svg';
+import { ReactComponent as Logo } from 'assets/icons/fixedLogo.svg';
 
 const StyledWrapper = styled.div`
   position: absolute;
@@ -51,13 +51,11 @@ const StyledForm = styled.form`
 `;
 const StyledLabel = styled.label``;
 const StyledMainHeader = styled.h1`
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-  max-width: 400px;
+  width: 100%;
   height: 20%;
+`;
+const StyledLogo = styled(Logo)`
+  width: 100%;
 `;
 const StyledHeader = styled.h3`
   text-transform: uppercase;
@@ -85,14 +83,14 @@ class Auth extends Component {
     secondPassword: '',
   };
   componentDidMount() {
-    const { userdIsLogged } = this.props;
+    const { userIsLogged } = this.props;
     if (window.sessionStorage.getItem('userId')) {
       const userData = {
         userId: window.sessionStorage.getItem('userId'),
         token: window.sessionStorage.getItem('token'),
         login: window.sessionStorage.getItem('loginName'),
       };
-      userdIsLogged(userData);
+      userIsLogged(userData);
     }
   }
   handleInputChange = (e) => {
@@ -157,14 +155,14 @@ class Auth extends Component {
   };
   render() {
     const { registration } = this.state;
-    const { userId } = this.props;
-    if (userId) {
+    const { userId, isLoggedIn } = this.props;
+    if (isLoggedIn) {
       return <Redirect to="/home" />;
     }
     return (
       <StyledWrapper>
         <StyledMainHeader>
-          <Logo />
+          <StyledLogo />
         </StyledMainHeader>
         <StyledForm>
           <StyledHeader>Sign In!</StyledHeader>
@@ -229,12 +227,13 @@ class Auth extends Component {
     );
   }
 }
-const mapStateToProps = ({ userId = null, token }) => ({
+const mapStateToProps = ({ userId = null, token, isLoggedIn }) => ({
   userId,
   token,
+  isLoggedIn,
 });
 const mapDispatchToProps = (dispatch) => ({
   authenticate: (user) => dispatch(authenticateAction(user)),
-  userdIsLogged: (userData) => dispatch({ type: 'AUTH_SUCCESS', payload: userData }),
+  userIsLogged: (userData) => dispatch({ type: 'AUTH_SUCCESS', payload: userData }),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);

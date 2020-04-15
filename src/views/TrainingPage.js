@@ -4,15 +4,49 @@ import AddNew from 'components/molecules/AddNew/AddNew.js';
 import Card from 'components/atoms/Card/Card.js';
 import { connect } from 'react-redux';
 import { createDate, createHour } from 'helpers';
+import MainTemplate from 'templates/MainTemplate.js';
 
 const StyledWrapper = styled.div`
+  display: grid;
+  grid-template-areas:
+    'addNew'
+    'wrapper';
+  grid-template-columns: 1fr;
+  grid-template-rows: 120px 1fr;
+
+  justify-items: center;
+  align-items: center;
+
   width: 100%;
   min-height: 80vh;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
+
+  padding-bottom: 5vh;
+  @media (min-width: 768px) {
+    grid-template-rows: 200px 1fr;
+  }
+`;
+const StyledMealsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 180px);
+  grid-template-rows: repeat(auto-fill, 80px);
+  grid-gap: 10px;
+  grid-area: wrapper;
+
+  width: 80%;
+  height: 100%;
+
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(auto-fill, 220px);
+    grid-template-rows: repeat(auto-fill, 180px);
+    grid-gap: 20px;
+  }
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(auto-fill, 300px);
+  }
 `;
 
 class TrainingPage extends Component {
@@ -104,16 +138,19 @@ class TrainingPage extends Component {
       />
     ));
     return (
-      <StyledWrapper>
-        {MappedTrainings}
-        <AddNew
-          change={this.handleInputChange}
-          name="training"
-          name2="calories"
-          value={this.state.training}
-          value2={this.state.calories}
-        />
-      </StyledWrapper>
+      <MainTemplate>
+        <StyledWrapper>
+          <AddNew
+            change={this.handleInputChange}
+            name="training"
+            name2="calories"
+            value={this.state.training}
+            value2={this.state.calories}
+            click={this.habndleYesButtonClick}
+          />
+          <StyledMealsWrapper> {MappedTrainings}</StyledMealsWrapper>
+        </StyledWrapper>
+      </MainTemplate>
     );
   }
 }
