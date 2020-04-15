@@ -19,9 +19,22 @@ Project was created for many reasons, first to improve skills, and show the abil
 
 ## Screenshots
 
+Here are some screenshots taken on PC:
+
+### Authentication Page
+
 ![Authentication Page](src/assets/screenshots/authPage.png)
+
+### Home
+
 ![HomePage](src/assets/screenshots/home.png)
+
+### Measurement List
+
 ![Measurement List](src/assets/screenshots/measurementList.png)
+
+### Taking a body measurement
+
 ![Taking Measurement](src/assets/screenshots/takingMeasurement.png)
 
 ## Technologies
