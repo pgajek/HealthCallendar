@@ -12,6 +12,7 @@ const Input = styled.input`
     letter-spacing: 1px;
     text-align: right;
   }
+
   &:focus {
     outline: none;
     background-color: #fff;

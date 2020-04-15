@@ -8,7 +8,7 @@ const Button = styled.button`
 
   color: #707070;
   -webkit-text-stroke: 0.5px #9b9b9b;
-  background-color: #fff;
+  background-color: ${({ color }) => (color ? `${theme.mainGreen}` : '#fff')};
 
   min-width: 105px;
   min-height: 30px;
@@ -27,12 +27,6 @@ const Button = styled.button`
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.38);
 
   cursor: pointer;
-
-  ${({ color }) =>
-    color &&
-    css`
-      background-color: ${theme.mainGreen};
-    `}
 
   ${({ round }) =>
     round &&

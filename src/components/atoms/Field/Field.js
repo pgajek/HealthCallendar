@@ -63,9 +63,6 @@ const StyledName = styled.span`
   @media (orientation: landscape) and (min-width: 1024px) {
     width: 180px;
   }
-  @media (orientation: landscape) and (min-width: 1280px) {
-    width: 286px;
-  }
 `;
 const StyledInput = styled.input`
   width: 60px;
@@ -87,9 +84,6 @@ const StyledInput = styled.input`
   }
   @media (orientation: landscape) and (min-width: 1024px) {
     width: 80px;
-  }
-  @media (orientation: landscape) and (min-width: 1280px) {
-    width: 128px;
   }
 `;
 const StyledUnit = styled.span`
@@ -114,9 +108,9 @@ const StyledUnit = styled.span`
   @media (orientation: landscape) and (min-width: 1024px) {
     min-width: 50px;
   }
-  @media (orientation: landscape) and (min-width: 1280px) {
+  /* @media (orientation: landscape) and (min-width: 1280px) {
     min-width: 90px;
-  }
+  } */
 `;
 
 const Field = ({ unit, change, name, label, value, type }) => (

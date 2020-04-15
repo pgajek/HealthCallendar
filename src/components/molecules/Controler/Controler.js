@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from 'components/atoms/Button/Button';
 import { theme } from 'theme/mainTheme.js';
+import { Link } from 'react-router-dom';
 
 const StyledWrapper = styled.div`
   background-color: #fff;
@@ -66,13 +67,15 @@ const StyledButton = styled(Button)`
   transform: translateY(50%);
 `;
 
-const Controler = ({ label, children, click }) => (
+const Controler = ({ label, children, click, link }) => (
   <StyledWrapper>
     <StyledLabel>{label}</StyledLabel>
     <StyledValues>{children}</StyledValues>
-    <StyledButton round onClick={click}>
-      +
-    </StyledButton>
+    <Link to={link}>
+      <StyledButton round onClick={click}>
+        +
+      </StyledButton>
+    </Link>
   </StyledWrapper>
 );
 

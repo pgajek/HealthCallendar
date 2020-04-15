@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { theme } from 'theme/mainTheme.js';
+import Button from 'components/atoms/Button/Button';
+
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -19,10 +21,16 @@ const StyledWrapper = styled.div`
 
   font-size: ${theme.fontSize.s};
   font-family: 'Lato', sans-serif;
+
+  &:hover > button,
+  &:focus > button {
+    opacity: 1;
+  }
+
   @media (min-width: 1024px) {
     max-width: 330px;
-    width: 50%;
     height: 150px;
+    width: 100%;
     border-radius: 41px;
     font-size: ${theme.fontSize.l};
     padding: 10px;
@@ -59,24 +67,28 @@ const StyledValue = styled.div`
   }
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled(Button)`
   position: absolute;
-  top: 75%;
-  right: 6%;
+  top: 0;
+  right: 0;
   opacity: 1;
   transition: opacity linear 0.2s;
-  background-color: transparent;
+  transform: translate(-50%, -50%);
   border: none;
+  opacity: 0;
   cursor: pointer;
+
   @media (min-width: 1024px) {
-    width: 5%;
-    height: 5%;
+    width: 30px;
+    height: 30px;
   }
 `;
 
 const Card = ({ name, value, click, id }) => (
   <StyledWrapper>
-    {/* <StyledButton onClick={(e) => click(e, id)}>X</StyledButton> */}
+    <StyledButton round onClick={(e) => click(e, id)}>
+      X
+    </StyledButton>
     <StyledName>{name}</StyledName>
     <StyledValue>{value} kcal</StyledValue>
   </StyledWrapper>
