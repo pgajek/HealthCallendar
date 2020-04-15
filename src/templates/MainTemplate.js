@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Nav from 'components/organisms/Nav/Nav';
 import Footer from 'components/molecules/Footer/Footer';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -14,12 +16,20 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const MainTemplate = ({ children }) => (
-  <StyledWrapper>
-    <Nav />
-    {children}
-    <Footer />
-  </StyledWrapper>
-);
+const MainTemplate = ({ children, userId }) => {
+  if (!userId) {
+    return <Redirect to="/" />;
+  } else
+    return (
+      <StyledWrapper>
+        <Nav />
+        {children}
+        <Footer />
+      </StyledWrapper>
+    );
+};
 
-export default MainTemplate;
+const mapStateToProps = ({ userId }) => ({
+  userId,
+});
+export default connect(mapStateToProps)(MainTemplate);
