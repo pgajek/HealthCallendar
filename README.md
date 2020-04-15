@@ -1,6 +1,6 @@
 # Health Callendar - Health care progress tracker
 
-![Example screenshot](src/assets/icons/logo.svg)
+![Example screenshot](src/assets/screenshots/readme-logo.svg)
 
 > HealthCallendar is an application for people who trains unproffesionaly, the point is to track your progress, or let your trainer be up to date! Project built in cooperation with:( 'here will be the link).
 
@@ -51,11 +51,6 @@ Type:
 It will be opened in your default tnternet browser.
 
 Or you can check here: (here will be the link).
-
-## Code Examples
-
-Show examples of usage:
-`put-your-code-here`
 
 ## Features
 
