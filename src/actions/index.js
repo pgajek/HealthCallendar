@@ -12,11 +12,10 @@ export const authenticate = (user) => (dispatch) => {
       }
     })
     .then((data) => {
-      console.log(data);
       const payload = { login: user.loginName, userId: data.userId, token: data.token };
-      window.sessionStorage.setItem('token', payload.token);
-      window.sessionStorage.setItem('userId', payload.userId);
-      window.sessionStorage.setItem('loginName', payload.login);
+      window.localStorage.setItem('token', payload.token);
+      window.localStorage.setItem('userId', payload.userId);
+      window.localStorage.setItem('loginName', payload.login);
       dispatch({ type: 'AUTH_SUCCESS', payload });
     })
     .catch((err) => {
