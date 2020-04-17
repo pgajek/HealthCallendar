@@ -16,8 +16,8 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const MainTemplate = ({ children, userId }) => {
-  if (!userId) {
+const MainTemplate = ({ children, userId, token }) => {
+  if (!userId || !token) {
     return <Redirect to="/" />;
   } else
     return (
@@ -29,7 +29,8 @@ const MainTemplate = ({ children, userId }) => {
     );
 };
 
-const mapStateToProps = ({ userId }) => ({
+const mapStateToProps = ({ userId, token }) => ({
   userId,
+  token,
 });
 export default connect(mapStateToProps)(MainTemplate);

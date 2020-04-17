@@ -147,10 +147,10 @@ class Nav extends Component {
     }));
   };
   handleLogout = () => {
-    window.sessionStorage.removeItem('token');
-    window.sessionStorage.removeItem('userId');
-    window.sessionStorage.removeItem('loginName');
-    window.sessionStorage.removeItem('dayId');
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('userId');
+    window.localStorage.removeItem('loginName');
+    window.localStorage.removeItem('dayId');
     this.props.logout();
     this.setState((prevState) => ({
       ...prevState,

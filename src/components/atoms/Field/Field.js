@@ -65,25 +65,26 @@ const StyledName = styled.span`
   }
 `;
 const StyledInput = styled.input`
-  width: 60px;
+  width: ${({ unit }) => (unit ? '60px' : '120px')};
   margin: 0 5px;
 
   text-align: right;
   @media (orientation: portrait) and (min-width: 768px) {
-    width: 128px;
+    width: ${({ unit }) => (unit ? '128px' : '260px')};
+    font-size: ${theme.fontSize.l};
     ::placeholder {
-      font-size: ${theme.fontSize.m};
+      font-size: ${theme.fontSize.l};
     }
   }
   @media (min-width: 1024px) {
-    width: 128px;
+    width: ${({ unit }) => (unit ? '128px' : '260px')};
     font-size: 1.6rem;
   }
   @media (orientation: landscape) and (min-width: 600px) {
-    width: 100px;
+    width: ${({ unit }) => (unit ? '100px' : '200px')};
   }
   @media (orientation: landscape) and (min-width: 1024px) {
-    width: 80px;
+    width: ${({ unit }) => (unit ? '80px' : '160px')};
   }
 `;
 const StyledUnit = styled.span`
@@ -108,16 +109,20 @@ const StyledUnit = styled.span`
   @media (orientation: landscape) and (min-width: 1024px) {
     min-width: 50px;
   }
-  /* @media (orientation: landscape) and (min-width: 1280px) {
-    min-width: 90px;
-  } */
 `;
 
 const Field = ({ unit, change, name, label, value, type }) => (
   <>
     <StyledLabel htmlFor={label}>
       <StyledName>{label}</StyledName>
-      <StyledInput type={type} placeholder="00" onChange={change} name={name} value={value} />
+      <StyledInput
+        unit={unit}
+        type={type}
+        placeholder="00"
+        onChange={change}
+        name={name}
+        value={value}
+      />
       {unit ? <StyledUnit>{unit}</StyledUnit> : null}
     </StyledLabel>
   </>
