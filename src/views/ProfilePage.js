@@ -5,13 +5,67 @@ import { connect } from 'react-redux';
 import Field from 'components/atoms/Field/Field';
 import Plate from 'components/atoms/Plate/Plate';
 import MainTemplate from 'templates/MainTemplate.js';
+import { theme } from 'theme/mainTheme.js';
+import { ReactComponent as Girl } from 'assets/Graphics/girlOnPhone.svg';
 
 const StyledWrapper = styled.div`
-  margin-top: 50px;
-`;
-const StyledForm = styled.form``;
-const StyledList = styled.div``;
+  position: relative;
 
+  width: 100%;
+  height: 100%;
+  min-height: 80vh;
+  padding: 2vh 0 30vmax 0;
+
+  background-color: ${theme.mainGreen};
+  overflow: hidden;
+  @media (orientation: landscape) and (min-width: 1024px) {
+    min-height: 90vh;
+  }
+  @media (orientation: landscape) and (min-width: 1280px) {
+    padding: 2vh 30vw 2vh 0;
+  }
+`;
+const StyledHeader = styled.h2`
+  font-size: ${theme.fontSize.xl};
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 0px 1px 2px #000;
+  width: 90%;
+  margin: 0 auto;
+  @media (orientation: portrait) and (min-width: 768px) {
+    font-size: ${theme.fontSize.xxl};
+  }
+  @media (orientation: landscape) and (min-width: 1280px) {
+    width: 60%;
+  }
+`;
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  padding: 2vh;
+  margin: 0 auto;
+  width: 90%;
+  min-height: ${({ pass }) => (pass ? '10vh' : '60vh')};
+  background-color: #f2f2f2;
+  @media (orientation: landscape) and (min-width: 1280px) {
+    width: 60%;
+  }
+`;
+const StyledGirl = styled(Girl)`
+  position: absolute;
+  bottom: -6.5vmax;
+  right: 0;
+
+  width: 30vmax;
+  height: 30vmax;
+`;
+const StyledButton = styled(Button)`
+  align-self: flex-end;
+  margin: 10px 0 0 0;
+`;
 class ProfilePage extends Component {
   state = {
     drinkDemand: '',
@@ -25,7 +79,7 @@ class ProfilePage extends Component {
     edit: false,
     changePassword: false,
   };
-  handleInputChange = e => {
+  handleInputChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
@@ -43,9 +97,8 @@ class ProfilePage extends Component {
         Authorization: `${token}`,
       },
     })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
+      .then((res) => res.json())
+      .then((data) => {
         this.setState({
           ...this.state,
           drinkDemand: data.drinkDemandPerDay,
@@ -56,7 +109,7 @@ class ProfilePage extends Component {
           birthDate: data.birthDate ? data.birthDate : '',
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
   handleButtonClick = () => {
     if (this.state.edit) {
@@ -69,6 +122,7 @@ class ProfilePage extends Component {
       this.setState({
         ...this.state,
         edit: !this.state.edit,
+        changePassword: false,
       });
     }
   };
@@ -95,12 +149,8 @@ class ProfilePage extends Component {
         Authorization: `${token}`,
       },
     })
-      .then(res => res.json())
-      .then(data => {
-        console.log('dzialam');
-        console.log(data);
-      })
-      .catch(err => console.log(err));
+      .then((res) => res.json())
+      .catch((err) => console.log(err));
   };
   handlePasswordButtonClick = () => {
     const { changePassword, password, password2 } = this.state;
@@ -134,11 +184,8 @@ class ProfilePage extends Component {
         Authorization: `${theToken}`,
       },
     })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-      })
-      .catch(err => console.log(err));
+      .then((res) => res.json())
+      .catch((err) => console.log(err));
   };
   render() {
     const {
@@ -156,81 +203,84 @@ class ProfilePage extends Component {
     return (
       <MainTemplate>
         <StyledWrapper>
+          <StyledHeader>{nickname}</StyledHeader>
           {edit ? (
             <StyledForm>
               <Field
                 name="drinkDemand"
                 value={drinkDemand}
-                change={e => this.handleInputChange(e)}
-                label="Drink Demand Per Day"
+                change={(e) => this.handleInputChange(e)}
+                label="Drink Demand"
                 unit="ml"
               />
               <Field
                 name="kcalDemand"
                 value={kcalDemand}
-                change={e => this.handleInputChange(e)}
-                label="Kcal Demand Per Day"
+                change={(e) => this.handleInputChange(e)}
+                label="Kcal Demand"
                 unit="kcal"
               />
               <Field
                 name="email"
                 value={email}
-                change={e => this.handleInputChange(e)}
+                change={(e) => this.handleInputChange(e)}
                 label="E-mail"
                 placeholder="adress"
               />
               <Field
                 name="nickname"
                 value={nickname}
-                change={e => this.handleInputChange(e)}
+                change={(e) => this.handleInputChange(e)}
                 label="Nickname"
                 placeholder="name"
               />
               <Field
                 name="number"
                 value={number}
-                change={e => this.handleInputChange(e)}
+                change={(e) => this.handleInputChange(e)}
                 label="Phone Number"
                 placeholder="000-000-000"
               />
               <Field
                 name="birthDate"
                 value={birthDate}
-                change={e => this.handleInputChange(e)}
+                change={(e) => this.handleInputChange(e)}
                 label="Birth Date"
                 type="date"
               />
+              <Button onClick={this.handleButtonClick}>Save</Button>
             </StyledForm>
           ) : (
-            <StyledList>
-              <Plate name="Drink demand" value={drinkDemand} />
+            <StyledForm as="div">
+              <Plate name="Drink demand(ml)" value={drinkDemand} />
               <Plate name="Kcal demand" value={kcalDemand} />
               <Plate name="E-mail adress" value={email} />
               <Plate name="Birth date" value={birthDate} />
               <Plate name="Number" value={number} />
               <Plate name="Nickname" value={nickname} />
-            </StyledList>
+              <StyledButton onClick={this.handleButtonClick}>Edit</StyledButton>
+              <StyledButton onClick={this.handlePasswordButtonClick}>
+                {changePassword ? 'Save password' : 'Change password'}
+              </StyledButton>
+            </StyledForm>
           )}
-          <Button onClick={this.handleButtonClick}>{edit ? 'Save' : 'Edit'}</Button>
           {changePassword ? (
-            <StyledForm>
+            <StyledForm pass>
               <Field
                 name="password"
                 value={password}
-                change={e => this.handleInputChange(e)}
+                change={(e) => this.handleInputChange(e)}
                 label="Password"
               />
               <Field
                 name="password2"
                 value={password2}
-                change={e => this.handleInputChange(e)}
+                change={(e) => this.handleInputChange(e)}
                 label="Repeat password"
               />
             </StyledForm>
           ) : null}
-          <Button onClick={this.handlePasswordButtonClick}>
-            {changePassword ? 'Save password' : 'Change password'}
-          </Button>
+          <StyledGirl />
         </StyledWrapper>
       </MainTemplate>
     );

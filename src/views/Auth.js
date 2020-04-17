@@ -53,9 +53,13 @@ const StyledLabel = styled.label``;
 const StyledMainHeader = styled.h1`
   width: 100%;
   height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 const StyledLogo = styled(Logo)`
-  width: 100%;
+  width: 80%;
+  max-width: 400px;
 `;
 const StyledHeader = styled.h3`
   text-transform: uppercase;
@@ -84,11 +88,11 @@ class Auth extends Component {
   };
   componentDidMount() {
     const { userIsLogged } = this.props;
-    if (window.sessionStorage.getItem('userId')) {
+    if (window.localStorage.getItem('userId')) {
       const userData = {
-        userId: window.sessionStorage.getItem('userId'),
-        token: window.sessionStorage.getItem('token'),
-        login: window.sessionStorage.getItem('loginName'),
+        userId: window.localStorage.getItem('userId'),
+        token: window.localStorage.getItem('token'),
+        login: window.localStorage.getItem('loginName'),
       };
       userIsLogged(userData);
     }
@@ -124,9 +128,7 @@ class Auth extends Component {
         headers: {
           'Content-type': 'application/json',
         },
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+      }).then((response) => response.json());
 
       this.setState({
         login: '',

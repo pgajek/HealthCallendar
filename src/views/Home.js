@@ -164,7 +164,7 @@ class Home extends Component {
       })
       .then((dayId) => {
         if (dayId) {
-          window.sessionStorage.setItem('dayId', dayId);
+          window.localStorage.setItem('dayId', dayId);
           this.setState((prevState) => ({ ...prevState, dayId }));
         }
       })
@@ -182,7 +182,6 @@ class Home extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         const {
           lastDateMeasureBody,
           portionsSnack,

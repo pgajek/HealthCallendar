@@ -134,7 +134,6 @@ class BodySizeList extends Component {
     })
       .then((res) => res.json())
       .then((response) => {
-        console.log(response);
         if (response.length > 0) {
           this.setState({
             ...this.state,
