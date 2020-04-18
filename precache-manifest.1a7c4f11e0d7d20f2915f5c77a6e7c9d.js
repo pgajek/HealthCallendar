@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4945327b2693b4f04bc47595cbf800c5",
+    "revision": "66cc2995511227e6ce6c4e0b6cccd25e",
     "url": "/HealthCallendar/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/HealthCallendar/static/js/2.27b0eb21.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8be40da4e63f5954f46f",
-    "url": "/HealthCallendar/static/js/main.6a9f55e4.chunk.js"
+    "revision": "73cca188afd4af8af7b9",
+    "url": "/HealthCallendar/static/js/main.557888b6.chunk.js"
   },
   {
     "revision": "4928a7c49b13667d9bae",
