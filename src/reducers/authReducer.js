@@ -1,8 +1,8 @@
 const initialState = {
-  token: window.sessionStorage.getItem('token'),
-  userId: window.sessionStorage.getItem('userId'),
-  loginName: window.sessionStorage.getItem('loginName'),
-  dayId: window.sessionStorage.getItem('dayId'),
+  token: window.localStorage.getItem('token'),
+  userId: window.localStorage.getItem('userId'),
+  loginName: window.localStorage.getItem('loginName'),
+  dayId: window.localStorage.getItem('dayId'),
 };
 
 const authReducer = (state = initialState, action) => {
