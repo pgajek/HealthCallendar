@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.js": "/HealthCallendar/static/js/main.28775e2f.chunk.js",
-    "main.js.map": "/HealthCallendar/static/js/main.28775e2f.chunk.js.map",
+    "main.js": "/HealthCallendar/static/js/main.cc43fdc8.chunk.js",
+    "main.js.map": "/HealthCallendar/static/js/main.cc43fdc8.chunk.js.map",
     "runtime-main.js": "/HealthCallendar/static/js/runtime-main.fc1af404.js",
     "runtime-main.js.map": "/HealthCallendar/static/js/runtime-main.fc1af404.js.map",
-    "static/js/2.ab165230.chunk.js": "/HealthCallendar/static/js/2.ab165230.chunk.js",
-    "static/js/2.ab165230.chunk.js.map": "/HealthCallendar/static/js/2.ab165230.chunk.js.map",
+    "static/js/2.744d0208.chunk.js": "/HealthCallendar/static/js/2.744d0208.chunk.js",
+    "static/js/2.744d0208.chunk.js.map": "/HealthCallendar/static/js/2.744d0208.chunk.js.map",
     "index.html": "/HealthCallendar/index.html",
-    "precache-manifest.989dab8247d932776e93daaf64532a37.js": "/HealthCallendar/precache-manifest.989dab8247d932776e93daaf64532a37.js",
+    "precache-manifest.19e38077819f0cf37f211bdd9908f79a.js": "/HealthCallendar/precache-manifest.19e38077819f0cf37f211bdd9908f79a.js",
     "service-worker.js": "/HealthCallendar/service-worker.js",
-    "static/js/2.ab165230.chunk.js.LICENSE.txt": "/HealthCallendar/static/js/2.ab165230.chunk.js.LICENSE.txt",
+    "static/js/2.744d0208.chunk.js.LICENSE.txt": "/HealthCallendar/static/js/2.744d0208.chunk.js.LICENSE.txt",
     "static/media/fixedLogo.034caa42.svg": "/HealthCallendar/static/media/fixedLogo.034caa42.svg",
     "static/media/girlOnPhone.7e7b15e2.svg": "/HealthCallendar/static/media/girlOnPhone.7e7b15e2.svg",
     "static/media/girl_run.e44d3294.svg": "/HealthCallendar/static/media/girl_run.e44d3294.svg",
@@ -27,7 +27,7 @@
   },
   "entrypoints": [
     "static/js/runtime-main.fc1af404.js",
-    "static/js/2.ab165230.chunk.js",
-    "static/js/main.28775e2f.chunk.js"
+    "static/js/2.744d0208.chunk.js",
+    "static/js/main.cc43fdc8.chunk.js"
   ]
 }
