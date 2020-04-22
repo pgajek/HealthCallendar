@@ -20,7 +20,7 @@ const StyledWrapper = styled.div`
 
   width: 100%;
   min-height: 80vh;
-
+  padding-top: 10px;
   padding-bottom: 5vh;
   @media (min-width: 768px) {
     grid-template-rows: 220px 1fr;
@@ -56,6 +56,7 @@ class DietPage extends Component {
     calories: '',
     mealType: '',
     meals: [],
+    error: false,
   };
   componentDidMount() {
     this.getUserData();
@@ -83,10 +84,21 @@ class DietPage extends Component {
       .catch((err) => console.log(err));
   };
   handleInputChange = (e) => {
-    this.setState({
-      ...this.state,
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.name === 'calories') {
+      const value =
+        e.target.validity.valid || e.target.value === ''
+          ? e.target.value
+          : this.state[e.target.name];
+      this.setState({
+        ...this.state,
+        [e.target.name]: value,
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
   sendMeal = (Meal) => {
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
@@ -102,20 +114,30 @@ class DietPage extends Component {
       .catch((err) => console.log(err));
   };
   habndleYesButtonClick = (e) => {
+    const { calories, mealType, meal } = this.state;
     e.preventDefault();
     const NewMeal = {
       dateTimeOfEat: `${createDate()}_${createHour()}`,
       dayId: this.props.dayId,
-      description: this.state.meal,
-      kcal: this.state.calories,
-      type: this.state.mealType,
+      description: meal,
+      kcal: calories,
+      type: mealType,
     };
-    this.sendMeal(NewMeal);
-    this.setState({
-      ...this.state,
-      meal: '',
-      calories: '',
-    });
+    if (meal != '' && calories != '' && mealType != '') {
+      this.sendMeal(NewMeal);
+      this.setState({
+        ...this.state,
+        meal: '',
+        calories: '',
+        mealType: '',
+        error: false,
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        error: true,
+      });
+    }
   };
   handleDeleteButtonClick = (e, id) => {
     e.preventDefault();
@@ -131,6 +153,7 @@ class DietPage extends Component {
       .catch((err) => console.log(err));
   };
   render() {
+    const { error, mealType, meal, calories } = this.state;
     const MappedMeals = this.state.meals.map((meal) => (
       <Card
         key={meal.id}
@@ -147,12 +170,14 @@ class DietPage extends Component {
             change={this.handleInputChange}
             name="meal"
             name2="calories"
-            value={this.state.meal}
-            value2={this.state.calories}
+            value={meal}
+            value2={calories}
             click={this.habndleYesButtonClick}
             meal="mealType"
-            mealValue={this.state.mealType}
+            mealValue={mealType}
+            error={error}
           />
+
           <StyledMealsWrapper> {MappedMeals}</StyledMealsWrapper>
         </StyledWrapper>
       </MainTemplate>
