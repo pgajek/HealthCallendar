@@ -125,7 +125,6 @@ class Auth extends Component {
     const isSecondPasswordValidate = checkValidity(secondPassword, regex.password);
     const isLoginValidate = checkValidity(login, regex.login);
     const isEmailValidate = checkValidity(email, regex.email);
-    console.log(isEmailValidate);
     if (
       isLoginValidate &&
       isPasswordValidate &&
@@ -154,8 +153,34 @@ class Auth extends Component {
         email: '',
         secondPassword: '',
       });
-    } else {
-      console.log('wrong');
+    } else if (!isLoginValidate) {
+      this.setState({
+        ...this.state,
+        errors: {
+          login: !isLoginValidate,
+        },
+      });
+    } else if (!isPasswordValidate) {
+      this.setState({
+        ...this.state,
+        errors: {
+          password: !isPasswordValidate,
+        },
+      });
+    } else if (!isSecondPasswordValidate) {
+      this.setState({
+        ...this.state,
+        errors: {
+          secondPassword: !isSecondPasswordValidate,
+        },
+      });
+    } else if (!isEmailValidate) {
+      this.setState({
+        ...this.state,
+        errors: {
+          email: !isEmailValidate,
+        },
+      });
     }
   };
   handleSignIn = (e) => {
@@ -164,20 +189,26 @@ class Auth extends Component {
     const user = { loginName: login, password };
     const isLoginValidate = checkValidity(login, regex.login);
     const isPasswordValidate = checkValidity(password, regex.password);
-    if (isLoginValidate && isPasswordValidate) {
-      this.props.authenticate(user);
-      this.setState({
-        ...this.state,
-        login: '',
-        password: '',
-      });
+    if (isLoginValidate) {
+      if (isPasswordValidate) {
+        this.props.authenticate(user);
+      } else {
+        this.setState({
+          ...this.state,
+          errors: {
+            ...this.state.errors,
+            login: !isLoginValidate,
+            password: !isPasswordValidate,
+          },
+        });
+      }
     } else {
       this.setState({
         ...this.state,
         errors: {
           ...this.state.errors,
           login: !isLoginValidate,
-          password: !isPasswordValidate,
+          password: false,
         },
       });
     }
@@ -197,38 +228,44 @@ class Auth extends Component {
         </StyledMainHeader>
         <StyledForm>
           <StyledHeader>Sign In!</StyledHeader>
-          <StyledLabel>
+          <StyledLabel htmlFor="login">
             <Input
               holderLeft
+              id="login"
               name="login"
               placeholder="LOGIN"
               type="text"
               onChange={this.handleInputChange}
               value={this.state.login}
+              required
             />
             {errors.login && <StyledError>Login requires minimum 6 signs</StyledError>}
           </StyledLabel>
           {registration && (
-            <StyledLabel>
+            <StyledLabel htmlFor="email">
               <Input
                 holderLeft
+                id="email"
                 name="email"
                 type="email"
                 placeholder="Your email"
                 onChange={this.handleInputChange}
                 value={this.state.email}
+                required
               />
               {errors.email && <StyledError>Please inser proper email adress.</StyledError>}
             </StyledLabel>
           )}
-          <StyledLabel>
+          <StyledLabel htmlFor="password">
             <Input
               holderLeft
+              id="password"
               name="password"
               type="password"
               placeholder="PASSWORD"
               onChange={this.handleInputChange}
               value={this.state.password}
+              required
             />
             {errors.password && (
               <StyledError>
@@ -237,14 +274,16 @@ class Auth extends Component {
             )}
           </StyledLabel>
           {registration && (
-            <StyledLabel>
+            <StyledLabel htmlFor="secondPassword">
               <Input
                 HolderLeft
+                id="secondPassword"
                 name="secondPassword"
                 type="password"
                 placeholder="Reapeat your password"
                 onChange={this.handleInputChange}
                 value={this.state.secondPassword}
+                required
               />
               {errors.secondPassword && <StyledError>Passwords must match.</StyledError>}
             </StyledLabel>
