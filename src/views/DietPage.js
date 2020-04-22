@@ -13,7 +13,7 @@ const StyledWrapper = styled.div`
     'addNew'
     'wrapper';
   grid-template-columns: 1fr;
-  grid-template-rows: 120px 1fr;
+  grid-template-rows: 150px 1fr;
 
   justify-items: center;
   align-items: center;
@@ -23,7 +23,7 @@ const StyledWrapper = styled.div`
 
   padding-bottom: 5vh;
   @media (min-width: 768px) {
-    grid-template-rows: 200px 1fr;
+    grid-template-rows: 220px 1fr;
   }
 `;
 const StyledMealsWrapper = styled.div`
@@ -54,6 +54,7 @@ class DietPage extends Component {
   state = {
     meal: '',
     calories: '',
+    mealType: '',
     meals: [],
   };
   componentDidMount() {
@@ -107,6 +108,7 @@ class DietPage extends Component {
       dayId: this.props.dayId,
       description: this.state.meal,
       kcal: this.state.calories,
+      type: this.state.mealType,
     };
     this.sendMeal(NewMeal);
     this.setState({
@@ -148,6 +150,8 @@ class DietPage extends Component {
             value={this.state.meal}
             value2={this.state.calories}
             click={this.habndleYesButtonClick}
+            meal="mealType"
+            mealValue={this.state.mealType}
           />
           <StyledMealsWrapper> {MappedMeals}</StyledMealsWrapper>
         </StyledWrapper>
