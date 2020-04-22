@@ -7,6 +7,7 @@ import { theme } from 'theme/mainTheme.js';
 import { connect } from 'react-redux';
 import { authenticate as authenticateAction } from 'actions/index.js';
 import { ReactComponent as Logo } from 'assets/icons/fixedLogo.svg';
+import { regex } from 'helpers/regex.js';
 
 const StyledWrapper = styled.div`
   position: absolute;
@@ -78,6 +79,12 @@ const StyledButton = styled(Button)`
     font-size: ${theme.fontSize.xs};
   }
 `;
+const StyledError = styled.div`
+  color: red;
+  font-size: ${theme.fontSize.xxs};
+  width: 100%;
+  max-width: 160px;
+`;
 class Auth extends Component {
   state = {
     login: '',
@@ -85,6 +92,7 @@ class Auth extends Component {
     registration: false,
     email: '',
     secondPassword: '',
+    errors: {},
   };
   componentDidMount() {
     const { userIsLogged } = this.props;
@@ -97,11 +105,13 @@ class Auth extends Component {
       userIsLogged(userData);
     }
   }
-  handleInputChange = (e) => {
+  handleInputChange = ({ target: { value, name } }) => {
     this.setState({
-      [e.target.name]: e.target.value,
+      ...this.state,
+      [name]: value,
     });
   };
+
   handleLinkClick = () => {
     this.setState({
       registration: !this.state.registration,
@@ -110,10 +120,16 @@ class Auth extends Component {
   hadnleRegistration = (e) => {
     e.preventDefault();
     const { login, password, email, secondPassword } = this.state;
+    const isPasswordValidate = this.checkValidity(password, regex.password);
+    const isSecondPasswordValidate = this.checkValidity(secondPassword, regex.password);
+    const isLoginValidate = this.checkValidity(login, regex.login);
+    const isEmailValidate = this.checkValidity(email, regex.email);
+    console.log(isEmailValidate);
     if (
-      login.length > 4 &&
-      password.length > 4 &&
-      email.length > 4 &&
+      isLoginValidate &&
+      isPasswordValidate &&
+      isEmailValidate &&
+      isSecondPasswordValidate &&
       password === secondPassword
     ) {
       const user = {
@@ -144,20 +160,37 @@ class Auth extends Component {
   handleSignIn = (e) => {
     e.preventDefault();
     const { login, password } = this.state;
-    const user = { loginName: login, password, roles: 'USER' };
-    if (login.length > 4 && password.length > 4) {
+    const user = { loginName: login, password };
+    const isLoginValidate = this.checkValidity(login, regex.login);
+    const isPasswordValidate = this.checkValidity(password, regex.password);
+    if (isLoginValidate && isPasswordValidate) {
       this.props.authenticate(user);
+      this.setState({
+        ...this.state,
+        login: '',
+        password: '',
+      });
     } else {
-      console.log('wrong login');
+      this.setState({
+        ...this.state,
+        errors: {
+          ...this.state.errors,
+          login: !isLoginValidate,
+          password: !isPasswordValidate,
+        },
+      });
     }
-    this.setState({
-      login: '',
-      password: '',
-    });
+  };
+  checkValidity = (name, regex) => {
+    if (name != '') {
+      if (regex.test(name)) return true;
+      else return false;
+    } else return false;
   };
   render() {
-    const { registration } = this.state;
-    const { userId, isLoggedIn } = this.props;
+    const { registration, errors } = this.state;
+    const { isLoggedIn } = this.props;
+
     if (isLoggedIn) {
       return <Redirect to="/home" />;
     }
@@ -177,6 +210,7 @@ class Auth extends Component {
               onChange={this.handleInputChange}
               value={this.state.login}
             />
+            {errors.login && <StyledError>Login requires minimum 6 signs</StyledError>}
           </StyledLabel>
           {registration && (
             <StyledLabel>
@@ -188,6 +222,7 @@ class Auth extends Component {
                 onChange={this.handleInputChange}
                 value={this.state.email}
               />
+              {errors.email && <StyledError>Please inser proper email adress.</StyledError>}
             </StyledLabel>
           )}
           <StyledLabel>
@@ -199,6 +234,11 @@ class Auth extends Component {
               onChange={this.handleInputChange}
               value={this.state.password}
             />
+            {errors.password && (
+              <StyledError>
+                Password requires min 6 characters, one capital letter and one number.
+              </StyledError>
+            )}
           </StyledLabel>
           {registration && (
             <StyledLabel>
@@ -210,6 +250,7 @@ class Auth extends Component {
                 onChange={this.handleInputChange}
                 value={this.state.secondPassword}
               />
+              {errors.secondPassword && <StyledError>Passwords must match.</StyledError>}
             </StyledLabel>
           )}
           {registration ? (
@@ -217,7 +258,11 @@ class Auth extends Component {
               Registration
             </StyledButton>
           ) : (
-            <StyledButton color onClick={(e) => this.handleSignIn(e)}>
+            <StyledButton
+              color
+              onClick={(e) => this.handleSignIn(e)}
+              onTouchEnd={(e) => this.handleSignIn(e)}
+            >
               Sign In
             </StyledButton>
           )}
