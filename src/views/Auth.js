@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { authenticate as authenticateAction } from 'actions/index.js';
 import { ReactComponent as Logo } from 'assets/icons/fixedLogo.svg';
 import { regex } from 'helpers/regex.js';
+import { checkValidity } from 'helpers/index.js';
 
 const StyledWrapper = styled.div`
   position: absolute;
@@ -120,10 +121,10 @@ class Auth extends Component {
   hadnleRegistration = (e) => {
     e.preventDefault();
     const { login, password, email, secondPassword } = this.state;
-    const isPasswordValidate = this.checkValidity(password, regex.password);
-    const isSecondPasswordValidate = this.checkValidity(secondPassword, regex.password);
-    const isLoginValidate = this.checkValidity(login, regex.login);
-    const isEmailValidate = this.checkValidity(email, regex.email);
+    const isPasswordValidate = checkValidity(password, regex.password);
+    const isSecondPasswordValidate = checkValidity(secondPassword, regex.password);
+    const isLoginValidate = checkValidity(login, regex.login);
+    const isEmailValidate = checkValidity(email, regex.email);
     console.log(isEmailValidate);
     if (
       isLoginValidate &&
@@ -161,8 +162,8 @@ class Auth extends Component {
     e.preventDefault();
     const { login, password } = this.state;
     const user = { loginName: login, password };
-    const isLoginValidate = this.checkValidity(login, regex.login);
-    const isPasswordValidate = this.checkValidity(password, regex.password);
+    const isLoginValidate = checkValidity(login, regex.login);
+    const isPasswordValidate = checkValidity(password, regex.password);
     if (isLoginValidate && isPasswordValidate) {
       this.props.authenticate(user);
       this.setState({
@@ -181,12 +182,7 @@ class Auth extends Component {
       });
     }
   };
-  checkValidity = (name, regex) => {
-    if (name != '') {
-      if (regex.test(name)) return true;
-      else return false;
-    } else return false;
-  };
+
   render() {
     const { registration, errors } = this.state;
     const { isLoggedIn } = this.props;
