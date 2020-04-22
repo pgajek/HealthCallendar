@@ -253,7 +253,7 @@ class Auth extends Component {
                 value={this.state.email}
                 required
               />
-              {errors.email && <StyledError>Please inser proper email adress.</StyledError>}
+              {errors.email && <StyledError>Please insert proper email adress.</StyledError>}
             </StyledLabel>
           )}
           <StyledLabel htmlFor="password">
