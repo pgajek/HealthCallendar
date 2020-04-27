@@ -182,6 +182,7 @@ class Home extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         const {
           lastDateMeasureBody,
           portionsSnack,
@@ -189,6 +190,7 @@ class Home extends Component {
           portionsAlcohol,
           dailyDiet: { listMeals },
           trainings: { listTrainings },
+          nick,
         } = data;
         const LastMeal = listMeals[listMeals.length - 1];
         const LastTraining = listTrainings[listTrainings.length - 1];
@@ -201,6 +203,7 @@ class Home extends Component {
           lastBodyMeasurement: lastDateMeasureBody,
           lastMeal: LastMeal,
           lastTraining: LastTraining,
+          nickname: nick,
         });
       })
       .catch((err) => console.log(err));
@@ -229,15 +232,21 @@ class Home extends Component {
   handleCount = (aspect, type) => {
     if (this.state[aspect] > -1 && this.state[aspect] < 8) {
       if (type === '+') {
-        this.setState((prevState) => ({
-          ...prevState,
-          [aspect]: this.state[aspect] + 1,
-        }));
+        this.setState(
+          (prevState) => ({
+            ...prevState,
+            [aspect]: this.state[aspect] + 1,
+          }),
+          this.updateUserData,
+        );
       } else if (this.state[aspect] > 0) {
-        this.setState((prevState) => ({
-          ...prevState,
-          [aspect]: this.state[aspect] - 1,
-        }));
+        this.setState(
+          (prevState) => ({
+            ...prevState,
+            [aspect]: this.state[aspect] - 1,
+          }),
+          this.updateUserData,
+        );
       }
     }
   };
@@ -255,6 +264,7 @@ class Home extends Component {
       lastBodyMeasurement,
       lastMeal,
       lastTraining,
+      nickname,
     } = this.state;
     const LastMealTime = lastMeal && lastMeal.dateTimeOfEat.slice(11);
     const TrainingTime = lastTraining && lastTraining.dateTimeOfExecution.slice(11);
@@ -265,6 +275,7 @@ class Home extends Component {
             <StyledHeader>
               <Logo />
             </StyledHeader>
+            <span>{nickname}</span>
             <Count
               aspect="portionsDrink"
               howMany={8}
@@ -286,21 +297,34 @@ class Home extends Component {
               click={this.handleCount}
               sendData={this.updateUserData}
             />
-            <Button onClick={this.updateUserData}>Update</Button>
           </StyledGreenWrapper>
           <StyledWhiteWrapper>
             <StyledGirl />
             <Controler label="Last body measurement" link="/bodySize">
               <span>
-                {lastBodyMeasurement ? this.checkMeasurementDate(lastBodyMeasurement) : null}
+                {lastBodyMeasurement
+                  ? this.checkMeasurementDate(lastBodyMeasurement)
+                  : 'No measurements yet'}
               </span>
             </Controler>
             <Controler label="Last training" link="/training">
-              <span>{lastTraining && lastTraining.description} </span> | <span>{TrainingTime}</span>
+              {lastTraining ? (
+                <>
+                  <span>{lastTraining.description} </span> | <span>{TrainingTime}</span>
+                </>
+              ) : (
+                <span>You haven't train today</span>
+              )}
             </Controler>
             <Controler label="Last meal" link="/dietPage">
-              <span>{lastMeal && lastMeal.description}</span> |
-              <span>{lastMeal && lastMeal.kcal}kcal</span> |<span>{LastMealTime}</span>
+              {lastMeal ? (
+                <>
+                  <span>{lastMeal.description}</span> |<span>{lastMeal.kcal}kcal</span> |
+                  <span>{LastMealTime}</span>
+                </>
+              ) : (
+                <span>You haven't eat today</span>
+              )}
             </Controler>
           </StyledWhiteWrapper>
         </StyledWrapper>
