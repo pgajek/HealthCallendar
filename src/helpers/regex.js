@@ -5,3 +5,4 @@ export const regex = {
   numbers: /^[0-9]*$/,
   word: /(.*[a-z]){3}/i,
 };
+// (?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W) pass

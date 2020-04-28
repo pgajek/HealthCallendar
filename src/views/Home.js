@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import Count from 'components/molecules/Count/Count';
 import MainTemplate from 'templates/MainTemplate.js';
 import { connect } from 'react-redux';
-import Button from 'components/atoms/Button/Button';
 import Controler from 'components/molecules/Controler/Controler';
-import { createDate } from 'helpers';
+import { getDayId as getDayIdAction } from 'actions/index.js';
+import { createDate, createNewDay } from 'helpers';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import { ReactComponent as GirlRun } from 'assets/Graphics/girl_run.svg';
 import { theme } from 'theme/mainTheme.js';
@@ -112,7 +112,19 @@ const StyledGirl = styled(GirlRun)`
     justify-self: flex-start;
   }
 `;
-
+const StyledNickname = styled.span`
+  display: flex;
+  align-items: center;
+  width: 80%;
+  max-width: 670px;
+  font-size: ${theme.fontSize.m};
+  color: #f0f0f0;
+  font-weight: bold;
+  text-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.4);
+  @media (min-width: 768px) {
+    font-size: ${theme.fontSize.xxl};
+  }
+`;
 class Home extends Component {
   state = {
     portionsSnack: 0,
@@ -124,51 +136,12 @@ class Home extends Component {
     this.downloadUserData();
   }
   postDay = () => {
-    const day = {
-      date: createDate(),
-      portionsAlcohol: 0,
-      portionsDrink: 0,
-      portionsSnack: 0,
-      userId: this.props.userId,
-    };
-    const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`https://164.132.97.42:8443/health-calendar/api/day`, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `${token}`,
-      },
-      body: JSON.stringify(day),
-    })
-      .then((res) => {
-        this.getDayData();
-      })
-      .catch((err) => console.log(err));
+    const { userId, token } = this.props;
+    createNewDay(userId, token).then(this.getDayData());
   };
   getDayData = () => {
-    const { userId } = this.props;
-    const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`https://164.132.97.42:8443/health-calendar/api/day/day-id/${createDate()}/${userId}`, {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `${token}`,
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          this.postDay();
-        }
-      })
-      .then((dayId) => {
-        if (dayId) {
-          window.localStorage.setItem('dayId', dayId);
-          this.setState((prevState) => ({ ...prevState, dayId }));
-        }
-      })
-      .catch((err) => console.log(err));
+    const { getDayId, userId, token } = this.props;
+    getDayId(userId, token, createDate());
   };
   downloadUserData = () => {
     const { userId } = this.props;
@@ -188,7 +161,7 @@ class Home extends Component {
           portionsSnack,
           portionsDrink,
           portionsAlcohol,
-          dailyDiet: { listMeals },
+          dailyDiet: { listMeals, sumOfKcal },
           trainings: { listTrainings },
           nick,
         } = data;
@@ -204,6 +177,7 @@ class Home extends Component {
           lastMeal: LastMeal,
           lastTraining: LastTraining,
           nickname: nick,
+          sumOfKcal,
         });
       })
       .catch((err) => console.log(err));
@@ -265,6 +239,7 @@ class Home extends Component {
       lastMeal,
       lastTraining,
       nickname,
+      sumOfKcal,
     } = this.state;
     const LastMealTime = lastMeal && lastMeal.dateTimeOfEat.slice(11);
     const TrainingTime = lastTraining && lastTraining.dateTimeOfExecution.slice(11);
@@ -275,7 +250,7 @@ class Home extends Component {
             <StyledHeader>
               <Logo />
             </StyledHeader>
-            <span>{nickname}</span>
+            <StyledNickname>{`${nickname} - ${createDate()}`}</StyledNickname>
             <Count
               aspect="portionsDrink"
               howMany={8}
@@ -316,7 +291,7 @@ class Home extends Component {
                 <span>You haven't train today</span>
               )}
             </Controler>
-            <Controler label="Last meal" link="/dietPage">
+            <Controler label={`Last meal -  Kcal : ${sumOfKcal} `} link="/dietPage">
               {lastMeal ? (
                 <>
                   <span>{lastMeal.description}</span> |<span>{lastMeal.kcal}kcal</span> |
@@ -338,4 +313,7 @@ const mapStateToProps = ({ userId, token, loginName, dayId }) => ({
   loginName,
   dayId,
 });
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = (dispatch) => ({
+  getDayId: (userId, apiToken, date) => dispatch(getDayIdAction(userId, apiToken, date)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

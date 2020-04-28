@@ -35,8 +35,31 @@ export const createHour = () => {
 };
 
 export const checkValidity = (name, regex) => {
-  if (name != '') {
+  if (name !== '') {
     if (regex.test(name)) return true;
     else return false;
   } else return false;
+};
+
+export const createNewDay = (userId, apiToken) => {
+  const day = {
+    date: createDate(),
+    portionsAlcohol: 0,
+    portionsDrink: 0,
+    portionsSnack: 0,
+    userId,
+  };
+  const token = JSON.parse(JSON.stringify(`Bearer ${apiToken}`));
+  return fetch(`https://164.132.97.42:8443/health-calendar/api/day`, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `${token}`,
+    },
+    body: JSON.stringify(day),
+  })
+    .then((res) => {
+      this.getDayData();
+    })
+    .catch((err) => console.log(err));
 };
