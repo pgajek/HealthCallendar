@@ -1,10 +1,10 @@
 import authReducer from './authReducer';
-import bodySizeReducer from './bodySizeReducer';
+import dayReducer from './dayReducer';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
   authReducer,
-  bodySizeReducer,
+  dayReducer,
 });
 
 export default rootReducer;
