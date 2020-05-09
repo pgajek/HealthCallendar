@@ -1,6 +1,10 @@
-const dayReducer = (state, action) => {
+const initialState = {
+  dayId: window.localStorage.getItem('dayId'),
+};
+
+const dayReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'getDayId':
+    case 'GET_DAY_ID':
       return {
         ...state,
         dayId: action.payload.dayId,
