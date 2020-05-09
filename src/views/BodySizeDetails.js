@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import MainTemplate from 'templates/MainTemplate.js';
-import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import Button from 'components/atoms/Button/Button';
 import { Link } from 'react-router-dom';
 import { theme } from 'theme/mainTheme.js';

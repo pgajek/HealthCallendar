@@ -207,6 +207,20 @@ class ProfilePage extends Component {
           {edit ? (
             <StyledForm>
               <Field
+                name="nickname"
+                value={nickname}
+                change={(e) => this.handleInputChange(e)}
+                label="Nickname"
+                placeholder="name"
+              />
+              <Field
+                name="email"
+                value={email}
+                change={(e) => this.handleInputChange(e)}
+                label="E-mail"
+                placeholder="adress"
+              />
+              <Field
                 name="drinkDemand"
                 value={drinkDemand}
                 change={(e) => this.handleInputChange(e)}
@@ -219,20 +233,6 @@ class ProfilePage extends Component {
                 change={(e) => this.handleInputChange(e)}
                 label="Kcal Demand"
                 unit="kcal"
-              />
-              <Field
-                name="email"
-                value={email}
-                change={(e) => this.handleInputChange(e)}
-                label="E-mail"
-                placeholder="adress"
-              />
-              <Field
-                name="nickname"
-                value={nickname}
-                change={(e) => this.handleInputChange(e)}
-                label="Nickname"
-                placeholder="name"
               />
               <Field
                 name="number"
@@ -252,12 +252,12 @@ class ProfilePage extends Component {
             </StyledForm>
           ) : (
             <StyledForm as="div">
+              <Plate name="Nickname" value={nickname} />
+              <Plate name="E-mail adress" value={email} />
               <Plate name="Drink demand(ml)" value={drinkDemand} />
               <Plate name="Kcal demand" value={kcalDemand} />
-              <Plate name="E-mail adress" value={email} />
-              <Plate name="Birth date" value={birthDate} />
               <Plate name="Number" value={number} />
-              <Plate name="Nickname" value={nickname} />
+              <Plate name="Birth date" value={birthDate} />
               <StyledButton onClick={this.handleButtonClick}>Edit</StyledButton>
               <StyledButton onClick={this.handlePasswordButtonClick}>
                 {changePassword ? 'Save password' : 'Change password'}

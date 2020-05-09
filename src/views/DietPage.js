@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { theme } from 'theme/mainTheme.js';
 import AddNew from 'components/molecules/AddNew/AddNew.js';
 import MainTemplate from 'templates/MainTemplate.js';
 import Card from 'components/atoms/Card/Card.js';
@@ -102,7 +101,7 @@ class DietPage extends Component {
   };
   sendMeal = (Meal) => {
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`https://164.132.97.42:8443/health-calendar/api/meal`, {
+    fetch(`https://164.132.97.42:8443/health-calendar/api/meal/current/${this.props.userId}`, {
       method: 'POST',
       body: JSON.stringify(Meal),
       headers: {
@@ -110,10 +109,12 @@ class DietPage extends Component {
         Authorization: `${token}`,
       },
     })
-      .then((res) => this.getUserData())
+      .then((res) => {
+        this.getUserData();
+      })
       .catch((err) => console.log(err));
   };
-  habndleYesButtonClick = (e) => {
+  handleYesButtonClick = (e) => {
     const { calories, mealType, meal } = this.state;
     e.preventDefault();
     const NewMeal = {
@@ -123,7 +124,7 @@ class DietPage extends Component {
       kcal: calories,
       type: mealType,
     };
-    if (meal != '' && calories != '' && mealType != '') {
+    if (meal !== '' && calories !== '' && mealType !== '') {
       this.sendMeal(NewMeal);
       this.setState({
         ...this.state,
@@ -139,10 +140,11 @@ class DietPage extends Component {
       });
     }
   };
+
   handleDeleteButtonClick = (e, id) => {
     e.preventDefault();
     const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`https://164.132.97.42:8443/health-calendar/api/meal/${id}`, {
+    fetch(`https://164.132.97.42:8443/health-calendar/api/meal/${id}/${this.props.userId}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',
@@ -172,12 +174,11 @@ class DietPage extends Component {
             name2="calories"
             value={meal}
             value2={calories}
-            click={this.habndleYesButtonClick}
+            click={this.handleYesButtonClick}
             meal="mealType"
             mealValue={mealType}
             error={error}
           />
-
           <StyledMealsWrapper> {MappedMeals}</StyledMealsWrapper>
         </StyledWrapper>
       </MainTemplate>

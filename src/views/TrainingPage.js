@@ -54,6 +54,9 @@ class TrainingPage extends Component {
     training: '',
     calories: '',
     trainings: [],
+    hours: '',
+    minutes: '',
+    error: false,
   };
   componentDidMount() {
     this.getUserData();
@@ -95,23 +98,33 @@ class TrainingPage extends Component {
         Authorization: `${token}`,
       },
     })
-      .then((res) => this.getUserData())
+      .then((res) => {
+        console.log(res);
+
+        this.getUserData();
+      })
       .catch((err) => console.log(err));
   };
   habndleYesButtonClick = (e) => {
     e.preventDefault();
+    const { hours, minutes, training, calories } = this.state;
+    const elapsedTime = `${hours < 10 ? `0${hours}` : hours}:${
+      minutes < 10 ? `0${minutes}` : minutes
+    }`;
     const NewTraining = {
       dateTimeOfExecution: `${createDate()}_${createHour()}`,
       dayId: parseInt(this.props.dayId),
-      elapsedTime: '01:20',
-      description: this.state.training,
-      burnKcal: this.state.calories,
+      elapsedTime,
+      description: training,
+      burnKcal: calories,
     };
     this.sendTraining(NewTraining);
     this.setState({
       ...this.state,
       training: '',
       calories: '',
+      hours: '',
+      minutes: '',
     });
   };
   handleDeleteButtonClick = (e, id) => {
@@ -128,7 +141,8 @@ class TrainingPage extends Component {
       .catch((err) => console.log(err));
   };
   render() {
-    const MappedTrainings = this.state.trainings.map((training) => (
+    const { trainings, training, calories, hours, minutes, error } = this.state;
+    const MappedTrainings = trainings.map((training) => (
       <Card
         key={training.id}
         id={training.id}
@@ -144,9 +158,12 @@ class TrainingPage extends Component {
             change={this.handleInputChange}
             name="training"
             name2="calories"
-            value={this.state.training}
-            value2={this.state.calories}
+            value={training}
+            value2={calories}
+            value3={hours}
+            value4={minutes}
             click={this.habndleYesButtonClick}
+            error={error}
           />
           <StyledMealsWrapper> {MappedTrainings}</StyledMealsWrapper>
         </StyledWrapper>

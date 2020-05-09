@@ -4,7 +4,7 @@ import Count from 'components/molecules/Count/Count';
 import MainTemplate from 'templates/MainTemplate.js';
 import { connect } from 'react-redux';
 import Controler from 'components/molecules/Controler/Controler';
-import { getDayId as getDayIdAction } from 'actions/index.js';
+import { getDayId as getDayIdAction, createNewDay as createNewDayAction } from 'actions/index.js';
 import { createDate, createNewDay } from 'helpers';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import { ReactComponent as GirlRun } from 'assets/Graphics/girl_run.svg';
@@ -132,16 +132,16 @@ class Home extends Component {
     portionsAlcohol: 0,
   };
   componentDidMount() {
-    this.getDayData();
     this.downloadUserData();
+    this.getDayData();
   }
   postDay = () => {
     const { userId, token } = this.props;
-    createNewDay(userId, token).then(this.getDayData());
+    return createNewDay(userId, token, createDate());
   };
   getDayData = () => {
     const { getDayId, userId, token } = this.props;
-    getDayId(userId, token, createDate());
+    return getDayId(userId, token, createDate());
   };
   downloadUserData = () => {
     const { userId } = this.props;
@@ -184,24 +184,30 @@ class Home extends Component {
   };
   updateUserData = () => {
     const { userId, dayId } = this.props;
-    const { portionsDrink, portionsAlcohol, portionsSnack } = this.state;
-    const userData = {
-      date: createDate(),
-      portionsAlcohol,
-      portionsDrink,
-      portionsSnack,
-      userId: parseInt(userId),
-    };
+    if (dayId) {
+      console.log('wykonane if');
+      const { portionsDrink, portionsAlcohol, portionsSnack } = this.state;
+      const userData = {
+        date: createDate(),
+        portionsAlcohol,
+        portionsDrink,
+        portionsSnack,
+        userId: parseInt(userId),
+      };
 
-    const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
-    fetch(`https://164.132.97.42:8443/health-calendar/api/day/${dayId}`, {
-      method: 'PUT',
-      body: JSON.stringify(userData),
-      headers: {
-        'Content-type': 'application/json',
-        Authorization: `${token}`,
-      },
-    });
+      const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
+      fetch(`https://164.132.97.42:8443/health-calendar/api/day/${dayId}`, {
+        method: 'PUT',
+        body: JSON.stringify(userData),
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `${token}`,
+        },
+      });
+    } else {
+      console.log('wykonane else');
+      this.postDay();
+    }
   };
   handleCount = (aspect, type) => {
     if (this.state[aspect] > -1 && this.state[aspect] < 8) {
@@ -243,6 +249,7 @@ class Home extends Component {
     } = this.state;
     const LastMealTime = lastMeal && lastMeal.dateTimeOfEat.slice(11);
     const TrainingTime = lastTraining && lastTraining.dateTimeOfExecution.slice(11);
+    console.log(this.props.dayId);
     return (
       <MainTemplate>
         <StyledWrapper>
@@ -314,6 +321,9 @@ const mapStateToProps = ({ userId, token, loginName, dayId }) => ({
   dayId,
 });
 const mapDispatchToProps = (dispatch) => ({
-  getDayId: (userId, apiToken, date) => dispatch(getDayIdAction(userId, apiToken, date)),
+  getDayId: (userId, apiToken, date) => {
+    dispatch(getDayIdAction(userId, apiToken, date));
+  },
+  createNewDay: (userId, token, date) => dispatch(createNewDayAction(userId, token, date)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
