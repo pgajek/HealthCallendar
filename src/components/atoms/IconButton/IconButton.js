@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { theme } from 'theme/mainTheme.js';
 
 const StyledIconButton = styled.button`
   display: flex;
