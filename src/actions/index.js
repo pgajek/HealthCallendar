@@ -15,6 +15,7 @@ export const authenticate = (user) => (dispatch) => {
       }
     })
     .then((data) => {
+      console.log(data);
       const payload = { login: user.loginName, userId: data.userId, token: data.token };
       window.localStorage.setItem('token', payload.token);
       window.localStorage.setItem('userId', payload.userId);
@@ -41,10 +42,8 @@ export const getDayId = (userId, apiToken, date) => (dispatch) => {
       }
     })
     .then((dayId) => {
-      if (dayId) {
-        window.localStorage.setItem('dayId', dayId);
-        dispatch({ type: 'GET_DAY_ID', payload: dayId });
-      }
+      console.log(dayId);
+      dispatch({ type: 'GET_DAY_ID', payload: { dayId } });
     })
     .catch((err) => console.log(err));
 };
@@ -67,6 +66,9 @@ export const createNewDay = (userId, apiToken, date) => (dispatch) => {
     body: JSON.stringify(day),
   })
     .then((res) => res.json())
-    .then((data) => dispatch({ type: 'GET_DAY_ID', payload: data }))
+    .then((data) => {
+      console.log(data);
+      dispatch({ type: 'POST_NEW_DAY', payload: data });
+    })
     .catch((err) => console.log(err));
 };
