@@ -263,7 +263,7 @@ class BodySize extends Component {
     );
   }
 }
-const mapStateToProps = ({ userId, token }) => ({
+const mapStateToProps = ({ auth: { userId, token } }) => ({
   userId,
   token,
 });

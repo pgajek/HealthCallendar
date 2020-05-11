@@ -2,7 +2,7 @@ const initialState = {
   token: window.localStorage.getItem('token'),
   userId: window.localStorage.getItem('userId'),
   loginName: window.localStorage.getItem('loginName'),
-  dayId: window.localStorage.getItem('dayId'),
+  isLoggedIn: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -18,12 +18,7 @@ const authReducer = (state = initialState, action) => {
     case 'AUTH_FAILURE':
       return state;
     case 'USER_LOGOUT':
-      return {
-        ...state,
-        userId: '',
-        token: '',
-        isLoggedIn: false,
-      };
+      return {};
     default:
       return state;
   }

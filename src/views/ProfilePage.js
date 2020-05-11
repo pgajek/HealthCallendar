@@ -286,7 +286,7 @@ class ProfilePage extends Component {
     );
   }
 }
-const mapStateToProps = ({ token, userId, loginName }) => ({
+const mapStateToProps = ({ auth: { token, userId, loginName } }) => ({
   token,
   userId,
   loginName,

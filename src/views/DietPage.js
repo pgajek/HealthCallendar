@@ -185,7 +185,7 @@ class DietPage extends Component {
     );
   }
 }
-const mapStateToProps = ({ userId, token, dayId }) => ({
+const mapStateToProps = ({ auth: { userId, token }, day: { dayId } }) => ({
   userId,
   token,
   dayId,

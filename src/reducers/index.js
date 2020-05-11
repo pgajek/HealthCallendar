@@ -1,10 +1,10 @@
-import authReducer from './authReducer';
 import dayReducer from './dayReducer';
+import authReducer from './authReducer';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
-  authReducer,
-  dayReducer,
+  day: dayReducer,
+  auth: authReducer,
 });
 
 export default rootReducer;

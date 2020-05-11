@@ -5,7 +5,7 @@ import MainTemplate from 'templates/MainTemplate.js';
 import { connect } from 'react-redux';
 import Controler from 'components/molecules/Controler/Controler';
 import { getDayId as getDayIdAction, createNewDay as createNewDayAction } from 'actions/index.js';
-import { createDate, createNewDay } from 'helpers';
+import { createDate } from 'helpers';
 import { ReactComponent as Logo } from 'assets/icons/logo.svg';
 import { ReactComponent as GirlRun } from 'assets/Graphics/girl_run.svg';
 import { theme } from 'theme/mainTheme.js';
@@ -132,11 +132,12 @@ class Home extends Component {
     portionsAlcohol: 0,
   };
   componentDidMount() {
-    this.downloadUserData();
-    this.getDayData();
+    console.log(this.props);
+    if (!this.props.dayId) this.getDayData();
+    else this.downloadUserData();
   }
   postDay = () => {
-    const { userId, token } = this.props;
+    const { userId, token, createNewDay } = this.props;
     return createNewDay(userId, token, createDate());
   };
   getDayData = () => {
@@ -184,17 +185,16 @@ class Home extends Component {
   };
   updateUserData = () => {
     const { userId, dayId } = this.props;
+    const { portionsDrink, portionsAlcohol, portionsSnack } = this.state;
+    const userData = {
+      date: createDate(),
+      portionsAlcohol,
+      portionsDrink,
+      portionsSnack,
+      userId: parseInt(userId),
+    };
     if (dayId) {
-      console.log('wykonane if');
-      const { portionsDrink, portionsAlcohol, portionsSnack } = this.state;
-      const userData = {
-        date: createDate(),
-        portionsAlcohol,
-        portionsDrink,
-        portionsSnack,
-        userId: parseInt(userId),
-      };
-
+      console.log('bylo dayId');
       const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
       fetch(`https://164.132.97.42:8443/health-calendar/api/day/${dayId}`, {
         method: 'PUT',
@@ -205,7 +205,7 @@ class Home extends Component {
         },
       });
     } else {
-      console.log('wykonane else');
+      console.log('nie bylo dayId');
       this.postDay();
     }
   };
@@ -314,7 +314,7 @@ class Home extends Component {
     );
   }
 }
-const mapStateToProps = ({ userId, token, loginName, dayId }) => ({
+const mapStateToProps = ({ auth: { userId, token, loginName }, day: { dayId } }) => ({
   userId,
   token,
   loginName,

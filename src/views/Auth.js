@@ -96,6 +96,7 @@ class Auth extends Component {
     errors: {},
   };
   componentDidMount() {
+    console.log(this.props);
     const { userIsLogged } = this.props;
     if (window.localStorage.getItem('userId')) {
       const userData = {
@@ -309,7 +310,7 @@ class Auth extends Component {
     );
   }
 }
-const mapStateToProps = ({ userId = null, token, isLoggedIn }) => ({
+const mapStateToProps = ({ auth: { userId = null, token, isLoggedIn } }) => ({
   userId,
   token,
   isLoggedIn,
