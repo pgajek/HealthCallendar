@@ -11,7 +11,7 @@ import { theme } from 'theme/mainTheme.js';
 
 const StyledNav = styled.nav`
   width: 100vw;
-  height: 90vh;
+  height: 91vh;
 
   z-index: 98;
   position: fixed;
@@ -21,7 +21,7 @@ const StyledNav = styled.nav`
   color: #fff;
   background-color: #4b4b4b;
 
-  transform: ${({ active }) => (active ? 'translateY(0vh)' : 'translateY(-80vh)')};
+  transform: ${({ active }) => (active ? 'translateY(0vh)' : 'translateY(-81vh)')};
   text-shadow: 1.5px 1.5px 6px rgba(0, 0, 0, 0.38);
   transition: transform 0.3s;
 
@@ -150,7 +150,6 @@ class Nav extends Component {
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('userId');
     window.localStorage.removeItem('loginName');
-    window.localStorage.removeItem('dayId');
     this.props.logout();
     this.setState((prevState) => ({
       ...prevState,
