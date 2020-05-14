@@ -7,6 +7,11 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'SET_USER_ID':
+      return {
+        ...state,
+        userId: action.paload.userId,
+      };
     case 'AUTH_SUCCESS':
       return {
         ...state,
@@ -18,7 +23,13 @@ const authReducer = (state = initialState, action) => {
     case 'AUTH_FAILURE':
       return state;
     case 'USER_LOGOUT':
-      return {};
+      return {
+        userId: null,
+        token: null,
+        loginName: null,
+        dayId: null,
+        isLoggedIn: false,
+      };
     default:
       return state;
   }

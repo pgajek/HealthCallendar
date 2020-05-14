@@ -99,8 +99,6 @@ class TrainingPage extends Component {
       },
     })
       .then((res) => {
-        console.log(res);
-
         this.getUserData();
       })
       .catch((err) => console.log(err));

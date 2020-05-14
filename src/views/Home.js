@@ -132,17 +132,16 @@ class Home extends Component {
     portionsAlcohol: 0,
   };
   componentDidMount() {
-    console.log(this.props);
     if (!this.props.dayId) this.getDayData();
     else this.downloadUserData();
   }
-  postDay = () => {
+  postDay = (day) => {
     const { userId, token, createNewDay } = this.props;
-    return createNewDay(userId, token, createDate());
+    createNewDay(userId, token, createDate(), day);
   };
   getDayData = () => {
     const { getDayId, userId, token } = this.props;
-    return getDayId(userId, token, createDate());
+    getDayId(userId, token, createDate());
   };
   downloadUserData = () => {
     const { userId } = this.props;
@@ -156,7 +155,6 @@ class Home extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         const {
           lastDateMeasureBody,
           portionsSnack,
@@ -183,6 +181,25 @@ class Home extends Component {
       })
       .catch((err) => console.log(err));
   };
+  downloadBasicData = () => {
+    const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
+    fetch(`https://164.132.97.42:8443/health-calendar/api/report/basic/${this.props.loginName}`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        this.props.setUserID(data.userId);
+        this.setState({
+          ...this.state,
+          lastBodyMeasurement: data.lastDateMeasureBody,
+          nickname: data.nick,
+        });
+      });
+  };
   updateUserData = () => {
     const { userId, dayId } = this.props;
     const { portionsDrink, portionsAlcohol, portionsSnack } = this.state;
@@ -194,7 +211,6 @@ class Home extends Component {
       userId: parseInt(userId),
     };
     if (dayId) {
-      console.log('bylo dayId');
       const token = JSON.parse(JSON.stringify(`Bearer ${this.props.token}`));
       fetch(`https://164.132.97.42:8443/health-calendar/api/day/${dayId}`, {
         method: 'PUT',
@@ -203,10 +219,13 @@ class Home extends Component {
           'Content-type': 'application/json',
           Authorization: `${token}`,
         },
+      }).then((res) => {
+        if (res.ok) {
+          this.downloadUserData();
+        }
       });
     } else {
-      console.log('nie bylo dayId');
-      this.postDay();
+      this.postDay(userData);
     }
   };
   handleCount = (aspect, type) => {
@@ -249,7 +268,6 @@ class Home extends Component {
     } = this.state;
     const LastMealTime = lastMeal && lastMeal.dateTimeOfEat.slice(11);
     const TrainingTime = lastTraining && lastTraining.dateTimeOfExecution.slice(11);
-    console.log(this.props.dayId);
     return (
       <MainTemplate>
         <StyledWrapper>
@@ -298,7 +316,7 @@ class Home extends Component {
                 <span>You haven't train today</span>
               )}
             </Controler>
-            <Controler label={`Last meal -  Kcal : ${sumOfKcal} `} link="/dietPage">
+            <Controler label={`Last meal -  Kcal : ${sumOfKcal ? sumOfKcal : 0} `} link="/dietPage">
               {lastMeal ? (
                 <>
                   <span>{lastMeal.description}</span> |<span>{lastMeal.kcal}kcal</span> |
@@ -324,6 +342,8 @@ const mapDispatchToProps = (dispatch) => ({
   getDayId: (userId, apiToken, date) => {
     dispatch(getDayIdAction(userId, apiToken, date));
   },
-  createNewDay: (userId, token, date) => dispatch(createNewDayAction(userId, token, date)),
+  createNewDay: (userId, token, date, day) =>
+    dispatch(createNewDayAction(userId, token, date, day)),
+  setUserID: (userId) => dispatch({ type: 'SET_USER_ID', payload: { userId } }),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
