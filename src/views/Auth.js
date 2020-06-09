@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Input from 'components/atoms/Input/Input';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Button from 'components/atoms/Button/Button';
 import { Redirect } from 'react-router-dom';
 import { theme } from 'theme/mainTheme.js';
@@ -45,6 +45,12 @@ const StyledForm = styled.form`
 
   background-color: #fff;
   box-shadow: 0 10px 20px 10px rgba(0, 0, 0, 0.2);
+
+  ${({ registry }) =>
+    registry &&
+    css`
+      max-height: 500px;
+    `}
 
   @media (orientation: landscape) {
     height: 70%;
@@ -93,10 +99,14 @@ class Auth extends Component {
     registration: false,
     email: '',
     secondPassword: '',
-    errors: {},
+    errors: {
+      login: false,
+      password: false,
+      email: false,
+      secondPassword: false,
+    },
   };
   componentDidMount() {
-    console.log(this.props);
     const { userIsLogged } = this.props;
     if (window.localStorage.getItem('userId')) {
       const userData = {
@@ -108,9 +118,15 @@ class Auth extends Component {
     }
   }
   handleInputChange = ({ target: { value, name } }) => {
+    const isValidate = checkValidity(value, regex[name]);
+
     this.setState({
       ...this.state,
       [name]: value,
+      errors: {
+        ...this.state.errors,
+        [name]: !isValidate,
+      },
     });
   };
 
@@ -227,7 +243,7 @@ class Auth extends Component {
         <StyledMainHeader>
           <StyledLogo />
         </StyledMainHeader>
-        <StyledForm>
+        <StyledForm registry={registration}>
           <StyledHeader>Sign In!</StyledHeader>
           <StyledLabel htmlFor="login">
             <Input
@@ -240,7 +256,7 @@ class Auth extends Component {
               value={this.state.login}
               required
             />
-            {errors.login && <StyledError>Login requires minimum 6 signs</StyledError>}
+            <StyledError>{errors.login && 'Login requires minimum 6 signs'}</StyledError>
           </StyledLabel>
           {registration && (
             <StyledLabel htmlFor="email">
@@ -254,7 +270,7 @@ class Auth extends Component {
                 value={this.state.email}
                 required
               />
-              {errors.email && <StyledError>Please insert proper email adress.</StyledError>}
+              <StyledError>{errors.email && 'Please insert proper email adress.'}</StyledError>
             </StyledLabel>
           )}
           <StyledLabel htmlFor="password">
@@ -268,11 +284,11 @@ class Auth extends Component {
               value={this.state.password}
               required
             />
-            {errors.password && (
-              <StyledError>
-                Password requires min 6 characters, one capital letter and one number.
-              </StyledError>
-            )}
+
+            <StyledError>
+              {errors.password &&
+                ' Password requires min 6 characters, one capital letter and one number.'}
+            </StyledError>
           </StyledLabel>
           {registration && (
             <StyledLabel htmlFor="secondPassword">
@@ -286,7 +302,8 @@ class Auth extends Component {
                 value={this.state.secondPassword}
                 required
               />
-              {errors.secondPassword && <StyledError>Passwords must match.</StyledError>}
+
+              <StyledError>{errors.secondPassword && 'Passwords must match.'}</StyledError>
             </StyledLabel>
           )}
           {registration ? (
