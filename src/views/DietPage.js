@@ -155,8 +155,8 @@ class DietPage extends Component {
       .catch((err) => console.log(err));
   };
   render() {
-    const { error, mealType, meal, calories } = this.state;
-    const MappedMeals = this.state.meals.map((meal) => (
+    const { error, mealType, meal, calories, meals } = this.state;
+    const MappedMeals = meals.map((meal) => (
       <Card
         key={meal.id}
         id={meal.id}
