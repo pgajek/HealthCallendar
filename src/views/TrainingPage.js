@@ -73,14 +73,26 @@ class TrainingPage extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.listTrainings.length > 0) {
+        console.log(data);
+        if (data.listTrainings) {
           this.setState({
             ...this.state,
             trainings: data.listTrainings,
           });
+        } else {
+          this.setState({
+            ...this.state,
+            trainings: [],
+          });
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        this.setState({
+          ...this.state,
+          trainings: [],
+        });
+        console.log(err);
+      });
   };
   handleInputChange = (e) => {
     this.setState({
@@ -106,8 +118,9 @@ class TrainingPage extends Component {
   habndleYesButtonClick = (e) => {
     e.preventDefault();
     const { hours, minutes, training, calories } = this.state;
-    const elapsedTime = `${hours < 10 ? `0${hours}` : hours}:${
-      minutes < 10 ? `0${minutes}` : minutes
+
+    const elapsedTime = `${hours < 10 ? '0' + hours : hours}:${
+      minutes < 10 ? '0' + minutes : minutes
     }`;
     const NewTraining = {
       dateTimeOfExecution: `${createDate()}_${createHour()}`,
