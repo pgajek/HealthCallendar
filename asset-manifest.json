@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.js": "/HealthCallendar/static/js/main.694fb8a4.chunk.js",
-    "main.js.map": "/HealthCallendar/static/js/main.694fb8a4.chunk.js.map",
-    "runtime-main.js": "/HealthCallendar/static/js/runtime-main.fc1af404.js",
-    "runtime-main.js.map": "/HealthCallendar/static/js/runtime-main.fc1af404.js.map",
-    "static/js/2.6e34a893.chunk.js": "/HealthCallendar/static/js/2.6e34a893.chunk.js",
-    "static/js/2.6e34a893.chunk.js.map": "/HealthCallendar/static/js/2.6e34a893.chunk.js.map",
+    "main.js": "/HealthCallendar/static/js/main.477c994d.chunk.js",
+    "main.js.map": "/HealthCallendar/static/js/main.477c994d.chunk.js.map",
+    "runtime-main.js": "/HealthCallendar/static/js/runtime-main.1076db4b.js",
+    "runtime-main.js.map": "/HealthCallendar/static/js/runtime-main.1076db4b.js.map",
+    "static/js/2.d71b8f33.chunk.js": "/HealthCallendar/static/js/2.d71b8f33.chunk.js",
+    "static/js/2.d71b8f33.chunk.js.map": "/HealthCallendar/static/js/2.d71b8f33.chunk.js.map",
     "index.html": "/HealthCallendar/index.html",
-    "precache-manifest.310fcfbdc2210e3803c0eee753efd6cc.js": "/HealthCallendar/precache-manifest.310fcfbdc2210e3803c0eee753efd6cc.js",
+    "precache-manifest.88e59c387997b49593aa591f80594b39.js": "/HealthCallendar/precache-manifest.88e59c387997b49593aa591f80594b39.js",
     "service-worker.js": "/HealthCallendar/service-worker.js",
-    "static/js/2.6e34a893.chunk.js.LICENSE.txt": "/HealthCallendar/static/js/2.6e34a893.chunk.js.LICENSE.txt",
+    "static/js/2.d71b8f33.chunk.js.LICENSE.txt": "/HealthCallendar/static/js/2.d71b8f33.chunk.js.LICENSE.txt",
     "static/media/fixedLogo.034caa42.svg": "/HealthCallendar/static/media/fixedLogo.034caa42.svg",
     "static/media/girlOnPhone.7e7b15e2.svg": "/HealthCallendar/static/media/girlOnPhone.7e7b15e2.svg",
     "static/media/girl_run.e44d3294.svg": "/HealthCallendar/static/media/girl_run.e44d3294.svg",
@@ -26,8 +26,8 @@
     "static/media/yesicon.ffdc4baa.svg": "/HealthCallendar/static/media/yesicon.ffdc4baa.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.fc1af404.js",
-    "static/js/2.6e34a893.chunk.js",
-    "static/js/main.694fb8a4.chunk.js"
+    "static/js/runtime-main.1076db4b.js",
+    "static/js/2.d71b8f33.chunk.js",
+    "static/js/main.477c994d.chunk.js"
   ]
 }
