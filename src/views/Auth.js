@@ -92,6 +92,9 @@ const StyledError = styled.div`
   width: 100%;
   max-width: 160px;
 `;
+const StyledButtonTwo = styled(StyledButton)`
+  margin-top: 10px;
+`;
 class Auth extends Component {
   state = {
     login: '',
@@ -328,9 +331,9 @@ class Auth extends Component {
             <StyledLink onClick={this.handleLinkClick}>Create Your Account</StyledLink>
           )}
         </StyledForm>
-        <StyledButton onClick={(e) => this.handleSignIn(e, true)}>
+        <StyledButtonTwo onClick={(e) => this.handleSignIn(e, true)}>
           Check without registration
-        </StyledButton>
+        </StyledButtonTwo>
       </StyledWrapper>
     );
   }
