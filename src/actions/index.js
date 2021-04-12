@@ -1,4 +1,4 @@
-export const authenticate = (user) => (dispatch) => {
+export const authenticate = (user, test) => (dispatch) => {
   return fetch('https://164.132.97.42:8443/health-calendar/token', {
     method: 'POST',
     body: JSON.stringify(user),
@@ -25,7 +25,10 @@ export const authenticate = (user) => (dispatch) => {
       console.log(err);
     });
 };
-
+export const fakeAuth = () => (dispatch) => {
+  dispatch({ type: 'FAKE_AUTH_SUCCESS' });
+  console.log('hi');
+};
 export const getDayId = (userId, apiToken, date) => (dispatch) => {
   const token = JSON.parse(JSON.stringify(`Bearer ${apiToken}`));
   fetch(`https://164.132.97.42:8443/health-calendar/api/day/day-id/${date}/${userId}`, {

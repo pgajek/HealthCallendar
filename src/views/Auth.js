@@ -5,7 +5,7 @@ import Button from 'components/atoms/Button/Button';
 import { Redirect } from 'react-router-dom';
 import { theme } from 'theme/mainTheme.js';
 import { connect } from 'react-redux';
-import { authenticate as authenticateAction } from 'actions/index.js';
+import { authenticate as authenticateAction, fakeAuth } from 'actions/index.js';
 import { ReactComponent as Logo } from 'assets/icons/fixedLogo.svg';
 import { regex } from 'helpers/regex.js';
 import { checkValidity } from 'helpers/index.js';
@@ -200,34 +200,39 @@ class Auth extends Component {
       });
     }
   };
-  handleSignIn = (e) => {
-    e.preventDefault();
-    const { login, password } = this.state;
-    const user = { loginName: login, password };
-    const isLoginValidate = checkValidity(login, regex.login);
-    const isPasswordValidate = checkValidity(password, regex.password);
-    if (isLoginValidate) {
-      if (isPasswordValidate) {
-        this.props.authenticate(user);
+  handleSignIn = (e, test) => {
+    if (test) {
+      this.props.fakeA();
+      console.log(this.props.isLoggedIn);
+    } else {
+      e.preventDefault();
+      const { login, password } = this.state;
+      const user = { loginName: login, password };
+      const isLoginValidate = checkValidity(login, regex.login);
+      const isPasswordValidate = checkValidity(password, regex.password);
+      if (isLoginValidate) {
+        if (isPasswordValidate) {
+          this.props.authenticate(user, test && test);
+        } else {
+          this.setState({
+            ...this.state,
+            errors: {
+              ...this.state.errors,
+              login: !isLoginValidate,
+              password: !isPasswordValidate,
+            },
+          });
+        }
       } else {
         this.setState({
           ...this.state,
           errors: {
             ...this.state.errors,
             login: !isLoginValidate,
-            password: !isPasswordValidate,
+            password: false,
           },
         });
       }
-    } else {
-      this.setState({
-        ...this.state,
-        errors: {
-          ...this.state.errors,
-          login: !isLoginValidate,
-          password: false,
-        },
-      });
     }
   };
 
@@ -323,6 +328,9 @@ class Auth extends Component {
             <StyledLink onClick={this.handleLinkClick}>Create Your Account</StyledLink>
           )}
         </StyledForm>
+        <StyledButton onClick={(e) => this.handleSignIn(e, true)}>
+          Check without registration
+        </StyledButton>
       </StyledWrapper>
     );
   }
@@ -333,6 +341,7 @@ const mapStateToProps = ({ auth: { userId = null, token, isLoggedIn } }) => ({
   isLoggedIn,
 });
 const mapDispatchToProps = (dispatch) => ({
+  fakeA: () => dispatch(fakeAuth()),
   authenticate: (user) => dispatch(authenticateAction(user)),
   userIsLogged: (userData) => dispatch({ type: 'AUTH_SUCCESS', payload: userData }),
 });

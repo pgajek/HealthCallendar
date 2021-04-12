@@ -20,6 +20,12 @@ const authReducer = (state = initialState, action) => {
         loginName: action.payload.login,
         isLoggedIn: true,
       };
+    case 'FAKE_AUTH_SUCCESS':
+      return {
+        isLoggedIn: true,
+        userId: 9999999,
+        token: 'jfhdsfhdsihwiufhesoht75y9turehfre95th9ure',
+      };
     case 'AUTH_FAILURE':
       return state;
     case 'USER_LOGOUT':
